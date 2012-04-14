@@ -3,8 +3,9 @@
 ##  created by Matthias Strubel   2011-08-04
 ##
 
+## ASH does not support arrays, so no nice foreach 
 # All Perl packages for kareha
-OPENWRT_PACKAGES_IMAGEBOARD=(  perl perlbase-base perlbase-cgi perlbase-essential perlbase-file perlbase-bytes perlbase-config perlbase-data perlbase-db-file perlbase-digest perlbase-encode perlbase-encoding perlbase-fcntl perlbase-gdbm-file perlbase-integer perlbase-socket perlbase-unicode perlbase-utf8 perlbase-xsloader  )
+##OPENWRT_PACKAGES_IMAGEBOARD=(  perl perlbase-base perlbase-cgi perlbase-essential perlbase-file perlbase-bytes perlbase-config perlbase-data perlbase-db-file perlbase-digest perlbase-encode perlbase-encoding perlbase-fcntl perlbase-gdbm-file perlbase-integer perlbase-socket perlbase-unicode perlbase-utf8 perlbase-xsloader  )
 
 
 
@@ -95,15 +96,37 @@ if [ $2 = 'imageboard' ] ; then
           exit 5
       fi
 
-    for package in ${OPENWRT_PACKAGES[@]}
-       do
-         echo "Start install package $package ...."
-         opkg -d piratebox install $package
-         if [ $? ne 0 ] ; then
-               echo "ERROR installing $package"
-               exit 5
-         fi
-      done
+#    for package in ${OPENWRT_PACKAGES[@]}
+#       do
+#         echo "Start install package $package ...."
+#         opkg -d piratebox install $package
+#         if [ $? ne 0 ] ; then
+#               echo "ERROR installing $package"
+#               exit 5
+#         fi
+#      done
+###------------------------------------------
+#  ASH does not support arrays :(
+###-----------------------------------------
+	opkg -d piratebox install perl
+	opkg -d piratebox install perlbase-base 
+	opkg -d piratebox install perlbase-cgi
+	opkg -d piratebox install perlbase-essential
+	opkg -d piratebox install perlbase-file
+	opkg -d piratebox install perlbase-bytes
+	opkg -d piratebox install perlbase-config 
+	opkg -d piratebox install perlbase-data
+	opkg -d piratebox install perlbase-db-file 
+	opkg -d piratebox install perlbase-digest
+	opkg -d piratebox install perlbase-encode
+	opkg -d piratebox install perlbase-encoding
+	opkg -d piratebox install perlbase-fcntl
+	opkg -d piratebox install perlbase-gdbm-file
+	opkg -d piratebox install perlbase-integer
+	opkg -d piratebox install perlbase-socket
+	opkg -d piratebox install perlbase-unicode
+	opkg -d piratebox install perlbase-utf8
+	opkg -d piratebox install perlbase-xsloader
     fi
 
     cd  $PIRATEBOX_FOLDER/share/board
