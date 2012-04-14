@@ -1,0 +1,43 @@
+<!DOCTYPE html> 
+<html> 
+<head>
+<style type="text/css">
+<!--
+body {margin: 0; border: 0; padding: 0px; background-color: white}
+--></style>
+
+<script type="text/javascript">
+function refresh() {
+ frame = document.getElementsByName( 'psoread' )[0];
+ frame.contentWindow.location.reload()
+}
+interval = window.setInterval( 'refresh()', 8000 );
+</script>
+</head>
+
+<body><center>
+<br>
+
+<iframe name="psoread" src="/cgi-bin/psoread.py" width="600" height="275" frameBorder="1" #ccc>
+Your browser does not support inline frames or is currently configured not to display inline frames.</iframe></p>
+<script language="javascript">
+<!--
+function reset() {
+self.document.psowrte.data.value="";
+self.document.psowrte.data.focus();
+}
+-->
+</script>
+
+<form method="POST" action="/cgi-bin/psowrte.py" target="psoread" name="psowrte" onsubmit="setTimeout('reset()',10)"> 
+<b>Name:</b><input type="text" value="anonymous" name="name" size="10">&nbsp;&nbsp; <b>Message:</b><input type="text" name="data" size="20">&nbsp;&nbsp;
+<input type="submit" value="PirateBox Chat" name="submit"><br>
+<b>Color:</b> Default<input type="radio" value="def" name="color" checked> |
+<font color="#0000FF">Blue</font><input type="radio" value="blue" name="color"> 
+| <font color="#008000">Green</font><input type="radio" value="green" name="color"> 
+| <font color="#FF8040">Orange</font><input type="radio" value="orange" name="color"> 
+| <font color="#FF0000">Red</font><input type="radio" value="red" name="color"></p>
+</form>
+</center>
+</body>
+</html>

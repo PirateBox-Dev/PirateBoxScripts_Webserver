@@ -1,0 +1,143 @@
+#! /bin/sh
+# /etc/init.d/piratebox
+
+### BEGIN INIT INFO
+# Provides:          piratebox
+# Required-Start:    $network
+# Required-Stop:     $network
+# Default-Start:     2 3 4 5
+# Default-Stop:      1 0
+# Short-Description: All services around piratebox
+# Description:       Based on /opt/piratebox/conf/piratebox.conf starts:  * DNSMASQ * HOSTAPD * DROOPY * WLAN-config * CHAT
+### END INIT INFO
+
+###  
+#  Default start-stop script for piratebox services on a laptop
+#   written by Matthias Strubel  (matthias.strubel@aod-rpg.de) 2011-02-22 
+#  licenced by gpl, feel free to improve and send me comments
+
+. /lib/lsb/init-functions
+
+
+[ -f /etc/default/rcS ] && . /etc/default/rcS
+
+# PATH for /opt piratebox folder
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/opt/piratebox/bin
+
+PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
+PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
+PIDFILE_LIGHTTPD=/var/run/lighttpd.pid
+
+PIRATEBOX=/opt/piratebox
+CONF=$PIRATEBOX/conf/piratebox.conf
+CONF_APN=$PIRATEBOX/conf/hostapd.conf
+CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf
+
+#Some extra config files for dnsmasq
+CONF_HOSTS=$PIRATEBOX/conf/hosts
+
+
+if [ -f $CONF ] ; then
+   . $CONF 
+else 
+   log_failure_msg "Configuration file not found"
+   exit 1
+fi
+
+# Command Line for DNSMASQ,  use extra host-file and listen to  configured ip only ; no resolv.conf
+#     forward only to piratebox ip
+#    -K  for taking over whole net
+#    -F  activating dhcp server ... 
+CMD_DNSMASQ="-x $PIDFILE_DNSMASQ  -h -H $CONF_HOSTS -a $IP  -R  --address=/#/$IP -K --dhcp-range=$IPSTART,$IPEND -9"
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    log_daemon_msg "Starting script piratebox "
+
+    if [ "$DO_IFCONFIG" = 'yes' ] ; then
+      log_daemon_msg "  Setting up wlan"
+      #Setting up WLAN Interface
+      piratebox_setup_wlan.sh  $CONF start
+    fi
+     if  [ $? -ne 0 ] ;  then
+       log_failure_msg "failed setting up Interface"
+     else
+
+      #BRIDGE
+      if [  ${BRIDGE:-no} != 'no' ] ; then
+         log_daemon_msg  "Adding $INTERFACE to bridge $BRIDGE //  brctl addif $BRIDGE  $INTERFACE "
+         sleep 1
+         BR_CMD="brctl addif  $BRIDGE  $INTERFACE"
+         ( $BR_CMD ; )
+         log_end_msg $?
+      fi
+
+       # Only  activate
+       if  [ "$USE_APN" =  "yes" ] ;  then
+         log_daemon_msg  "Starting hostap... "
+         start-stop-daemon -m --start --background --pidfile $PIDFILE_HOSTAPN  --exec /usr/sbin/hostapd --  $CONF_APN
+         log_end_msg $?
+       fi
+       if [ "$USE_DNSMASQ" = "yes" ] ;  then
+         log_daemon_msg  "Starting dnsmasq... "
+   # pidfile is written by dnsmasq
+         start-stop-daemon --start --quiet --exec /usr/sbin/dnsmasq  --  $CMD_DNSMASQ  
+         log_end_msg $?
+       fi
+
+       #Start here the lighttpd i.e.
+       log_daemon_msg "Starting lighttpd..."
+       start-stop-daemon --start --quiet  --pidfile $PIDFILE_LIGHTTPD --exec /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD 
+       log_end_msg $?
+
+     fi
+
+    ;;
+  stop)
+    log_daemon_msg  "Stopping script piratebox"
+    if [  "$USE_APN"  = "yes" ] ;  then
+       log_daemon_msg  "Stopping hostap... "
+       start-stop-daemon --stop --quiet  --pidfile $PIDFILE_HOSTAPN  --oknodo  --startas "hostapd"
+       log_end_msg  $?
+    fi
+    if [ "$USE_DNSMASQ" = "yes" ] ;  then 
+       log_daemon_msg "Stopping dnsmasq..."
+       start-stop-daemon --stop --quiet  --pidfile $PIDFILE_DNSMASQ  
+       log_end_msg $?
+    fi
+
+    log_daemon_msg "Stopping lighttpd..."
+    start-stop-daemon --stop --retry 30 --quiet --pidfile $PIDFILE_LIGHTTPD
+    log_end_msg $?
+
+     #Remove tmp files (depend. to droopy)
+     #rm -f  "$FOLDER/tmp/*"
+
+      #BRIDGE
+      if [  ${BRIDGE:-no} != 'no' ] ; then
+        log_daemon_msg  "Remove $INTERFACE from bridge $BRIDGE //  brctl delif $BRIDGE  $INTERFAC$"
+         sleep 1
+         BR_CMD="brctl delif  $BRIDGE  $INTERFACE"
+         ( $BR_CMD ; )
+         log_end_msg $?
+      fi
+
+     if [ "$DO_IFCONFIG" = 'yes' ] ; then
+       piratebox_setup_wlan.sh $CONF stop
+     fi
+
+    ;;
+  check)
+       echo "DO CONFIG = $DO_IFCONFIG "
+       echo "APN       = $USE_APN "
+       echo "DNSMASQ   = $USE_DNSMASQ "
+       echo "Bridge    = $BRIDGE "
+    ;;
+  *)
+    echo "Usage: /etc/init.d/piratebox {start|stop|check}"
+    exit 1
+    ;;
+esac
+
+exit 0
