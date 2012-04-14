@@ -15,49 +15,17 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 
 <!--piratebox.lan-->
 
-
+</head>
+<body>
 <center>
 
 <div class="box"><img src="/piratebox-logo-small.png"/></div>
 <div id="message" class="box"> <b>1.</b> Learn more about the project <a href="/.READ.ME.htm" target="_parent"><b>here</b></a>.<p><b>2.</b> Click button below to begin sharing.</p><b>3.</b> Browse and download files <a href="/share/unsorted" target="_parent"><b>here</b></a>.<br> </div>
 
-<script language="JavaScript">
-function swap() {
-   document.getElementById("form").style.display = "none";
-   document.getElementById("sending").style.display = "block";
-   update();
 }
-ncell = 4;
-curcell = 0;
-function update() {
-   setTimeout(update, 300);
-   e = document.getElementById("cell"+curcell);
-   e.style.backgroundColor = "#eee";
-   curcell = (curcell+1) % ncell
-   e = document.getElementById("cell"+curcell);
-   e.style.backgroundColor = "#aaa";
-}
-function onunload() {
-   document.getElementById("form").style.display = "block";
-   document.getElementById("sending").style.display = "none";	  
-}
-</script></head>
-<body>
 
-<div id="wrapform">
-  <div id="form" class="box">
-    <form method="post" enctype="multipart/form-data" action="">
-      <input name="upfile" type="file">
-      <input value="Send" onclick="swap()" type="submit">
-    </form>
-  </div>
-  <div id="sending" class="box"> Sending &nbsp;
-    <table id="progress"><tr>
-      <td id="cell0"/><td id="cell1"/><td id="cell2"/><td id="cell3"/>
-    </tr></table>
-  </div>
-</div>
-
+<iframe height='200' width='650' frameBorder='0' src='http://piratebox.lan:8080'>Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a></iframe>
  <br /> <iframe height='400' width='650' frameBorder='0' src='/chat.html'></iframe> 
 
+</center>
 </body></html>

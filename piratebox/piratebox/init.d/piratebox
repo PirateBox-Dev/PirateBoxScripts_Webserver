@@ -27,6 +27,8 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/:/usr/local/sbin:/opt/piratebo
 PIDFILE_DROOPY=/var/run/piratebox_droopy.pid
 PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
+PIDFILE_LIGHTTPD=/var/run/piratebox_lighttpd.pid
+
 
 PIRATEBOX=/opt/piratebox
 CONF=$PIRATEBOX/conf/piratebox.conf
@@ -35,6 +37,9 @@ CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
 #Some extra config files for dnsmasq
 CONF_HOSTS=$PIRATEBOX/conf/hosts
+
+CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf
+
 
 # Some things that run always
 touch /var/lock/piratebox

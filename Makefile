@@ -29,13 +29,13 @@ $(PACKAGE):  $(VERSION)
 $(IMAGE_FILE): $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
-	sudo -c "mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)"
+	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
 	echo "#### Copy content to image file"
-	sudo -c " cp -vr $(PB_SRC_FOLDER)/*  $(MOUNT_POINT)     "
+	sudo   cp -vr $(PB_SRC_FOLDER)/*  $(MOUNT_POINT)     
 	echo "#### Copy customizatiosns to image file"
-	sudo -c " cp -rv $(OPENWRT_FOLDER)/* $(MOUNT_POINT)/ "
+	sudo   cp -rv $(OPENWRT_FOLDER)/* $(MOUNT_POINT)/ 
 	echo "#### Umount Image file"
-	sudo -c "umount  $(MOUNT_POINT)"
+	sudo  umount  $(MOUNT_POINT)
 	gzip -rc $(SRC_IMAGE_UNPACKED) > $(IMAGE_FILE)
 
 

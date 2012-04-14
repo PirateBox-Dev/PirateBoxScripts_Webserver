@@ -36,7 +36,9 @@ if [ $2 = 'init_openwrt' ] ; then
     . /etc/piratebox.common
     #  cp -v $pb_pbmount/src/* "$pb_share"
     #  cp -v $pb_pbmount/src/.* $pb_share
-    cp_src  $pb_pbmount/src $pb_share
+
+# not needed anymore    cp_src  $pb_pbmount/src $pb_share
+
     touch "$pb_pbmount/conf/init_done"
 
     # Copy Removed, File is included in lib folder.. 
@@ -87,11 +89,11 @@ fi
 if [ $2 = 'imageboard' ] ; then
    
     if [ "$OPENWRT" = "yes" ] ; then
-    if ! opkg update
-      then
-        echo "ERROR: Not Internet Conenction"
-        exit 5
-    fi
+      if ! opkg update 
+        then
+          echo "ERROR: Not Internet Conenction"
+          exit 5
+      fi
 
     for package in ${OPENWRT_PACKAGES[@]}
        do
