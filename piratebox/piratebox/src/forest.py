@@ -55,8 +55,9 @@ import time
 
 # Show any errors on the page. You might want to take this out on a live server
 # and look in the servers error log instead.
-import cgitb
-cgitb.enable()
+#  Removed for compatibility issues
+#import cgitb
+#cgitb.enable()
 
 # ============================================================================
 # Configuration
