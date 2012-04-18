@@ -108,7 +108,7 @@ $BRIDGE  $INTERFACE "
        rm  $UPLOADFOLDER/tmp*
 
        log_daemon_msg "Starting droopy..."
-       start-stop-daemon -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER  -m "$DROOPY_TXT" $DROOPY_PORT
+       start-stop-daemon -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_PORT
        log_end_msg $?
 
        #Writing init-message and reset chat..
