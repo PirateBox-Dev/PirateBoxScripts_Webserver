@@ -6,8 +6,8 @@
 
 # Changed by Matthias Strubel / 2011-02-27 for piratebox-path
 
-css = open("cgi-bin/style.css", 'r')
-data = open("cgi-bin/data.pso", 'r')
+css = open("style.css", 'r')
+data = open("data.pso", 'r')
 stl = css.read()
 dat = data.read()
 css.close()
