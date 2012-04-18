@@ -25,7 +25,7 @@ PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/opt/piratebox
 PIDFILE_DROOPY=/var/run/piratebox_droopy.pid
 PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
-PIDFILE_LIGHTTPD=/var/run/piratebox_lighttpd.pid
+PIDFILE_LIGHTTPD=/opt/piratebox/tmp/lighttpd.pid
 
 PIRATEBOX=/opt/piratebox
 CONF=$PIRATEBOX/conf/piratebox.conf
@@ -63,6 +63,9 @@ CMD_DNSMASQ="-x $PIDFILE_DNSMASQ $DNSMASQ_INTERFACE -h -H $CONF_HOSTS -R  --addr
 case "$1" in
   start)
     echo "Starting script piratebox "
+
+    echo "Empty tmp folder"
+    rm $PIRATEBOX/tmp/*
 
     if [ "$DO_IW" = "yes" ] ; then
        log_daemon_msg " Setting up Interface (iw) "
