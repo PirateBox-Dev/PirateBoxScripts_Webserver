@@ -110,7 +110,7 @@ $BRIDGE  $INTERFACE "
        #Start here the PirateBox-Parts droopy i.e.
        #Delete 0 Byte Files
        delete_empty.sh  $UPLOADFOLDER
-       rm  $UPLOADFOLDER/tmp*
+       find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
 
        log_daemon_msg "Starting droopy..."
        start-stop-daemon -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_PORT

@@ -108,7 +108,7 @@ case "$1" in
 
        #Start here the PirateBox-Parts droopy i.e.
        echo "Starting droopy..."
-       rm  $UPLOADFOLDER/tmp*
+       find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
        #Delete 0 Byte Files
        delete_empty.sh  $UPLOADFOLDER
 
