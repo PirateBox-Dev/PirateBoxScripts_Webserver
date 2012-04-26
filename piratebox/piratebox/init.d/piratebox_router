@@ -112,7 +112,11 @@ case "$1" in
        #Delete 0 Byte Files
        delete_empty.sh  $UPLOADFOLDER
 
-       start-stop-daemon -c $LIGHTTPD_USER:$LIGHTTPD_GROUP  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER  -m "$DROOPY_TXT" -c "" $DROOPY_USERDIR  $DROOPY_PORT 
+       DROOPY_USER=""
+       if [ "$DROOPY_USE_USER" = "yes" ] ; then
+           DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+       fi
+       start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER  -m "$DROOPY_TXT" -c "" $DROOPY_USERDIR  $DROOPY_PORT 
        echo  $?
 
        #Writing init-message and reset chat..
