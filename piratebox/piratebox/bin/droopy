@@ -6,6 +6,7 @@
 # Licensed under the New BSD License.
 
 # Changelog
+#   20120421 * Added Directory create..  Thank you "someguy"
 #   20120402 * Return success Message for iOS devices # Thank you "Reventlov"
 #   20120401 * Input of chatbox from outside... extend modularisation
 #   20120317 * MStrubel; no upload of index.html
@@ -68,6 +69,8 @@ import shutil
 import tempfile
 import socket
 import locale
+import string
+from pickle import load,dump
 
 LOGO = '''\
  _____                               
@@ -89,6 +92,7 @@ Options:
   -d DIRECTORY, --directory DIRECTORY   set the directory to upload files to
   --save-config                         save options in a configuration file
   --delete-config                       delete the configuration file and exit
+  -u True , --userdirs			allow users to specify file subdirectory
   
 Example:
    droopy -m "Hi, this is Bob. You can send me a file." -p avatar.png
@@ -103,14 +107,43 @@ must_save_options = False
 # 20110310 Hostname for links
 hostname_pb = "piratebox.lan"
 
+## User supplied subdirectory stuff
+userdirs= False # disabled by default, overridden by command line
+# where to store the password file for users
+#password_file='/opt/piratebox/passwd'
+password_file='/tmp/passwd'
+# What name will be used if subdir isn't specified
+# must be lower case
+anondir="anonymous"
+# If no subdir is specified, put in root (0), or anondir(1)?
+useAnondir=1
+
+userdirform='''
+<br><A HREF="javascript:show('advanced_fields')">%(advanced)s</a>
+<hr width="20%%">
+<div height="150px">
+<fieldset id="advanced_fields" style="hidden:true;display:none">
+<br>%(userdirname)s <input name="subdir" type="textbox">
+<p>%(userdirpassword)s <input name="secret" type="textbox">
+</fieldset>
+</div>
+<br />
+<br />
+<br />
+'''
+
+
+
 # -- HTML templates
 
 # 20110310 - Piratebox Chat template
 piratebox_chat = '''
 <iframe
-height="400"
-width="650"
+height="400px"
+width="50%%"
 frameBorder="0"
+scrolling="0"
+style="position:absolute; top:190;right:25%%"
 src="http://%(hostname)s:8002">
 </iframe>
 '''
@@ -150,6 +183,12 @@ function swap() {
    document.getElementById("sending").style.display = "block";
    update();
 }
+
+function show(elem_id) {
+    elem = document.getElementById(elem_id);
+    if (elem) elem.style.display = 'block';
+}
+
 ncell = 4;
 curcell = 0;
 function update() {
@@ -171,6 +210,7 @@ function onunload() {
   <div id="form" class="box">
     <form method="post" enctype="multipart/form-data" action="">
       <input name="upfile" type="file">
+	  %(userdiropts)s      
       <input value="%(submit)s" onclick="swap()" type="submit">
     </form>
   </div>
@@ -256,6 +296,10 @@ ar = {"maintitle":       u"Ø¥Ø±Ø³Ø§Ù„ Ù…Ù„Ù",
       "another":         u"Ø¥Ø±Ø³Ø§Ù„ Ù…Ù„Ù Ø¢Ø®Ø±",
       "errortitle":      u"Ù…Ø´ÙƒÙ„Ø©",
       "problem":         u"Ø­Ø¯Ø«Øª Ù…Ø´ÙƒÙ„Ø© !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Ø¥Ø¹Ø§Ø¯Ø© Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø©",
       "discover":        u"Ø§ÙƒØªØ´Ø§Ù Ø¹Ù†ÙˆØ§Ù† Ù‡Ø°Ù‡ Ø§Ù„ØµÙØ­Ø©"}
 
@@ -267,6 +311,10 @@ cs = {"maintitle":       u"Poslat soubor",
       "another":         u"Poslat dalÅ¡Ã­ soubor",
       "errortitle":      u"Chyba",
       "problem":         u"Stala se chyba !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Zkusit znova.",
       "discover":        u"Zjistit adresu strÃ¡nky"}
 
@@ -278,6 +326,10 @@ da = {"maintitle":       u"Send en fil",
       "another":         u"Send en fil til.",
       "errortitle":      u"Problem",
       "problem":         u"Det er opstÃ¥et en fejl!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"ForsÃ¸g igen.",
       "discover":        u"Find adressen til denne side"}
 
@@ -289,6 +341,10 @@ de = {"maintitle":       "Datei senden",
       "another":         "Weitere Datei senden",
       "errortitle":      "Fehler",
       "problem":         "Ein Fehler ist aufgetreten!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           "Wiederholen",
       "discover":        "Internet-Adresse dieser Seite feststellen"}
 
@@ -300,6 +356,10 @@ el = {"maintitle":       u"Î£Ï„ÎµÎ¯Î»Îµ Î­Î½Î± Î±ÏÏ‡�
       "another":         u"Î£Ï„ÎµÎ¯Î»Îµ Î¬Î»Î»Î¿ Î­Î½Î± Î±ÏÏ‡ÎµÎ¯Î¿",
       "errortitle":      u"Î£Ï†Î¬Î»Î¼Î±",
       "problem":         u"Î Î±ÏÎ¿Ï…ÏƒÎ¹Î¬ÏƒÏ„Î·ÎºÎµ ÏƒÏ†Î¬Î»Î¼Î±",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Î•Ï€Î±Î½Î¬Î»Î·ÏˆÎ·",
       "discover":        u"Î’ÏÎµÏ‚ Ï„Î·Î½ Î´Î¹ÎµÏÎ¸Ï…Î½ÏƒÎ· Ï„Î·Ï‚ ÏƒÎµÎ»Î¯Î´Î±Ï‚"}
 
@@ -311,6 +371,10 @@ en = {"maintitle":       "Send a file",
       "another":         "Send another file.",
       "errortitle":      "Problem",
       "problem":         "There has been a problem !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           "Retry.",
       "discover":        "Discover the address of this page"}
 
@@ -322,6 +386,10 @@ es = {"maintitle":       u"Enviar un archivo",
       "another":         u"Enviar otro archivo.",
       "errortitle":      u"Error",
       "problem":         u"Â¡Hubo un problema!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Reintentar",
       "discover":        u"Descubrir la direcciÃ³n de esta pÃ¡gina"}
 
@@ -333,6 +401,10 @@ fi = {"maintitle":       u"LÃ¤hetÃ¤ tiedosto",
       "another":         u"LÃ¤hetÃ¤ toinen tiedosto.",
       "errortitle":      u"Virhe",
       "problem":         u"Virhe lahetettÃ¤essÃ¤ tiedostoa!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Uudelleen.",
       "discover":        u"NÃ¤ytÃ¤ tÃ¤mÃ¤n sivun osoite"}
 
@@ -344,6 +416,10 @@ fr = {"maintitle":       u"Envoyer un fichier",
       "another":         u"Envoyer un autre fichier.",
       "errortitle":      u"ProblÃ¨me",
       "problem":         u"Il y a eu un problÃ¨me !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"RÃ©essayer.",
       "discover":        u"DÃ©couvrir l'adresse de cette page"}
 
@@ -355,6 +431,10 @@ gl = {"maintitle":       u"Enviar un ficheiro",
       "another":         u"Enviar outro ficheiro.",
       "errortitle":      u"Erro",
       "problem":         u"XurdÃ­u un problema!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Reintentar",
       "discover":        u"Descubrir o enderezo desta pÃ¡xina"}
 
@@ -366,6 +446,10 @@ hu = {"maintitle":       u"ÃllomÃ¡ny kÃ¼ldÃ©se",
       "another":         u"TovÃ¡bbi Ã¡llomÃ¡nyok kÃ¼ldÃ©se",
       "errortitle":      u"Hiba",
       "problem":         u"Egy hiba lÃ©pett fel!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"MegismÃ©telni",
       "discover":        u"Az oldal Internet-cÃ­mÃ©nek megÃ¡llapÃ­tÃ¡sa"}
 
@@ -377,6 +461,10 @@ id = {"maintitle":       "Kirim sebuah berkas",
       "another":         "Kirim berkas yang lain.",
       "errortitle":      "Permasalahan",
       "problem":         "Telah ditemukan sebuah kesalahan!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           "Coba kembali.",
       "discover":        "Kenali alamat IP dari halaman ini"}
 
@@ -388,6 +476,10 @@ it = {"maintitle":       u"Invia un file",
       "another":         u"Invia un altro file.",
       "errortitle":      u"Errore",
       "problem":         u"Si Ã¨ verificato un errore!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Riprova.",
       "discover":        u"Scopri lâ€™indirizzo di questa pagina"}
 
@@ -399,6 +491,10 @@ ja = {"maintitle":       u"ãƒ•ã‚¡ã‚¤ãƒ«é€ä¿¡",
       "another":         u"ä»–ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é€ä¿¡ã™ã‚‹",
       "errortitle":      u"å•é¡Œç™ºç”Ÿ",
       "problem":         u"å•é¡ŒãŒç™ºç”Ÿã—ã¾ã—ãŸï¼",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"ãƒªãƒˆãƒ©ã‚¤",
       "discover":        u"ã“ã®ãƒšãƒ¼ã‚¸ã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’ç¢ºèªã™ã‚‹"}
 
@@ -410,6 +506,10 @@ ko = {"maintitle":       u"íŒŒì¼ ë³´ë‚´ê¸°",
       "another":         u"ë‹¤ë¥¸ íŒŒì¼ ë³´ë‚´ê¸°",
       "errortitle":      u"ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤",
       "problem":         u"ë¬¸ì œê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"ë‹¤ì‹œ ì‹œë„",
       "discover":        u"ì´ íŽ˜ì´ì§€ ì£¼ì†Œ ì•Œì•„ë³´ê¸°"}
 
@@ -421,6 +521,10 @@ nl = {"maintitle":       "Verstuur een bestand",
       "another":         "Verstuur nog een bestand.",
       "errortitle":      "Fout",
       "problem":         "Er is een fout opgetreden!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           "Nog eens.",
       "discover":        "Vind het adres van deze pagina"}
 
@@ -432,6 +536,10 @@ no = {"maintitle":       u"Send en fil",
       "another":         u"Send en ny fil.",
       "errortitle":      u"Feil",
       "problem":         u"Det har skjedd en feil !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Send pÃ¥ nytt.",
       "discover":        u"Finn addressen til denne siden"}
 
@@ -443,6 +551,10 @@ pt = {"maintitle":       u"Enviar um ficheiro",
       "another":         u"Enviar outro ficheiro.",
       "errortitle":      u"Erro",
       "problem":         u"Ocorreu um erro !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Tentar novamente.",
       "discover":        u"Descobrir o endereÃ§o desta pÃ¡gina"}
 
@@ -455,6 +567,10 @@ pt_br = {
       "another":         u"Enviar outro arquivo.",
       "errortitle":      u"Erro",
       "problem":         u"Ocorreu um erro!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Tentar novamente.",
       "discover":        u"Descobrir o endereÃ§o desta pÃ¡gina"}
 
@@ -466,6 +582,10 @@ ro = {"maintitle":       u"Trimite un fiÅŸier",
       "another":         u"Trimite un alt fiÅŸier.",
       "errortitle":      u"ProblemÄƒ",
       "problem":         u"A intervenit o problemÄƒ !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"ReÃ®ncearcÄƒ.",
       "discover":        u"DescoperÄƒ adresa acestei pagini"}
 
@@ -477,6 +597,10 @@ ru = {"maintitle":       u"ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ñ„Ð°Ð¹
       "another":         u"ÐžÑ‚Ð¿Ñ€Ð°Ð²Ð¸Ñ‚ÑŒ Ð´Ñ€ÑƒÐ³Ð¾Ð¹ Ñ„Ð°Ð¹Ð».",
       "errortitle":      u"ÐžÑˆÐ¸Ð±ÐºÐ°",
       "problem":         u"ÐŸÑ€Ð¾Ð¸Ð·Ð¾ÑˆÐ»Ð° Ð¾ÑˆÐ¸Ð±ÐºÐ° !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"ÐŸÐ¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚ÑŒ.",
       "discover":        u"ÐŸÐ¾ÑÐ¼Ð¾Ñ‚Ñ€ÐµÑ‚ÑŒ Ð°Ð´Ñ€ÐµÑ ÑÑ‚Ð¾Ð¹ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹"}
 
@@ -488,6 +612,10 @@ sk = {"maintitle":       u"PoÅ¡li sÃºbor",
       "another":         u"PoslaÅ¥ ÄalÅ¡Ã­ sÃºbor.",
       "errortitle":      u"Chyba",
       "problem":         u"Vyskytla sa chyba!",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"SkÃºsiÅ¥ znova.",
       "discover":        u"Zisti adresu tejto strÃ¡nky"}
 
@@ -499,6 +627,10 @@ sl = {"maintitle":       u"PoÅ¡lji datoteko",
       "another":         u"PoÅ¡lji novo datoteko.",
       "errortitle":      u"Napaka",
       "problem":         u"PriÅ¡lo je do napake !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Poizkusi ponovno.",
       "discover":        u"PoiÅ¡Äi naslov na tej strani"}
 
@@ -510,6 +642,10 @@ sr = {"maintitle":       u"PoÅ¡alji fajl",
       "another":         u"PoÅ¡alji joÅ¡ jedan fajl.",
       "errortitle":      u"Problem",
       "problem":         u"Desio se problem !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"PokuÅ¡aj ponovo.",
       "discover":        u"Otkrij adresu ove stranice"}
 
@@ -521,6 +657,10 @@ sv = {"maintitle":       u"Skicka en fil",
       "another":         u"Skicka en fil till.",
       "errortitle":      u"Fel",
       "problem":         u"Det har uppstÃ¥tt ett fel !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"FÃ¶rsÃ¶k igen.",
       "discover":        u"Ta reda pÃ¥ adressen till denna sida"}
 
@@ -532,6 +672,10 @@ tr = {"maintitle":       u"Dosya gÃ¶nder",
       "another":         u"BaÅŸka bir dosya gÃ¶nder.",
       "errortitle":      u"Problem.",
       "problem":         u"Bir problem oldu !",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"Yeniden dene.",
       "discover":        u"Bu sayfanÄ±n adresini bul"}
 
@@ -544,6 +688,10 @@ zh_cn = {
       "another":         u"å‘é€å¦ä¸€ä¸ªæ–‡ä»¶ã€‚",
       "errortitle":      u"é—®é¢˜",
       "problem":         u"å‡ºçŽ°é—®é¢˜ï¼",
+      "subdirerror":          "There is a problem uploading to that subdirectory.<br> Check if that subdirectory already exits.<br> If it does not, make sure you are only using characters a-zA-Z0-9 for the username and password. <br>If the directory exists and the characters are valid, you probably are using the wrong password<p>",
+      "advanced":	 "advanced options",
+      "userdirname":     "Name of directory to place files in ",
+      "userdirpassword": "Password for saving files to that directory (optional)",
       "retry":           u"é‡è¯•ã€‚",
       "discover":        u"æŸ¥çœ‹æœ¬é¡µé¢çš„åœ°å€"}
 
@@ -571,12 +719,67 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     protocol_version = 'HTTP/1.0'
     form_field = 'upfile'
 
-    def html(self, page):
+    def _safername(self,name):
+        """ Checking whether we can make a directory-name out of this name
+        Thanks to stackoverflow, Vinko Vrsalovic 
+        """
+        valid_chars = frozenset("-_() %s%s" % (string.letters, string.digits))
+        name2 = ''.join(c for c in name if c in valid_chars)
+        if len(name) == 0:
+                return anondir
+        if name2 == name:
+                return name.encode('utf8')
+        else:
+                print('WARNING: name too complex; try %s'%name2)
+        return False
+
+    def _mkuserpath(self,userdir,filename):
+          mydir = directory + "/" + userdir
+          if (os.path.exists(mydir)):
+                localpath = os.path.join(mydir, filename).encode('utf-8')
+          else:
+                try:
+                       os.mkdir(mydir)
+                except IOError:
+                        print ("can't make directory")
+                else:
+                        localpath = os.path.join(mydir, filename).encode('utf-8')
+          return localpath
+
+    def _login(self,subdir, passwd ):
+         """ Allow user to provide subdirectory & write access password. 
+      	     This offers little security, but helps organization
+	  returns success,NAME
+	 """
+         name = self._safername( subdir.lower() )
+         password = passwd  #safename( passwd )
+
+         if (name == "" or name == anondir) :
+                return (True, anondir ) # don't let people set password on anon
+         try:
+                pairs = load(open(password_file))
+         except IOError:
+                print('WARNING: No password file found. Starting from scratch.')
+                pairs = {}
+         if name in pairs:
+                 if pairs[name] == password:
+                         return True,name
+                 else:
+                         print('ERROR: wrong password')
+                         return False,"BadPassword"
+         else:
+                 print('INFO: Adding subdir %s to the system'%name)
+                 pairs[name] = password
+                 dump(pairs, open(password_file, 'w'))
+                 return True,name
+
+    def html(self, page , errormsg=""):
         """
         page can be "main", "success", or "error"
+	errormsg is optional, more specific error name
         returns an html page (in the appropriate language) as a string
         """
-        
+
         # -- Parse accept-language header
         if not self.headers.has_key("accept-language"):
             a = []
@@ -615,8 +818,16 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
         # 20110314 Start - add hostname in template var
         dico["hostname"] = hostname_pb 
-        dico["pb_chat"]  = piratebox_chat % dico
+        dico["pb_chat"]  = piratebox_chat 
         # 20110314 End
+        if(userdirs == True):
+               dico["userdiropts"]  = userdirform % dico
+        else:
+               dico["userdiropts"]  = ''
+ 
+        if (errormsg != ""):
+               if dico[errormsg]:
+                      dico["problem"]=dico[errormsg]
 
         return templates[page] % dico
 
@@ -660,14 +871,38 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                 return
 	
 	#20120317 Start
-	    if filename.lower() == "index.html" or filename.lower() == "index.htm":
+            if filename.lower() == "index.html" or filename.lower() == "index.htm":
                    self.send_response(303)
                    self.send_header('Location', '/')
                    self.end_headers()
                    return
 	#20120317 End
-            
-            localpath = os.path.join(directory, filename).encode('utf-8')
+
+#--- Directory Handling Start
+            localpath=''
+            if (userdirs == True ):
+
+                subdir = form['subdir'].value
+                passwd = form['secret'].value
+                success,userdir=self._login(subdir, passwd )
+                if success == False:
+                     self.send_html(self.html("error","subdirerror"))
+                     os.unlink(fileitem.tmpfilename)
+                     return	
+                else:
+                 if (userdir == anondir or userdir == ''):
+                    if ( useAnondir == 0):
+                         localpath = None
+                    else:
+                         localpath=self._mkuserpath(anondir,filename)
+                 else:
+                         localpath=self._mkuserpath(userdir,filename)
+
+
+            if (localpath == None or localpath == ''):
+                 localpath = os.path.join(directory, filename).encode('utf-8')
+
+#--- directory handling end
             root, ext = os.path.splitext(localpath)
             i = 1
             # race condition, but hey...
@@ -782,7 +1017,8 @@ def parse_args(cmd=None):
     """
 # 20110314 added hostname 
 # 20120401 added piratebox_chat
-    global picture, message, port, directory, must_save_options , hostname_pb , piratebox_chat
+# 20120421 added userdirs
+    global picture, message, port, directory, must_save_options , hostname_pb , piratebox_chat , userdirs
 
     if cmd == None:
         cmd = sys.argv[1:]
@@ -793,9 +1029,9 @@ def parse_args(cmd=None):
     opts, args = None, None
     try:
 # 20110314 - Added Hostname as opt
-        opts, args = getopt.gnu_getopt(cmd, "c:H:p:m:d:h",
+        opts, args = getopt.gnu_getopt(cmd, "c:H:p:m:u:d:h",
                                        ["chatbox=","hostname=","picture=","message=",
-                                        "directory=", "help",
+                                        "directory=", "help","userdirs",
                                         "save-config","delete-config"])
     except Exception, e:
         print e
@@ -812,6 +1048,9 @@ def parse_args(cmd=None):
         elif o in ["-c", "--chatbox" ] :
             piratebox_chat = a 
 # 20120401 End
+        elif o in ["-u", "--userdirs" ] :
+            userdirs = True
+            print "userdirs are %s" %userdirs
         elif o in ["-m", "--message"] :
             message = a
                 
