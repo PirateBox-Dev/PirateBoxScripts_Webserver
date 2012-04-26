@@ -52,9 +52,13 @@ if [ $2 = 'init_openwrt' ] ; then
 if [ $2 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
     cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/
+    cp -v $PIRATEBOX_FOLDER/src/forum_forest.html  $WWW_FOLDER/forum.html
     mkdir -p $PIRATEBOX_FOLDER/forumspace
     chmod a+rw -R  $PIRATEBOX_FOLDER/forumspace
-    echo "Copied the file. Now edit conf/piratebox.conf and uncomment #FORUM_LINK_HTML "
+    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/cgi-bin/forest.py
+    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/forest.css
+    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/forum.html
+    echo "Copied the files. Recheck your PirateBox now. "
 fi
 
 
