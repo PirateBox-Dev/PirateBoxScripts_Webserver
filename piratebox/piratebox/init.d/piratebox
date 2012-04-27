@@ -64,9 +64,7 @@ case "$1" in
     echo ""
 
     echo "Empty tmp folder"
-    rm $PIRATEBOX/tmp/*
-
-
+    find   $PIRATEBOX/tmp/  -exec rm {} \;
 
     if [ "$DO_IW" = "yes" ] ; then
        log_daemon_msg " Setting up Interface (iw) "
