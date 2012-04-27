@@ -59,7 +59,7 @@ $(SRC_IMAGE_UNPACKED):
 
 package:  $(PACKAGE)
 
-all: $(PACKAGE) shortimage
+all: package  shortimage
 
 clean: cleanimage 
 	rm -f $(PACKAGE)
