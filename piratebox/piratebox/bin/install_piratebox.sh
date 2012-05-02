@@ -128,11 +128,35 @@ if [ $2 = 'imageboard' ] ; then
 	opkg -d piratebox install perlbase-gdbm-file
 	opkg -d piratebox install perlbase-integer
 	opkg -d piratebox install perlbase-socket
+	opkg -d piratebox install perlbase-time
 	opkg -d piratebox install perlbase-unicode
+	opkg -d piratebox install perlbase-unicore
 	opkg -d piratebox install perlbase-utf8
 	opkg -d piratebox install perlbase-xsloader
+	opkg -d piratebox install unzip
+
+	ln -s /usr/local/bin/perl /usr/bin/perl
+	ln -s /usr/local/lib/perl* /usr/lib/
     fi
 
+    echo "------------ Finished OpenWRT Packages ---------------"
+    echo "  Wgetting kareha-zip file "
+    cd $PIRATEBOX_FOLDER/tmp
+    wget http://wakaba.c3.cx/releases/kareha_3.1.4.zip 
+    if [ "$?" ne "0" ] ; then
+       echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
+    fi
+
+    if [ -e  $PIRATEBOX_FOLDER/tmp/kareha* ] ; then
+       echo "Kareha Zip found..."
+    else 
+       echo "No Zip found, abort "
+       exit 255
+    fi
+    
+    /usr/local/bin/unzip kareha_* 
+    mv kareha/* $PIRATEBOX_FOLDER/share/board
+    
     cd  $PIRATEBOX_FOLDER/share/board
     cp -R  mode_image/* ./ 
     cp  $PIRATEBOX_FOLDER/src/kareha_img_config.pl $PIRATEBOX_FOLDER/share/board/config.pl
