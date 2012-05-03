@@ -143,7 +143,7 @@ if [ $2 = 'imageboard' ] ; then
     echo "  Wgetting kareha-zip file "
     cd $PIRATEBOX_FOLDER/tmp
     wget http://wakaba.c3.cx/releases/kareha_3.1.4.zip 
-    if [ "$?" ne "0" ] ; then
+    if [ "$?" != "0" ] ; then
        echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
     fi
 
@@ -155,13 +155,21 @@ if [ $2 = 'imageboard' ] ; then
     fi
     
     /usr/local/bin/unzip kareha_* 
-    mv kareha/* $PIRATEBOX_FOLDER/share/board
+    mv kareha/* $PIRATEBOX_FOLDER/share/board  
     
-    cd  $PIRATEBOX_FOLDER/share/board
-    cp -R  mode_image/* ./ 
-    cp  $PIRATEBOX_FOLDER/src/kareha_img_config.pl $PIRATEBOX_FOLDER/share/board/config.pl
-    chown -R $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share/board 
+    cd  $PIRATEBOX_FOLDER/share/board  
+    cp -R  mode_image/* ./   
+    cp  $PIRATEBOX_FOLDER/src/kareha_img_config.pl $PIRATEBOX_FOLDER/share/board/config.pl 
+    chown -R $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share/board   
     #Install filetype thumbnails
-    mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/
+    mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
+
+    echo "Errors in chown occurs if you are using vfat on the USB stick"
+    echo "   . don't Panic!'"
+    echo "Generating index page"
+    wget http://127.0.0.1/board/kareha.pl -q 
+    echo "finished!"
+    echo "Now Edit your kareha settings file to change your ADMIN_PASS and SECRET : "
+    echo "  # vi /opt/piratebox/www/board/config.pl "
 fi
 
