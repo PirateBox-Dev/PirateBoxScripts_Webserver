@@ -140,6 +140,12 @@ if [ $2 = 'imageboard' ] ; then
     fi
 
     echo "------------ Finished OpenWRT Packages ---------------"
+
+    if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
+       echo "init_done file Found in Kareha folder. Won't reinstall board."
+       exit 0;
+    fi
+
     echo "  Wgetting kareha-zip file "
     cd $PIRATEBOX_FOLDER/tmp
     wget http://wakaba.c3.cx/releases/kareha_3.1.4.zip 
@@ -155,7 +161,8 @@ if [ $2 = 'imageboard' ] ; then
     fi
     
     /usr/local/bin/unzip kareha_* 
-    mv kareha/* $PIRATEBOX_FOLDER/share/board  
+    mv kareha/* $PIRATEBOX_FOLDER/share/board 
+    rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
     cd  $PIRATEBOX_FOLDER/share/board  
     cp -R  mode_image/* ./   
@@ -164,12 +171,17 @@ if [ $2 = 'imageboard' ] ; then
     #Install filetype thumbnails
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
 
+    #Activate on mainpage
+    mv $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
+
     echo "Errors in chown occurs if you are using vfat on the USB stick"
-    echo "   . don't Panic!'"
+    echo "   . don't Panic!"
     echo "Generating index page"
     wget http://127.0.0.1/board/kareha.pl -q 
     echo "finished!"
     echo "Now Edit your kareha settings file to change your ADMIN_PASS and SECRET : "
     echo "  # vi /opt/piratebox/www/board/config.pl "
+
+    touch  $PIRATEBOX_FOLDER/share/board/init_done
 fi
 
