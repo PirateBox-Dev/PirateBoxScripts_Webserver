@@ -14,7 +14,7 @@
 use constant TITLE => 'PirateBox board';	# Name of this image board
 use constant SHOWTITLETXT => 1;				# Show TITLE at top (1: yes  0: no)
 use constant SHOWTITLEIMG => 1;				# Show image at top (0: no, 1: single, 2: rotating)
-use constant TITLEIMG => '/piratebox-logo.png';			# Title image (point to a script file if rotating)
+use constant TITLEIMG => '/piratebox-logo-small.png';			# Title image (point to a script file if rotating)
 #use constant THREADS_DISPLAYED => 10;			# Number of threads on the front page
 #use constant THREADS_LISTED => 40;				# Number of threads in the thread list
 #use constant REPLIES_PER_THREAD => 10;			# Replies shown
@@ -154,9 +154,9 @@ use constant MAX_KB => 10000;					# Maximum upload size in KB
  	swf => 'icons/flash.png',
  	torrent => 'icons/torrent.png',
  	# To stop Wakaba from renaming image files, put their names in here like this:
- 	gif => '.',
- 	jpg => '.',
-	png => '.',
+# 	gif => '.',
+#	jpg => '.',
+#	png => '.',
 );
 
 # Allowed HTML tags and attributes. Sort of undocumented for now, but feel free to
