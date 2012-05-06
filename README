@@ -6,3 +6,23 @@
 #
 #               Use Droopy??!! 
 #   
+
+Packages contains only scripts based PirateBox scripts with running lighttpd webserver.
+
+PirateBox scripts can:
+   * Setup WLAN Interface via iw
+   * Setup hotspot functionality (hostapd)
+   * Setup IP Adresses of wlan interface
+   * Can add wlan interface to an existing bridge
+   * Sets Up a DHCP Server with redirect to wlan-interface IP
+   * Upload landing page  (via iframe droopy)
+   * Browse Uploaded files
+   * Announce "Internet yes" for iOS
+   * ShoutBox
+   * Optional small python Forum
+   * Optional imageboard
+
+
+Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
+
+
