@@ -1,4 +1,8 @@
-<html><head><LINK rel="shortcut icon" href="/favicon.ico" type="image/x-icon" /><title>Send a file</title>
+<html>
+<head>
+    <LINK rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <title>PirateBox: Send a file</title>
+
 <style type="text/css">
 <!--
 * {margin: 0; padding: 0;}
@@ -24,6 +28,10 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 	          $('div#forum_link').html(data);
 	         } );
    });
+
+  function fnGetDomain(url) {
+     return url.match(/:\/\/(.[^/]+)/)[1];
+  }
 </script>
 
 </head>
