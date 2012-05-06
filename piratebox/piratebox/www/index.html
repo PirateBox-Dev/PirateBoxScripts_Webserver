@@ -15,6 +15,17 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 
 <!--piratebox.lan-->
 
+<script type="text/javascript" src="jquery.min.js"></script>    
+
+<script type="text/javascript">
+    $(document).ready(function() {
+           // do stuff when DOM is ready
+	   $.get('forum.html', function(data) {
+	          $('div#forum_link').html(data);
+	         } );
+   });
+</script>
+
 </head>
 <body>
 <center>
@@ -23,8 +34,9 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 <div id="message" class="box"> 
 <b>1.</b> Learn more about the project <a href="/.READ.ME.htm" target="_parent"><b>here</b></a>.<p>
 <b>2.</b> Click button below to begin sharing.</p>
-<b>3.</b> Browse and download files <a href="/unsorted" target="_parent"><b>here</b></a>.<br> </div>
-
+<b>3.</b> Browse and download files <a href="/unsorted" target="_parent"><b>here</b></a>.<br> 
+<div id="forum_link"></div>
+</div>
 
 
 <iframe height='60' width='650' frameBorder='0' src='http://piratebox.lan:8080'>Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a></iframe>
