@@ -1,0 +1,20 @@
+Based on idea of David Darts:  http://wiki.daviddarts.com/PirateBox
+
+Script collection by:
+   Matthias Strubel  http://piratebox.aod-rpg.de
+
+Live CD & Installer by:
+   TerrorByte 
+
+Contributors for modifications:
+   * Droopy
+       # someguy   - Droopy Directory support
+       # Reventlov - Modification for better iOS Support
+   * python Forum
+       # someguy  - Modifications for running on OpenWRT
+       # ToM'aSs  - Languag-Support
+
+Based on Software:
+   * Droopy     - http://stackp.online.fr/?p=28
+   * forest.py  - http://www.triv.org.uk/~nelis/forest/
+   * kareha     - http://wakaba.c3.cx/s/web/wakaba_kareha
