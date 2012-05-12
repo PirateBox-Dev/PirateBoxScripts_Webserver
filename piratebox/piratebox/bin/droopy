@@ -127,9 +127,6 @@ userdirform='''
 <p>%(userdirpassword)s <input name="secret" type="textbox">
 </fieldset>
 </div>
-<br />
-<br />
-<br />
 '''
 
 
