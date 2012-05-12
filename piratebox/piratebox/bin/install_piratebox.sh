@@ -141,6 +141,10 @@ if [ $2 = 'imageboard' ] ; then
 
     echo "------------ Finished OpenWRT Packages ---------------"
 
+    #Activate on mainpage
+    mv $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
+
+
     if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
        echo "init_done file Found in Kareha folder. Won't reinstall board."
        exit 0;
