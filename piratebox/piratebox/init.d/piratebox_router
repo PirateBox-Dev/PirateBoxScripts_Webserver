@@ -147,7 +147,7 @@ case "$1" in
 
     #Kill Droopy
     echo "Stopping droopy... "
-    start-stop-daemon -K  -q -p  $PIDFILE_DROOPY 
+    start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY 
     echo  $?
 
     echo "Stopping lighttpd..."
