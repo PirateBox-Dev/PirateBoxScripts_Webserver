@@ -45,7 +45,7 @@ if [ $2 = 'init_openwrt' ] ; then
     # Copy Removed, File is included in lib folder.. 
     #cp /usr/share/piratebox/CGIHTTPServer.py $pb_pbmount/chat
     rm -r $pb_pbmount/share
-    ln -sf $pb_share $pb_pbmount/share
+    ln -sf $pb_usbdir $pb_pbmount/share
     chmod a+rw $CHATFILE
  fi
 
@@ -65,7 +65,8 @@ fi
 
 if [ $2 = 'part2' ] ; then
 #Create directories 
-   mkdir -p $PIRATEBOX_FOLDER/share/unsorted
+#   mkdir -p $PIRATEBOX_FOLDER/share/Shared
+   mkdir -p $UPLOADFOLDER
    mkdir -p $PIRATEBOX_FOLDER/share/board
    mkdir -p $PIRATEBOX_FOLDER/share/tmp
    mkdir -p $PIRATEBOX_FOLDER/tmp
@@ -87,7 +88,7 @@ if [ $2 = 'part2' ] ; then
    fi
    
    ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
-   ln -s $PIRATEBOX_FOLDER/share/unsorted $PIRATEBOX_FOLDER/www/unsorted
+   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
 fi 
 
 #Install the image-board
