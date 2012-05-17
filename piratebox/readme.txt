@@ -41,10 +41,6 @@ What to do? / Install
     # /opt/piratebox/bin/install_piratebox.sh /opt/piratebox/conf/piratebox.conf part2    
 
   > If you want to install kareha, please do the following steps:
-     >> Download the Kareha imageboard from this link
-         http://wakaba.c3.cx/releases/kareha_3.1.4.zip
-     >> unzip the zip and copy the content into /opt/piratebox/share/board
-     >> Then you can run  
     # /opt/piratebox/bin/install_piratebox.sh /opt/piratebox/conf/piratebox.conf imageboard
      >> This step installs a basic configuration for the board... 
      >> Edit /opt/piratebox/share/board/config.pl and change ADMIN_PASS and SECRET
@@ -53,17 +49,13 @@ I created
 /opt/piratebox/bin    - Binarys and Scripts
 /opt/piratebox/conf   - Piratebox related configs (seperated from the normal system-configs!)
 /opt/piratebox/share  - Mountpoint (with the first start of piratebox, the correct permissions will be set)
-/opt/piratebox/share/unsorted   -  Unsorted upload folder
+/opt/piratebox/share/Shared   -  Unsorted upload folder
 /opt/piratebox/share/board      -  imageboard location
 /opt/piratebox/init.d - the init-script (later more?)
 /opt/piratebox/www    - Webfolder with cgi-scripts and static html pages
 /opt/piratebox/tmp    - Folder with the error-log
 
 
-My cgi-droopy script
-----------------------
-Its based on the original droopy script with the modifications by David Darts. It doesn't support language switching support
-yet.
 
 
 Change directory?
