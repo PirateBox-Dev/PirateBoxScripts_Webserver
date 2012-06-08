@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Author: Matthias Strubel   / Feb. 2011
 #  Script for setting up the wlan interface
@@ -63,6 +63,13 @@ if [ $2 =  "start" ] ; then
   if  [ $?  -ne 0 ] ; then 
      echo  "..failed ";
      exit 1
+  fi
+
+  if [ $IPV6_ENABLE = "yes" ] ; then
+     echo  "Setting up IPv6 stuff"
+     IPv6="$IPV6_PREFIX:$IPV6_IP"/"$IPV6_MASK"
+     echo  "  $INTERFACE  -->$IPv6<--"
+     ifconfig $INTERFACE  add  $IPv6
   fi
 
 elif [ $2 = "stop" ] ; then
