@@ -1,12 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
 """
-
-Tiny changes for I18N by T0ma <tomassATno-log.org>
-Date April 2012
-
-Based on :
-
 Script: Forest, a simple Python forum script.
 Author: Andrew Nelis (andrew.nelis@gmail.com)
 OnTheWeb: http://www.triv.org.uk/~nelis/forest
@@ -54,13 +47,15 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 """
+
+
 import md5
 import os
 import time
-import copy
 
 # Show any errors on the page. You might want to take this out on a live server
 # and look in the servers error log instead.
+#  Removed for compatibility issues
 #import cgitb
 #cgitb.enable()
 
@@ -70,10 +65,19 @@ import copy
 
 # Where the threads are stored. This folder must exist.
 DATA_PATH = '/opt/piratebox/forumspace/'
+#Where the forest CGI is located (as a URL).
+CGI_URL='/cgi-bin/forest.py'
 # Where the main stylesheet is kept (as a URL).
 CSS_PATH = '/forest.css'
+# What is the title of the board?
+BOARD_TITLE = 'PirateBox Board'
+# Simple Description of the board, appears at the top of each page
+BOARD_DESCRIPTION = """PirateBox Board. Put media reviews or questions here.<br>
+<A HREF="http://piratebox.lan">Click here to go back to the main site</a> """
 # How dates are stored (see python time module for details)
 DATE_FORMAT = '%d %b %Y %H:%M:%S'
+# If no author name is given, then this is the default.
+ANON_AUTHOR = 'Anonymous Coward'
 
 # How many entries to show on the index?
 INDEX_PAGE_SIZE = 20
@@ -85,58 +89,6 @@ THREAD_PAGE_SIZE = 20
 MAX_AUTHOR_LEN = 20
 MAX_SUBJECT_LEN = 100
 MAX_BODY_LEN = 10000
-
-# Language to display
-# for now fr / en
-LANG = '''en'''
-
-# ============================================================================
-# Translation
-# ============================================================================
-
-fr = {"boardtitle":         u"Titre du forum",
-      "boarddescription":   u"Ceci est le forum, postez ici !",
-      "anonauthor":         u"Anonyme",
-      "submit":             u"Envoyer",
-      "date":               u"date",
-      "replies":            u"Réponses",
-      "subject":            u"Sujet",
-      "author":             u"Auteur",
-      "lastreply":          u"Dernière réponse",
-      "startanewthread":    u"Nouvelle discussion",
-      "name":               u"Nom",
-      "newthread":          u"Nouvelle discussion!",
-      "replytothisthread":  u"Répondre à cette discussion",
-      "reply":              u"Repondre!",
-      "main":               u"Accueil",
-      "invalidthread":      u"Discussion specifiée invalide",
-      "nosubjectgiven":     u"Sujet vide!",
-      "nobodytext":         u"Corps du message vide!",
-      "poweredbyforest" :   u"Propulsé par <a href=\"http://www.triv.org.uk/~nelis/forest\">Forest Python Board</a>."}
-
-en = {"boardtitle":         u"Forum's title",
-      "boarddescription":   u"This is the forum, post here !",
-      "anonauthor":         u"Anonymous",
-      "submit":             u"Submit",
-      "date":               u"date",
-      "replies":            u"Replies",
-      "subject":            u"Subject",
-      "author":             u"Author",
-      "lastreply":          u"Last reply",
-      "startanewthread":    u"Start a new thread",
-      "name":               u"Name",
-      "newthread":          u"New thread!",
-      "replytothisthread":  u"Reply to this thread",
-      "reply":              u"Reply!",
-      "main":               u"Main",
-      "invalidthread":      u"Invalid thread specified!",
-      "nosubjectgiven":     u"No subject given!",
-      "nobodytext":         u"No body text!",
-      "poweredbyforest" :   u"Powered by <a href=\"http://www.triv.org.uk/~nelis/forest\">Forest Python Board</a>."}
-
-
-translations = {"fr": fr, "en": en}
-langdict = copy.copy(translations[LANG])
 
 # ============================================================================
 # HTML Elements.
@@ -158,56 +110,52 @@ HTML_TOP = '''
 <body>
 <h3>%s</h3>
 <p class="board_description">%s</p>
-''' % ( langdict['boardtitle'], CSS_PATH, langdict['boardtitle'], langdict['boarddescription'])
+''' % (BOARD_TITLE, CSS_PATH, BOARD_TITLE, BOARD_DESCRIPTION)
 
 HTML_BOTTOM = '''
-<p class="copy">%s</p>
-</body></html>
-''' % ( langdict['poweredbyforest'])
-
-HTML_THREADS_TOP = '''
-<table width="95%%" class="threads_table">
+<p class="smallprint" >Powered by the <a href="http://www.triv.org.uk/~nelis/forest">Forest Python Board</a></font>
+</body></html>'''
+HTML_THREADS_TOP = '''<table width="95%" class="threads_table">
  <tr class="threads_header">
-  <th width="60%%">%s</th><th>%s</th><th>%s</th><th>%s</th><th>%s</th>
+  <th width="60%">Subject</th><th>Author</th><th>Date</th><th>Replies</th><th>Last Reply</th>
  </tr>
-''' % ( langdict['subject'], langdict['author'], langdict['date'], langdict['replies'], langdict['lastreply'])
-
+'''
 HTML_THREADS_ROW = '''
  <tr class="%s">
   <td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td>
  </tr>
 '''
 HTML_NEW_THREAD = '''
-<p><a href="javascript:show('hidden_form');">%s</a></p>
+<p><a href="javascript:show('hidden_form');">Start a new thread</a></p>
 <div id="hidden_form">
 <form method="post" action="?new=thread">
-<p>%s: <input name="author" maxlength="%s"/></p>
-<p>%s: <input name="subject" maxlength="%s" size="80"/></p>
+<p>Name: <input name="author" maxlength="%s"/></p>
+<p>Subject: <input name="subject" maxlength="%s" size="80"/></p>
 <p><textarea name="body" rows="10" cols="80"></textarea></p>
-<p><input class="submit_button" type="submit" value="%s"/></p>
+<p><input class="submit_button" type="submit" value="New Thread!"/></p>
 </form>
 </div>
-''' % ( langdict['startanewthread'],langdict['author'],MAX_AUTHOR_LEN,langdict['subject'], MAX_SUBJECT_LEN, langdict['newthread'])
+''' % (MAX_AUTHOR_LEN, MAX_SUBJECT_LEN)
 
 HTML_NEW_REPLY = '''
-<p><a href="javascript:show('hidden_form')">%s</a></p>
+<p><a href="javascript:show('hidden_form')">Reply to this thread</a></p>
 <div id="hidden_form">
 <form method="post" action="?new=reply&amp;thread=%%s">
 <p>Name: <input name="author" maxlength="%s"/></p>
 <p><textarea name="body" rows="10" cols="80"></textarea></p>
-<p><input class="submit_button" type="submit" value="%s"/></p>
+<p><input class="submit_button" type="submit" value="Reply!"/></p>
 </form>
 </div>
-''' % ( langdict['replytothisthread'],MAX_AUTHOR_LEN,langdict['reply'])
+''' % (MAX_AUTHOR_LEN,)
 
 HTML_THREADS_BOTTOM = '</table>'
 HTML_THREAD_TOP = '''
 <table width="95%%" class="threads_table">
  <col width="15%%" />
  <col width="85%%" />
- <tr><td colspan="2"><a href="?">&lt;&lt; $s</a></td></tr>
+ <tr><td colspan="2"><a href="?">&lt;&lt; Main</a></td></tr>
  <tr class="thread_header"><td colspan="2">%s</td></tr>
-''' % ( langdict['main'])
+'''
 HTML_THREAD_ROW = '''
  <tr class="%s">
   <td valign="top"><b>%s</b><br/><small>%s</small></td>
@@ -222,10 +170,9 @@ HTML_THREAD_BOTTOM = '''
 # Error messages
 # ============================================================================
 
-ERR_INVALID_THREAD = '<h3 class="error">%s</h3>' % \
-    ( langdict['invalidthread'])
-ERR_NO_SUBJECT = '<h3 class="error">%s</h3>' % ( langdict['nosubjectgiven'])
-ERR_NO_BODY = '<h3 class="error">%s</h3>' % ( langdict['nobodytext'])
+ERR_INVALID_THREAD = '<h3 class="error">Invalid Thread Specified</h3>'
+ERR_NO_SUBJECT = '<h3 class="error">No Subject Given</h3>'
+ERR_NO_BODY = '<h3 class="error">No body text!</h3>'
 
 # ============================================================================
 # Misc. globals
@@ -240,25 +187,29 @@ THREAD_PATH = DATA_PATH
 # Function definitions
 # ============================================================================
 
+html_escape_table = {
+        "&": "&amp;", '"': "&quot;", "'": "&apos;", ">": "&gt;",
+        "<": "&lt;", ';': "&#59;", "/": "&#47;", '=': "&#61;",
+        ":": "&#58;", '?': "&#63;", '!': "&#33;", '(': "&#40;",
+        "{": "&#121;", "[": "&#91", "-": "&#45",
+        }
+    
 def strip_html( text ):
     """Remove HTML chars from the given text and replace them with HTML
-       entities"""
-    text = text or ''
-    return text.replace( '&', '&amp;' ) \
-               .replace( '>', '&gt;' ) \
-               .replace( '<', '&lt;' )
+       entities. """
+    return "".join(html_escape_table.get(c,c) for c in text  )
 
 
 def process_body(body):
     """Process the message body e.g. for escaping smilies, HTML etc.
     ready for storing. We should then just be able to print the body out"""
     import re
-    url_re = re.compile('(http://[\S\.]+)')
     # Maximum body length.
     new_body = strip_html( body[:MAX_BODY_LEN] )
     new_body = new_body.replace('\n', '<br/>\n')
     # Turn (obvious) URLs into links.
-    new_body = url_re.sub(r'<a href="\1">\1</a>', new_body)
+#   new_body = url_re.sub(r'<a href="\1">\1</a>', new_body)
+#    url_re = re.compile('(http://[\S\.]+)')
     return new_body.encode('string_escape')
 
 
@@ -271,8 +222,11 @@ def process_author(author):
 
 def process_subject(subject):
     """Clean the subject line"""
-    return subject[:MAX_SUBJECT_LEN]
-
+    if ( subject is not None):
+	return subject[:MAX_SUBJECT_LEN]
+    else:
+ 	return "No Subject"	
+	
 
 def get_query_params():
     """Return the URL parameters as a dictionary.
@@ -377,7 +331,7 @@ def new_subject(field_storage):
     On error:
         raises ValueError with error as message.
     """
-    author = field_storage.getfirst( 'author', langdict["anonauthor"] )
+    author = field_storage.getfirst( 'author', ANON_AUTHOR )
     subject = field_storage.getfirst( 'subject' )
     body = field_storage.getfirst( 'body' )
     if not subject:
@@ -532,29 +486,29 @@ def list_single_thread(thread_hash, offset=0):
 
 def redirect( threadid, offset=None ):
     """Redirect the browser"""
-    new_location = os.environ.get('REQUEST_URI', '')
+    #new_location = os.environ.get('REQUEST_URI', '')
+    new_location = CGI_URL
     new_location += '?thread=%s' % threadid
     if offset:
         new_location += '&offset=%s' % offset
 
-    print 'Status: 303 See Other'
-    print 'Location: %s' % new_location
+## can't use standard redirect on CGIHTTPServer 
+#    print 'Status: 303 See Other'
+#    print 'Location: %s' % new_location
+#    print
+#    print 'Nothing to see here, move along!'
+
+    print 'Content-Type: text/html; charset=utf-8'
     print
-    print 'Nothing to see here, move along!'
-
-
+    print '<html><head><meta http-equiv="refresh" content="0;url=%s">' % new_location
+    print "</head></html>"
+	
 def handle():
     """Main entry point for our code. Handles the web request."""
 
     query_params = get_query_params()
     post_error = None
 
-    # try to set language useless for now !!! 
-    # TODO : httpaccept language and link in forum to swap language
-    if query_params.has_key('lang'):
-        lang = query_params['lang']
-        langdict = copy.copy(translations[lang])
-    
     if query_params.has_key('new'):
         # We only want the whole cgi module when we need to parse POST data.
         import cgi
@@ -563,7 +517,7 @@ def handle():
         if what == 'thread':
             try:
                 thread_hash = new_subject(form_data)
-                redirect( '?thread=%s' % thread_hash )
+                redirect( thread_hash )
                 return
             except ValueError, error:
                 post_error = str( error )
@@ -571,7 +525,7 @@ def handle():
             try:
                 thread_hash = reply(form_data, query_params.get('thread'))
                 # QQQ -> Get offset.
-                redirect( '?thread=%s' % thread_hash )
+                redirect( thread_hash )
                 return
             except ValueError, error:
                 post_error = str( error )
