@@ -185,7 +185,7 @@ if [ $2 = 'imageboard' ] ; then
     wget http://127.0.0.1/board/kareha.pl -q 
     echo "finished!"
     echo "Now Edit your kareha settings file to change your ADMIN_PASS and SECRET : "
-    echo "  # vi /opt/piratebox/www/board/config.pl "
+    echo "  # vi $PIRATEBOX_FOLDER/www/board/config.pl "
 
     touch  $PIRATEBOX_FOLDER/share/board/init_done
 fi
