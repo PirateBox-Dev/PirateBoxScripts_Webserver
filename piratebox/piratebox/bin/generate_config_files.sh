@@ -51,8 +51,13 @@ generate_dnsmasq() {
    lease_time=$5
    ip_pb=$2
    v6_prefix=$6
+   dnsmasq_interface=$7
    echo "Generating dnsmasq.conf ....."
    cat $DEFAULT_DNSMASQ                > $DNSMASQ_CONFIG
+
+   #Add interface line if filled
+   [[ -n $dnsmasq_interface ]] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONFIG
+
    lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
    echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONFIG
    #redirect every dns
@@ -94,4 +99,4 @@ if [ $IPV6_ENABLE = "yes" ] ; then
    IPV6=$IPV6_PREFIX:$IPV6_IP
 fi
 generate_hosts $HOST  $IP  $IPV6
-generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $ipv6_call
+generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $ipv6_call  $DNSMASQ_INTERFACE 

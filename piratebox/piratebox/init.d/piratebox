@@ -62,7 +62,7 @@ fi
 $PIRATEBOX/bin/generate_config_files.sh  "$CONF"
 
 # Command Line for DNSMASQ,  use extra config file generated from command above
-CMD_DNSMASQ="-x $PIDFILE_DNSMASQ $DNSMASQ_INTERFACE -C $CONF_DNSMASQ "
+CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
 
 # Carry out specific functions when asked to by the system
 case "$1" in
