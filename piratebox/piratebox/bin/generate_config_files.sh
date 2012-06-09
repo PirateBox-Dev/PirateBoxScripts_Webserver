@@ -31,7 +31,7 @@ set_pathnames() {
   HOSTS_CONFIG=$CONFIG_PATH/hosts_generated
   DEFAULT_HOSTS=$CONFIG_PATH/hosts
   DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
-  LEASE_FILE=$CONFIG_PATH/leases
+  LEASE_FILE=$1/tmp/leases
 }
 
 generate_hosts() {

@@ -33,7 +33,7 @@ CONF=$PIRATEBOX/conf/piratebox.conf
 CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
 #Some extra config files for dnsmasq
-CONF_HOSTS=$PIRATEBOX/conf/hosts
+CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf 
 
@@ -48,16 +48,15 @@ fi
 if [[ "$OPENWRT" = "yes" &&  -f $PIRATEBOX/conf/init_done ]] ; then
    INIT=OK
 else
-   $PIRATEBOX/bin/install_piratebox.sh "$CONF" init_openwrt
+   [[  "$OPENWRT" = "yes" ]] &&  $PIRATEBOX/bin/install_piratebox.sh "$CONF" init_openwrt
    $PIRATEBOX/bin/install_piratebox.sh "$CONF" part2
 fi
 
-# Command Line for DNSMASQ,  use extra host-file and listen to  configured ip only ; no resolv.conf
-#     forward only to piratebox ip
-#    -K  for taking over whole net
-#    -F  activating dhcp server ... 
-#    -9 no leasefile
-CMD_DNSMASQ="-x $PIDFILE_DNSMASQ $DNSMASQ_INTERFACE -h -H $CONF_HOSTS -R  --address=/#/$IP -K --dhcp-range=$IPSTART,$IPEND -l $PIRATEBOX/tmp/leases"
+# Generate hosts & dnsmasq file
+$PIRATEBOX/bin/generate_config_files.sh  "$CONF"
+
+# Command Line for DNSMASQ,  use extra config file generated from command above
+CMD_DNSMASQ="-x $PIDFILE_DNSMASQ $DNSMASQ_INTERFACE -C $CONF_DNSMASQ "
 
 # Carry out specific functions when asked to by the system
 case "$1" in
