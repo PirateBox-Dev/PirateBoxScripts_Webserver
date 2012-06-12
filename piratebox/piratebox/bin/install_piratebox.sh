@@ -19,6 +19,7 @@ if [ -z  $1 ] || [ -z $2 ]; then
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
   echo "                        should be installed in <Piratebox-Folder>/share/board"
   echo "       pyForum        : Simple PythonForum"
+  echo "       station_cnt    : Adds Statio counter to your Box - crontab entry"
   exit 1
 fi
 
@@ -190,3 +191,7 @@ if [ $2 = 'imageboard' ] ; then
     touch  $PIRATEBOX_FOLDER/share/board/init_done
 fi
 
+if [ $2 = "station_cnt" ] ; then
+    echo "#--- Crontab for PirateBox-Station-Cnt" >  $PIRATEBOX_FOLDER/tmp/crontab
+    echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt "
+fi
