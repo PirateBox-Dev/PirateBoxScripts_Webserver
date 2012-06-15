@@ -55,8 +55,6 @@ else
    $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
 fi
 
-# Generate hosts & dnsmasq file
-$PIRATEBOX/bin/generate_config_files.sh  "$CONF"
 
 # Command Line for DNSMASQ,  use extra config file generated from command above
 CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
@@ -66,7 +64,10 @@ case "$1" in
   start)
     echo "Starting script piratebox "
 
-     $PIRATEBOX/bin/hooks/hook_piratebox_start.sh  "$CONF"
+    # Generate hosts & dnsmasq file
+    $PIRATEBOX/bin/generate_config_files.sh  "$CONF"
+    
+    $PIRATEBOX/bin/hooks/hook_piratebox_start.sh  "$CONF"
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
