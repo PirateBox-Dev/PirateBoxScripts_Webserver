@@ -114,18 +114,21 @@ case "$1" in
          log_end_msg $?
        fi
 
-       #Start here the PirateBox-Parts droopy i.e.
-       #Delete 0 Byte Files
-       delete_empty.sh  $UPLOADFOLDER
-       find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
-       
-       DROOPY_USER=""
-       if [ "$DROOPY_USE_USER" = "yes" ] ; then
-           DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+
+        if [ "$DROOPY_ENABLED" = "yes" ] ; then
+          #Start here the PirateBox-Parts droopy i.e.
+          #Delete 0 Byte Files
+          delete_empty.sh  $UPLOADFOLDER
+          find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
+
+          DROOPY_USER=""
+          if [ "$DROOPY_USE_USER" = "yes" ] ; then
+            DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+          fi
+          log_daemon_msg "Starting droopy..."
+          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
+          log_end_msg $?
        fi
-       log_daemon_msg "Starting droopy..."
-       start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
-       log_end_msg $?
 
        #Writing init-message and reset chat..
        chmod 777 $CHATFILE
@@ -163,10 +166,12 @@ case "$1" in
     start-stop-daemon --stop --retry 30 --quiet --pidfile $PIDFILE_LIGHTTPD
     log_end_msg $?
 
-    #Kill Droopy
-    log_daemon_msg "Stopping droopy... "
-    start-stop-daemon --stop --quiet --pidfile  $PIDFILE_DROOPY --oknodo  --startas "python /opt/piratebox/bin/droopy"
-    log_end_msg $?
+    if [ "$DROOPY_ENABLED" = "yes" ] ; then
+       #Kill Droopy
+       log_daemon_msg "Stopping droopy... "
+       start-stop-daemon --stop --quiet --pidfile  $PIDFILE_DROOPY --oknodo  --startas "python /opt/piratebox/bin/droopy"
+       log_end_msg $?
+    fi
 
      if [ "$DO_IFCONFIG" = yes ] ; then
        piratebox_setup_wlan.sh $CONF stop

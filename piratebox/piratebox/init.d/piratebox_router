@@ -111,18 +111,20 @@ case "$1" in
          echo  $?
        fi
 
-       #Start here the PirateBox-Parts droopy i.e.
-       echo "Starting droopy..."
-       find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
-       #Delete 0 Byte Files
-       delete_empty.sh  $UPLOADFOLDER
+       if [ "$DROOPY_ENABLED" = "yes" ] ; then
+         #Start here the PirateBox-Parts droopy i.e.
+         echo "Starting droopy..."
+         find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
+         #Delete 0 Byte Files
+         delete_empty.sh  $UPLOADFOLDER
 
-       DROOPY_USER=""
-       if [ "$DROOPY_USE_USER" = "yes" ] ; then
-           DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+         DROOPY_USER=""
+         if [ "$DROOPY_USE_USER" = "yes" ] ; then
+             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+         fi
+         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER  -m "$DROOPY_TXT" -c "" $DROOPY_USERDIR  $DROOPY_PORT 
+         echo  $?
        fi
-       start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER  -m "$DROOPY_TXT" -c "" $DROOPY_USERDIR  $DROOPY_PORT 
-       echo  $?
 
        #Writing init-message and reset chat..
        if [ "$RESET_CHAT"  = "yes" ] ; then
@@ -154,10 +156,12 @@ case "$1" in
        echo  $?
     fi
 
-    #Kill Droopy
-    echo "Stopping droopy... "
-    start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY 
-    echo  $?
+    if [ "$DROOPY_ENABLED" = "yes" ] ; then
+       #Kill Droopy
+       echo "Stopping droopy... "
+       start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY 
+       echo  $?
+    fi
 
     echo "Stopping lighttpd..."
     start-stop-daemon -K -q -p $PIDFILE_LIGHTTPD
