@@ -193,9 +193,11 @@ fi
 
 if [ $2 = "station_cnt" ] ; then
     #we want to append the crontab, not overwrite
-    crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab
+    crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
     echo "#--- Crontab for PirateBox-Station-Cnt" >>  $PIRATEBOX_FOLDER/tmp/crontab
     echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt "  >> $PIRATEBOX_FOLDER/tmp/crontab
     crontab $PIRATEBOX_FOLDER/tmp/crontab
     [ "$?" != "0" ] && echo "an error occured" && exit 254
+    $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt
+    echo "installed, now every 2 minutes your station count is refreshed"
 fi
