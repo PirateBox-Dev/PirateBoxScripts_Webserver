@@ -24,6 +24,7 @@ DNSMASQ_CONFIG=""
 HOSTS_CONFIG=""
 DEFAULT_HOSTS=""
 LEASE_FILE=""
+RADVD_CONFIG=""
 
 set_pathnames() {
   CONFIG_PATH=$1/conf
@@ -31,6 +32,7 @@ set_pathnames() {
   HOSTS_CONFIG=$CONFIG_PATH/hosts_generated
   DEFAULT_HOSTS=$CONFIG_PATH/hosts
   DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
+  RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
   LEASE_FILE=$1/tmp/leases
 }
 
@@ -50,8 +52,7 @@ generate_dnsmasq() {
    lease_end=$4
    lease_time=$5
    ip_pb=$2
-   v6_prefix=$6
-   dnsmasq_interface=$7
+   dnsmasq_interface=$6
    echo "Generating dnsmasq.conf ....."
    cat $DEFAULT_DNSMASQ                > $DNSMASQ_CONFIG
 
@@ -67,13 +68,35 @@ generate_dnsmasq() {
 
    echo "addn-hosts=$HOSTS_CONFIG"     >>$DNSMASQ_CONFIG
 
-   if [ "$v6_prefix" != '' ] ; then
+   if [[ "$IPV6_ENABLE" = "yes" && "$IPV6_ADVERT" = "dnsmasq" ]] ; then
      echo "Do additional v6 stuff in dnsmasq.conf"
      echo "#----- V6 Stuff"                     >> $DNSMASQ_CONFIG
-     echo "dchp-range=$v6_prefix::, ra-stateless" >> $DNSMASQ_CONFIG
+     echo "dchp-range=$ipv6_call::, ra-stateless" >> $DNSMASQ_CONFIG
    fi
 
 }
+
+generate_radvd(){
+  prefix=$1
+  mask=$2
+  interface=$3
+
+  echo "#---- generated file ---"               > $RADVD_CONFIG  
+  echo "
+    interface $interface {
+       AdvSendAdvert on;
+       MinRtrAdvInterval 3;
+       MaxRtrAdvInterval 10;
+       prefix $prefix::/$mask {
+           AdvOnLink on; 
+	   AdvAutonomous on; 
+	   AdvRouterAddr on; 
+       };
+    };
+       "                                        >>  $RADVD_CONFIG
+
+}
+
 
 if [ -z  $1 ] ; then
   echo "Usage is 
@@ -97,6 +120,9 @@ ipv6_call=''
 if [ $IPV6_ENABLE = "yes" ] ; then
    ipv6_call=$IPV6_PREFIX
    IPV6=$IPV6_PREFIX:$IPV6_IP
+   [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
-generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $ipv6_call  $DNSMASQ_INTERFACE 
+generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE 
+
+
