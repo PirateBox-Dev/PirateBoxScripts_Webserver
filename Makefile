@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 0.2.1
+VERSION = 0.3.0
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -26,7 +26,7 @@ $(PACKAGE):  $(VERSION)
 	tar czf $@ $(PB_FOLDER) 
 
 
-$(IMAGE_FILE): $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER)
+$(IMAGE_FILE): $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
 	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
