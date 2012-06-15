@@ -192,6 +192,10 @@ if [ $2 = 'imageboard' ] ; then
 fi
 
 if [ $2 = "station_cnt" ] ; then
-    echo "#--- Crontab for PirateBox-Station-Cnt" >  $PIRATEBOX_FOLDER/tmp/crontab
-    echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt "
+    #we want to append the crontab, not overwrite
+    crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab
+    echo "#--- Crontab for PirateBox-Station-Cnt" >>  $PIRATEBOX_FOLDER/tmp/crontab
+    echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt "  >> $PIRATEBOX_FOLDER/tmp/crontab
+    crontab $PIRATEBOX_FOLDER/tmp/crontab
+    [ "$?" != "0" ] && echo "an error occured" && exit 254
 fi
