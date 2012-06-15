@@ -55,7 +55,9 @@ fi
 if [[ -f $PIRATEBOX/conf/init_done ]] ; then
    INIT=OK
 else
+   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"  
    $PIRATEBOX/bin/install_piratebox.sh "$CONF" part2
+   $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
 fi
 
 # Generate hosts & dnsmasq file
@@ -69,6 +71,8 @@ case "$1" in
   start)
     log_daemon_msg "Starting script piratebox "
     echo ""
+
+    $PIRATEBOX/bin/hooks/hook_piratebox_start.sh  "$CONF"
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
@@ -133,11 +137,17 @@ case "$1" in
        log_daemon_msg "Starting lighttpd..."
        start-stop-daemon --start --quiet  --pidfile $PIDFILE_LIGHTTPD --exec /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
        log_end_msg $?
-     fi 
+     fi
+
+     $PIRATEBOX/bin/hooks/hook_piratebox_start_done.sh  "$CONF"
+
     ;;
   stop)
     log_daemon_msg  "Stopping script piratebox"
     echo ""
+
+     $PIRATEBOX/bin/hooks/hook_piratebox_stop.sh  "$CONF"
+
     if [  "$USE_APN"  = "yes" ] ;  then
        log_daemon_msg  "Stopping hostap... "
        start-stop-daemon --stop --quiet  --pidfile $PIDFILE_HOSTAPN  --oknodo  --startas "hostapd"
@@ -173,6 +183,9 @@ case "$1" in
          ( $BR_CMD ; )
          log_end_msg $?
      fi
+
+      $PIRATEBOX/bin/hooks/hook_piratebox_stop_done.sh  "$CONF"
+
 
     ;;
   *)
