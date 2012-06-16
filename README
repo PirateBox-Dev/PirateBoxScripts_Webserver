@@ -5,7 +5,7 @@
 # Sources for Running PirateBox with Webserver <enter Webserver here>
 #    Contains:  Shoutbox, Forum
 #
-#               Use Droopy??!! 
+#              
 #   
 
 Packages contains only scripts based PirateBox scripts with running lighttpd webserver.
@@ -22,6 +22,8 @@ PirateBox scripts can:
    * ShoutBox
    * Optional small python Forum
    * Optional imageboard
+   * Optional Station counter
+   * Optional Inihibit starting upload-script
 
 
 Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
