@@ -144,7 +144,7 @@ if [ $2 = 'imageboard' ] ; then
     echo "------------ Finished OpenWRT Packages ---------------"
 
     #Activate on mainpage
-    mv $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
+    cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
 
     if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
