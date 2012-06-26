@@ -48,6 +48,17 @@ if [ $2 = 'init_openwrt' ] ; then
     rm -r $pb_pbmount/share
     ln -sf $pb_usbdir $pb_pbmount/share
     chmod a+rw $CHATFILE
+
+    if [ -d $pb_usbdir/www_alt ] ; then
+      echo "----------------------------------------------------"
+      echo "####      Alternative www folder found          ####"
+      echo "####          $pb_usbdir/www_alt                ####"
+      echo "####         switching directories              ####"
+      echo "----------------------------------------------------"
+      mv  $WWW_FOLDER  $PIRATEBOX_FOLDER/www_old 
+      ln -sf   $pb_usbdir/www_alt  $WWW_FOLDER
+      echo "  Done. Now, you are on your own! "
+    fi
  fi
 
 if [ $2 = 'pyForum' ] ; then
