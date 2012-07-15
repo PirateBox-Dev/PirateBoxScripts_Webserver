@@ -20,6 +20,7 @@ if [ -z  $1 ] || [ -z $2 ]; then
   echo "                        should be installed in <Piratebox-Folder>/share/board"
   echo "       pyForum        : Simple PythonForum"
   echo "       station_cnt    : Adds Statio counter to your Box - crontab entry"
+  echo "       flush_dns_reg  : Installs crontask to flush dnsmasq regulary"
   exit 1
 fi
 
@@ -211,4 +212,13 @@ if [ $2 = "station_cnt" ] ; then
     [ "$?" != "0" ] && echo "an error occured" && exit 254
     $PIRATEBOX_FOLDER/bin/station_cnt.sh >  $WWW_FOLDER/station_cnt.txt
     echo "installed, now every 2 minutes your station count is refreshed"
+fi
+
+if [ $2 = "flush_dns_reg" ] ; then
+    crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
+    echo "#--- Crontab for dnsmasq flush" >>  $PIRATEBOX_FOLDER/tmp/crontab
+    echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/flush_dnsmasq.sh >  $PIRATEBOX_FOLDER/tmp/dnsmasq_flush.log "  >> $PIRATEBOX_FOLDER/tmp/crontab
+    crontab $PIRATEBOX_FOLDER/tmp/crontab
+    [ "$?" != "0" ] && echo "an error occured" && exit 254
+    echo "Installed crontab for flushing dnsmasq requlary"
 fi
