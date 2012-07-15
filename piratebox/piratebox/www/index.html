@@ -15,17 +15,23 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
            border-spacing: 10px 0; padding: 0; vertical-align: bottom;}
 #progress td {height: 10px; width: 13px; background-color: #eee;
               border: 1px solid #aaa; padding: 0px;}
+
+#station {font-size: 50%; }
+	   text
 --></style>
 
 <!--piratebox.lan-->
 
-<script type="text/javascript" src="jquery.min.js"></script>    
+<script type="text/javascript" src="jquery.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
            // do stuff when DOM is ready
 	   $.get('forum.html', function(data) {
 	          $('div#forum_link').html(data);
+	         } );
+	   $.get('station_cnt.txt', function(data) {
+	          $('div#station').html(data);
 	         } );
    });
 
@@ -39,17 +45,19 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 <center>
 
 <div class="box"><img src="/piratebox-logo-small.png"/></div>
-<div id="message" class="box"> 
+<div id="message" class="box">
 <b>1.</b> Learn more about the project <a href="/.READ.ME.htm" target="_parent"><b>here</b></a>.<p>
 <b>2.</b> Click button below to begin sharing.</p>
-<b>3.</b> Browse and download files <a href="/Shared" target="_parent"><b>here</b></a>.<br> 
+<b>3.</b> Browse and download files <a href="/Shared" target="_parent"><b>here</b></a>.<br>
 <div id="forum_link"></div>
 </div>
 
 
 <iframe  width='650' frameBorder='0' src='http://piratebox.lan:8080'>Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a></iframe>
- <br /> 
-<iframe height='400px' width='50%' scrolling='0' frameBorder='0' src='/chat.html'></iframe> 
+ <br />
+<iframe height='400px' width='50%' scrolling='0' frameBorder='0' src='/chat.html'></iframe>
+
+<div id="station"></div>
 
 </center>
 </body></html>
