@@ -30,6 +30,7 @@ set_pathnames() {
   CONFIG_PATH=$1/conf
   DNSMASQ_CONFIG=$CONFIG_PATH/dnsmasq_generated.conf
   HOSTS_CONFIG=$CONFIG_PATH/hosts_generated
+  HOSTS_MESH=$CONFIG_PATH/hosts_mesh
   DEFAULT_HOSTS=$CONFIG_PATH/hosts
   DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
@@ -67,6 +68,9 @@ generate_dnsmasq() {
    echo "dhcp-leasefile=$LEASE_FILE"   >> $DNSMASQ_CONFIG
 
    echo "addn-hosts=$HOSTS_CONFIG"     >>$DNSMASQ_CONFIG
+
+   #Mesh hosts
+   echo "addn-hosts=$HOSTS_MESH" 	>> $DNSMASQ_CONFIG
 
    if [[ "$IPV6_ENABLE" = "yes" && "$IPV6_ADVERT" = "dnsmasq" ]] ; then
      echo "Do additional v6 stuff in dnsmasq.conf"
