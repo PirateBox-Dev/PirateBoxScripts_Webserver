@@ -26,4 +26,6 @@ datafile.close()
 datafile = open("data.pso", 'r+')
 datafile.write("<date>" + curdate.strftime("%H:%M:%S") + "</date>&nbsp;&nbsp;<name>" + name + ":</name>&nbsp;&nbsp;&nbsp;<data class='" + color + "'>" + data + "</data><br>\n" + old)
 datafile.close()
-print """<html><head><meta http-equiv="refresh" content="0;url=/cgi-bin/psoread.py"></head><body>Reading...</body></html>"""
+#print """<html><head><meta http-equiv="refresh" content="0;url=/cgi-bin/psoread.py"></head><body>Reading...</body></html>"""
+
+print """<html><body>ok</body></html>"""

@@ -17,7 +17,21 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
               border: 1px solid #aaa; padding: 0px;}
 
 #station {font-size: 50%; }
-	   text
+
+
+.shoutbox_content {
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
+   margin-top:   1%;
+   position:   relative;
+   text-align: left;
+   width: 50%;
+   min-height:  50px;
+   height:      25%;
+   max-height:  300px;
+   overflow: hidden;
+}
+
 --></style>
 
 <!--piratebox.lan-->
@@ -33,11 +47,47 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 	   $.get('station_cnt.txt', function(data) {
 	          $('div#station').html(data);
 	         } );
+       $('div#shoutbox').ajaxError(function() {
+                 $(this).text( "Triggered ajaxError handler on shoutbox" );
+               });
+
+       $("#sb_form").submit(function(event) {
+
+		     /* stop form from submitting normally */
+	         event.preventDefault();
+		     post_shoutbox();
+
+            });
+       display_shoutbox();
    });
+
+  function refresh_shoutbox () {
+          $.get('/cgi-bin/psoread.py', function(data) {
+                       $('div#shoutbox').html(data);
+                   } );
+  }
+  function refresh_time_sb () {
+     // Refresh rate in milli seconds
+     mytime=setTimeout('display_shoutbox()', 10000);
+
+  }
+
+  function post_shoutbox () {
+     $.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
+           .success(function() { refresh_shoutbox(); });
+     $('#sb_form_text').val("");
+  }
+
+
+  function display_shoutbox() {
+     refresh_shoutbox();
+     refresh_time_sb();
+  }
 
   function fnGetDomain(url) {
      return url.match(/:\/\/(.[^/]+)/)[1];
   }
+
 </script>
 
 </head>
@@ -55,7 +105,23 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
 
 <iframe  width='650' frameBorder='0' src='http://piratebox.lan:8080'>Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a></iframe>
  <br />
-<iframe height='400px' width='50%' scrolling='0' frameBorder='0' src='/chat.html'></iframe>
+
+<div>
+<form method="POST" name="psowrte" id="sb_form" >
+Name:<input type="text" value="anonymous" name="name" size="10">&nbsp;&nbsp; Message:<input type="text" name="data" size="20" id='sb_form_text' >&nbsp;&nbsp;
+<br /><b>Color:</b> Default<input type="radio" value="def" name="color" checked> |
+<font color="#0000FF">Blue</font><input type="radio" value="blue" name="color">
+| <font color="#008000">Green</font><input type="radio" value="green" name="color">
+| <font color="#FF8040">Orange</font><input type="radio" value="orange" name="color">
+| <font color="#FF0000">Red</font><input type="radio" value="red" name="color"></p>
+<input type="submit" value="Send" name="submit"  /><br>
+</form>
+
+</div>
+
+
+<div class="shoutbox_content" id="shoutbox"></div>
+
 
 <div id="station"></div>
 
