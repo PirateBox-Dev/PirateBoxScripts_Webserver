@@ -16,16 +16,32 @@ def generate_html(content):
     stl =  css.read()
     css.close()
 
+    htmlstring =   "<html><head><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>" 
+    htmlstring +=  "<style>" + stl   + "</style></head><body>"  
+    htmlstring +=  content 
+    htmlstring +=  "</body></html>" 
+    return htmlstring 
+
+def generate_html_into_file(content):
+    css = open("style.css", 'r')
+    stl =  css.read()
+    css.close()
+
+    htmlstring = generate_html ( content )
+
     htmlfile = open( htmlfilename , 'w' )
-    htmlfile.write( "<html><head><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>" )
-    htmlfile.write( "<style>" + stl   + "</style></head><body>"  )
-    htmlfile.write( content )
-    htmlfile.write( "</body></html>" )
+    htmlfile.write( htmlstring )
     htmlfile.close()
+
 
 def generate_html_from_file():
     old =  read_data_file() 
-    generate_html( old   )
+    generate_html_into_file( old   )
+
+def generate_html_to_display_from_file():    
+    old =  read_data_file()
+    htmlstring = generate_html ( old )
+    print htmlstring 
 
 def read_data_file():
     datafile = open(datafilename, 'r')
@@ -34,6 +50,10 @@ def read_data_file():
     return old
 
 def process_form( name , indata , color ):
+    content = save_input(  name , indata , color ) 
+    generate_html_into_file ( content )
+
+def save_input( name , indata , color ):
     old = read_data_file()
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
@@ -43,17 +63,16 @@ def process_form( name , indata , color ):
     finalcontent = "<date>" + curdate.strftime("%H:%M:%S") + "</date>&nbsp;&nbsp;<name>" + name + ":</name>&nbsp;&nbsp;&nbsp;<data class='" + color + "'>" + data + "</data><br>\n" + old 
     datafile = open(datafilename, 'r+')
     datafile.write(finalcontent)
-    datafile.truncate(0)
+    #datafile.truncate(0)
     datafile.close()
-    generate_html(finalcontent)
-
+    return finalcontent 
 
 if __name__ == "__main__":
   import sys
   if sys.argv.count("input") >= 1 :
-     process_form(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
+     save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
      print "Entered Text."
      
-  generate_html_from_file()
+  generate_html_to_display_from_file ()
   print "Generated HTML File."
 
