@@ -5,11 +5,9 @@
 
 
 import cgi, datetime, os, re
-import psogen 
-print "Content-type:text/html\r\n\r\n"
+from  psogen import process_form 
 
-datafilename = "data.pso"
-htmlfilename = "../chat_content.html"
+print "Content-type:text/html\r\n\r\n"
 
 datafile = open( datafilename  , 'r+')
 values = cgi.FieldStorage()
@@ -25,7 +23,6 @@ datapass = re.sub("<", "&lt;", rawdata)
 data = re.sub(">", "&gt;", datapass)
 color = values["color"].value
 curdate = datetime.datetime.now()
-
 
 process_form( name , rawdata , color )
 

@@ -6,16 +6,9 @@
 
 # Changed by Matthias Strubel / 2011-02-27 for piratebox-path
 
-css = open("style.css", 'r')
-data = open("data.pso", 'r')
-stl = css.read()
-dat = data.read()
-css.close()
-data.close()
+from psogen import generate_html_to_display_from_file 
+
 print "Content-type:text/html\r\n\r\n"
-print "<html><head><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>"
-print stl
-print "</style></head>"
-print "<body>"
-print dat
-print "</body>"
+
+generate_html_to_display_from_file()
+
