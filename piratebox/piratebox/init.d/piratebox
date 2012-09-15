@@ -134,6 +134,7 @@ case "$1" in
        chmod 777 $CHATFILE
        if [ "$RESET_CHAT"  = "yes" ] ; then 
            echo $CHATMSG > $CHATFILE
+	   $PIRATEBOX/bin/shoutbox_stuff.sh $WWW_FOLDER $CONF
        fi
 
        #Start here the lighttpd i.e.

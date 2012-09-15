@@ -11,6 +11,12 @@ import os, datetime, re
 datafilename = "data.pso"
 htmlfilename = "../chat_content.html"
 
+
+#--------------
+#  Generates Shoutbox-HTML-Frame  ... 
+#           Imports:
+#               content    -   String  containing preformatted data
+#--------------
 def generate_html(content):
     css = open("style.css", 'r')
     stl =  css.read()
@@ -22,6 +28,11 @@ def generate_html(content):
     htmlstring +=  "</body></html>" 
     return htmlstring 
 
+#--------------
+#   Generates HTML Data based on given content  and write it to static html file
+#          Imports: 
+#               content    -   String  containing preformatted data
+#--------------
 def generate_html_into_file(content):
     css = open("style.css", 'r')
     stl =  css.read()
@@ -33,26 +44,40 @@ def generate_html_into_file(content):
     htmlfile.write( htmlstring )
     htmlfile.close()
 
-
+#--------------
+# Generates HTML Data based on datafilename 's content 
+#--------------
 def generate_html_from_file():
     old =  read_data_file() 
     generate_html_into_file( old   )
 
+#--------------
+# Generates and Displays generated HTML
+#--------------
 def generate_html_to_display_from_file():    
     old =  read_data_file()
     htmlstring = generate_html ( old )
     print htmlstring 
 
+#--------------
+#  Reads Data file from datafilename given name
+#--------------
 def read_data_file():
     datafile = open(datafilename, 'r')
     old = datafile.read()
     datafile.close()
     return old
 
+#--------------
+# Function for saving new Shoubox-Content & Regenerate static HTML file -- usually called by HTML-Form
+#--------------
 def process_form( name , indata , color ):
     content = save_input(  name , indata , color ) 
     generate_html_into_file ( content )
 
+#--------------
+# Acutally Saves SB-Content to datafile
+#--------------
 def save_input( name , indata , color ):
     old = read_data_file()
     datapass = re.sub("<", "&lt;", indata)
@@ -67,12 +92,17 @@ def save_input( name , indata , color ):
     datafile.close()
     return finalcontent 
 
+
+#--------------
+#  Testing or Generating static HTML File
+#--------------
 if __name__ == "__main__":
   import sys
   if sys.argv.count("input") >= 1 :
      save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
+     generate_html_to_display_from_file()
      print "Entered Text."
      
-  generate_html_to_display_from_file ()
-  print "Generated HTML File."
+  generate_html_from_file ()
+  print "Generated HTML-Shoutbox File."
 
