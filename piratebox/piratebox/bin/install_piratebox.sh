@@ -42,8 +42,6 @@ if [ $2 = 'init_openwrt' ] ; then
 
 # not needed anymore    cp_src  $pb_pbmount/src $pb_share
 
-    touch "$pb_pbmount/conf/init_done"
-
     # Copy Removed, File is included in lib folder.. 
     #cp /usr/share/piratebox/CGIHTTPServer.py $pb_pbmount/chat
     rm -r $pb_pbmount/share
