@@ -47,7 +47,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:USE_APN="yes":USE_APN="no":'  -i $@/piratebox.conf 
 	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
-
+	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no"' -i  $@/piratebox.conf
 
 $(TGZ_IMAGE_FILE):
 	tar czf  $(TGZ_IMAGE_FILE) $(SRC_IMAGE_UNPACKED) 
