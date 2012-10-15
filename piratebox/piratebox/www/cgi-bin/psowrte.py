@@ -9,7 +9,6 @@ from  psogen import process_form
 
 print "Content-type:text/html\r\n\r\n"
 
-datafile = open( datafilename  , 'r+')
 values = cgi.FieldStorage()
 if values.has_key("name"):
   name = values["name"].value
