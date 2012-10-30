@@ -25,6 +25,8 @@ if [ -z  $1 ] || [ -z $2 ] ; then
   exit 1
 fi
 
+. $1
+
 TIMESAVE="$PIRATEBOX_FOLDER/timesave_file"
 
 if [ "$2" = "install" ] ; then
@@ -37,10 +39,17 @@ if [ "$2" = "install" ] ; then
     chmod a+rw $TIMESAVE
 
     if [  "$OPENWRT" = "yes" ] ; then
+        echo "Placing Timerecover on Startup" 
+        echo " $0 $1 recover " >> /etc/rc.local 
+	sed  's:exit:#exit:g' -i /etc/rc.local 
+        echo "Activating cron-service.."
 	/etc/init.d/cron enable
 	/etc/init.d/cron start
+	echo "done"
     else 
        echo "Remember to have cron active..."
+       echo "  on OpenWrt run:  /etc/init.d/cron enable"
+       echo "                   /etc/init.d/cron start"
     fi
     #Save the current time
     $0 $1 "save"
