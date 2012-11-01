@@ -8,8 +8,13 @@
 
 import os, datetime, re 
 
-datafilename = "data.pso"
-htmlfilename = "../chat_content.html"
+datafilename = os.environ["SHOUTBOX_CHATFILE"]
+htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
+
+try:
+     broadcast_destination = eval ( os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"] ) 
+except KeyError:
+     broadcast_destination = False 
 
 
 #--------------
@@ -73,25 +78,36 @@ def read_data_file():
 #--------------
 def process_form( name , indata , color ):
     content = save_input(  name , indata , color ) 
-    generate_html_into_file ( content )
+
+    if broadcast_destination == False:
+          generate_html_into_file ( content )
+
 
 #--------------
 # Acutally Saves SB-Content to datafile
 #--------------
 def save_input( name , indata , color ):
-    old = read_data_file()
-    datapass = re.sub("<", "&lt;", indata)
-    data = re.sub(">", "&gt;", datapass)
-    
-    curdate = datetime.datetime.now()
 
-    finalcontent = "<date>" + curdate.strftime("%H:%M:%S") + "</date>&nbsp;&nbsp;<name>" + name + ":</name>&nbsp;&nbsp;&nbsp;<data class='" + color + "'>" + data + "</data><br>\n" + old 
-    datafile = open(datafilename, 'r+')
-    datafile.write(finalcontent)
-    #datafile.truncate(0)
-    datafile.close()
+    content = prepare_line ( name, indata, color  )
+
+    if broadcast_destination != False:
+        pass 
+    else:
+        old = read_data_file()
+        finalcontent = content  + old 
+        datafile = open(datafilename, 'r+')
+        datafile.write(finalcontent)
+        #datafile.truncate(0)
+        datafile.close()
+
     return finalcontent 
 
+def prepare_line ( name, indata, color  ):
+    datapass = re.sub("<", "&lt;", indata)
+    data = re.sub(">", "&gt;", datapass)
+    curdate = datetime.datetime.now()
+    content = "<date>" + curdate.strftime("%H:%M:%S") + "</date>&nbsp;&nbsp;<name>" + name + ":</name>&nbsp;&nbsp;&nbsp;<data class='" + color + "'>" + data + "</data><br>\n" 
+    return content
 
 #--------------
 #  Testing or Generating static HTML File
@@ -102,7 +118,9 @@ if __name__ == "__main__":
      save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
      generate_html_to_display_from_file()
      print "Entered Text."
-     
+  
   generate_html_from_file ()
   print "Generated HTML-Shoutbox File."
+
+
 
