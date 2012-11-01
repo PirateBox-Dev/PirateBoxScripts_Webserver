@@ -37,6 +37,8 @@ CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf 
 
+PYTHONPATH=:$PYTHONPATH:$PIRATEBOX/python_lib
+
 if [ -f $CONF ] ; then
    . $CONF 
 else 
