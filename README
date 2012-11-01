@@ -24,6 +24,8 @@ PirateBox scripts can:
    * Optional imageboard
    * Optional Station counter
    * Optional Inihibit starting upload-script
+   * Optional Timesave script (for devices without RTC)  - can be found in piratebox/bin/timesave.sh 
+
 
 
 Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
