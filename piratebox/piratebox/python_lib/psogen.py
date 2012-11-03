@@ -8,6 +8,8 @@
 
 import os, datetime, re 
 
+import messages, broadcast
+
 datafilename = os.environ["SHOUTBOX_CHATFILE"]
 htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
 
@@ -91,16 +93,28 @@ def save_input( name , indata , color ):
     content = prepare_line ( name, indata, color  )
 
     if broadcast_destination != False:
-        pass 
+        return writeToNetwork( content , broadcast_destination )
     else:
+        return writeToDisk ( content )
+
+def writeToNetwork ( content , broadcast_destination ):
+        message = messages.shoutbox_message()
+	message.set(content)
+        casting = broadcast.broadcast( )
+	casting.setDestination(broadcast_destination)
+	casting.set( message.get_message() )
+	casting.send()
+	return None
+
+def writeToDisk ( content ):
         old = read_data_file()
         finalcontent = content  + old 
         datafile = open(datafilename, 'r+')
         datafile.write(finalcontent)
         #datafile.truncate(0)
         datafile.close()
+	return finalcontent 
 
-    return finalcontent 
 
 def prepare_line ( name, indata, color  ):
     datapass = re.sub("<", "&lt;", indata)
