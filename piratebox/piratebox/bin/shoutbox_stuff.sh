@@ -20,7 +20,7 @@ export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
 
 python psogen.py generate
 
-if [ "$GLOBAL_CHAT" = "yes"] ; then
+if [ "$GLOBAL_CHAT" = "yes" ] ; then
      export SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
 fi
 
