@@ -62,7 +62,7 @@ body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
    });
 
   function refresh_shoutbox () {
-          $.get('/cgi-bin/psoread.py', function(data) {
+          $.get('/chat_content.html', function(data) {
                        $('div#shoutbox').html(data);
                    } );
   }
