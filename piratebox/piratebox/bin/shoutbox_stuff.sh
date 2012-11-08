@@ -12,6 +12,7 @@
 
 . $2
 
+
 cd $PIRATEBOX_FOLDER
 cd python_lib
 
@@ -22,7 +23,18 @@ python psogen.py generate
 
 if [ "$GLOBAL_CHAT" = "yes" ] ; then
      export SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
+     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => '$SHOUTBOX_BROADCAST_DESTINATIONS' , "
 fi
 
+LIGHTTPD_ENV="setenv.add-environment = ( 
+   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
+   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" ,
+   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" ,
+   $LIGHTTPD_ENV_BR_LINE 
 
+  )"
+
+
+
+echo "$LIGHTTPD_ENV" >  $PIRATEBOX_FOLDER/conf/lighttpd/env
 
