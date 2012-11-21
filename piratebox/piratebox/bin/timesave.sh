@@ -32,7 +32,7 @@ TIMESAVE="$PIRATEBOX_FOLDER/timesave_file"
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
     echo "#--- Crontab for PirateBox-Timesave" >>  $PIRATEBOX_FOLDER/tmp/crontab
-    echo " */5 * * * *   $PIRATEBOX_FOLDER/bin/$0 $PIRATEBOX_FOLDER/conf/piratebox.conf save "  >> $PIRATEBOX_FOLDER/tmp/crontab
+    echo " */5 * * * *   $PIRATEBOX_FOLDER/bin/timesave.sh $PIRATEBOX_FOLDER/conf/piratebox.conf save "  >> $PIRATEBOX_FOLDER/tmp/crontab
     crontab $PIRATEBOX_FOLDER/tmp/crontab
 
     touch $TIMESAVE
