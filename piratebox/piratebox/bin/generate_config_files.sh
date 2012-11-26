@@ -58,7 +58,7 @@ generate_dnsmasq() {
    cat $DEFAULT_DNSMASQ                > $DNSMASQ_CONFIG
 
    #Add interface line if filled
-   [[ -n $dnsmasq_interface ]] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONFIG
+   [ -n $dnsmasq_interface ] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONFIG
 
    lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
    echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONFIG
@@ -72,7 +72,7 @@ generate_dnsmasq() {
    #Mesh hosts
    echo "addn-hosts=$HOSTS_MESH" 	>> $DNSMASQ_CONFIG
 
-   if [[ "$IPV6_ENABLE" = "yes" && "$IPV6_ADVERT" = "dnsmasq" ]] ; then
+   if [ "$IPV6_ENABLE" = "yes" ] && [ "$IPV6_ADVERT" = "dnsmasq" ] ; then
      echo "Do additional v6 stuff in dnsmasq.conf"
      echo "#----- V6 Stuff"                     >> $DNSMASQ_CONFIG
      echo "dchp-range=$ipv6_call::, ra-stateless" >> $DNSMASQ_CONFIG
@@ -121,7 +121,7 @@ IPV6="#"
 set_pathnames  $PIRATEBOX_FOLDER
 
 ipv6_call=''
-if [ $IPV6_ENABLE = "yes" ] ; then
+if [ "$IPV6_ENABLE" = "yes" ] ; then
    ipv6_call=$IPV6_PREFIX
    IPV6=$IPV6_PREFIX:$IPV6_IP
    [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
