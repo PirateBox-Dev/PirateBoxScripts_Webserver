@@ -130,10 +130,7 @@ case "$1" in
          echo  $?
        fi
 
-       #Writing init-message and reset chat..
-       if [ "$RESET_CHAT"  = "yes" ] ; then
-          echo $CHATMSG > $CHATFILE  
-       fi
+       #Do shoutbox stuff
        $PIRATEBOX/bin/shoutbox_stuff.sh $WWW_FOLDER $CONF
 
 
