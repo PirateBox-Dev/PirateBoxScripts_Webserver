@@ -3,6 +3,8 @@
 # Generate severall configuration files out of piratebox.conf
 #     conf/hosts_generated
 #     conf/dnsmasq_generated.conf
+#     conf/radvd_generated.conf
+#     conf/lighttpd/env
 #
 # There are files for default configuration or adding custom stuff:
 #     conf/hosts
@@ -25,6 +27,7 @@ HOSTS_CONFIG=""
 DEFAULT_HOSTS=""
 LEASE_FILE=""
 RADVD_CONFIG=""
+LIGHTTPD_ENV_CONFIG=""
 
 set_pathnames() {
   CONFIG_PATH=$1/conf
@@ -35,6 +38,7 @@ set_pathnames() {
   DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
   LEASE_FILE=$1/tmp/leases
+  LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/env
 }
 
 generate_hosts() {
@@ -101,6 +105,36 @@ generate_radvd(){
 
 }
 
+#------------ lighttpd env config - Start ---------------------
+
+generate_lighttpd_env() {
+        local $GLOBAL_CHAT = $1
+        local $GLOBAL_DEST = $2
+        local $SHOUTBOX_BROADCAST_DESTINATIONS = $3
+	local $PYTHONPATH = $4
+	local $SHOUTBOX_GEN_HTMLFILE = $5
+	local $PIRATEBOX = $6
+	local $SHOUTBOX_CHATFILE = $7
+
+	if [ "$GLOBAL_CHAT" = "yes" ] ; then
+	     SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
+	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"" $SHOUTBOX_BROADCAST_DESTINATIONS\" " , "
+	fi
+
+	LIGHTTPD_ENV="setenv.add-environment = ( 
+	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
+	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" ,
+	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" ,
+	   $LIGHTTPD_ENV_BR_LINE 
+
+        )"
+
+       echo $LIGHTTPD_ENV > $LIGHTTPD_ENV_CONFIG
+}
+
+#------------ lighttpd env config - End   ---------------------
+
+
 
 if [ -z  $1 ] ; then
   echo "Usage is 
@@ -128,5 +162,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE 
+generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $SHOUTBOX_BROADCAST_DESTINATIONS   $PYTHONPATH $SHOUTBOX_GEN_HTMLFILE $PIRATEBOX  $SHOUTBOX_CHATFILE 
+
 
 
