@@ -17,6 +17,14 @@
 #    END_LEASE         =                         end    250
 #    LEASE_DURATION    =    lease time           30min
 #    HOSTNAME          =  piratebox.lan   - o'rly?  Maybe generate some additional stuff here
+#  -
+#    GLOBAL_CHAT       = Enable Broadcasts
+#    GLOBAL_DEST       = Broadcast IP destinations
+#    PYTHONPATH        = Path of PirateBox python libs
+#    GEN_CHATFILE      = generated html chatfile
+#    PIRATEBOX         = PirateBox Folder
+#    CHATFILE          = data store for Shoutbox-content
+#    
 #
 #  Matthias Strubel    -- 08.06.2012
 #    licenced with GPL-3
@@ -110,11 +118,10 @@ generate_radvd(){
 generate_lighttpd_env() {
         local $GLOBAL_CHAT = $1
         local $GLOBAL_DEST = $2
-        local $SHOUTBOX_BROADCAST_DESTINATIONS = $3
-	local $PYTHONPATH = $4
-	local $SHOUTBOX_GEN_HTMLFILE = $5
-	local $PIRATEBOX = $6
-	local $SHOUTBOX_CHATFILE = $7
+	local $PYTHONPATH = $3
+	local $SHOUTBOX_GEN_HTMLFILE = $4
+	local $PIRATEBOX = $5
+	local $SHOUTBOX_CHATFILE = $6
 
 	if [ "$GLOBAL_CHAT" = "yes" ] ; then
 	     SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
@@ -162,7 +169,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE 
-generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $SHOUTBOX_BROADCAST_DESTINATIONS   $PYTHONPATH $SHOUTBOX_GEN_HTMLFILE $PIRATEBOX  $SHOUTBOX_CHATFILE 
+generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $PYTHONPATH $GEN_CHATFILE $PIRATEBOX  $CHATFILE
 
 
 
