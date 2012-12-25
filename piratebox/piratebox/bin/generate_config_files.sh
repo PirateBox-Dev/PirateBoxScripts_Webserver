@@ -116,13 +116,16 @@ generate_radvd(){
 #------------ lighttpd env config - Start ---------------------
 
 generate_lighttpd_env() {
-        local $GLOBAL_CHAT = $1
-        local $GLOBAL_DEST = $2
-	local $PYTHONPATH = $3
-	local $SHOUTBOX_GEN_HTMLFILE = $4
-	local $PIRATEBOX = $5
-	local $SHOUTBOX_CHATFILE = $6
+        local GLOBAL_CHAT=$1
+        local GLOBAL_DEST=$2
+	local PYTHONPATH=$3
+	local SHOUTBOX_GEN_HTMLFILE=$4
+	local PIRATEBOX=$5
+	local SHOUTBOX_CHATFILE=$6
 
+        echo "Generating Environment-config for ligttpd ....."
+
+        LIGHTTPD_ENV_BR_LINE=""
 	if [ "$GLOBAL_CHAT" = "yes" ] ; then
 	     SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
 	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"" $SHOUTBOX_BROADCAST_DESTINATIONS\" " , "
@@ -169,7 +172,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE 
-generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $PYTHONPATH $GEN_CHATFILE $PIRATEBOX  $CHATFILE
+generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
 
 
 
