@@ -56,6 +56,10 @@ data.red        { color: #FF0000 }
 	   $.get('forum.html', function(data) {
 	          $('div#forum_link').html(data);
 	         } );
+	   $.get('forban_link.html', function(data) {
+	          $('div#forban_link').html(data);
+	         } );
+
 	   $.get('station_cnt.txt', function(data) {
 	          $('div#station').html(data);
 	         } );
@@ -112,6 +116,7 @@ data.red        { color: #FF0000 }
 <b>2.</b> Click button below to begin sharing.</p>
 <b>3.</b> Browse and download files <a href="/Shared" target="_parent"><b>here</b></a>.<br>
 <div id="forum_link"></div>
+<div id="forban_link"></div>
 </div>
 
 

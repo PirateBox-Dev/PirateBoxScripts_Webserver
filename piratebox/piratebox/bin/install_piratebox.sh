@@ -82,6 +82,9 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/share/tmp
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
+#Copy Forban-Link spacer
+   cp $PIRATEBOX_FOLDER/src/no_link.html $PIRATEBOX_FOLDER/www/forban_link.html
+
 #Set permissions
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
