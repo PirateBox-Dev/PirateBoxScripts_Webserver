@@ -37,7 +37,7 @@ CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf 
 
-export PYTHONPATH=:$PYTHONPATH:$PIRATEBOX/python_lib
+export PYTHONPATH=:$PYTHONPATH:$PIRATEBOX_PYTHONPATH
 
 if [ -f $CONF ] ; then
    . $CONF 

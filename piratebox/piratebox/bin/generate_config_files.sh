@@ -117,7 +117,7 @@ generate_radvd(){
 
 generate_lighttpd_env() {
         local GLOBAL_CHAT=$1
-        local GLOBAL_DEST=$2
+        local GLOBAL_DEST="$2"
 	local PYTHONPATH=$3
 	local SHOUTBOX_GEN_HTMLFILE=$4
 	local PIRATEBOX=$5
@@ -127,14 +127,13 @@ generate_lighttpd_env() {
 
         LIGHTTPD_ENV_BR_LINE=""
 	if [ "$GLOBAL_CHAT" = "yes" ] ; then
-	     SHOUTBOX_BROADCAST_DESTINATIONS=$GLOBAL_DEST
-	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"" $SHOUTBOX_BROADCAST_DESTINATIONS\" " , "
+	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , \n"
 	fi
 
 	LIGHTTPD_ENV="setenv.add-environment = ( 
-	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
-	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" ,
-	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" ,
+	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", \n
+	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" , \n
+	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , \n
 	   $LIGHTTPD_ENV_BR_LINE 
 
         )"
@@ -171,8 +170,8 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
    [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
-generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE 
-generate_lighttpd_env $GLOBAL_CHAT $GLOBAL_DEST $PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
+generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
+generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
 
 
 

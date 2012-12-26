@@ -14,7 +14,9 @@ datafilename = os.environ["SHOUTBOX_CHATFILE"]
 htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
 
 try:
-     broadcast_destination = eval ( os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"] ) 
+     raw_dest =  os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"]
+     finished_dest = re.sub ( '#' , '"' , raw_dest ) 
+     broadcast_destination = eval ( finished_dest ) 
 except KeyError:
      broadcast_destination = False 
 

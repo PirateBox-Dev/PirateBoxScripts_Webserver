@@ -1,29 +1,10 @@
-# Forban - a simple link-local opportunistic p2p free software
-#
-# For more information : http://www.foo.be/forban/
-#
-# Copyright (C) 2009-2010 Alexandre Dulaunoy - http://www.foo.be/
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import SocketServer
 import socket
 import sys
 import os
 
 import messages
-from psogen import writeToDisk
+from psogen import writeToDisk, generate_html_from_file
 
 global lastmsg
 lastmsg = ""
@@ -41,6 +22,7 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
 		    msg.set_message(data)
 		    content = msg.get()
 	            writeToDisk(content)
+                    generate_html_from_file()
 		    lastmsg = data
 	    else:
 	       print data[11:12]
