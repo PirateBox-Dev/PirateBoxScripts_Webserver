@@ -56,6 +56,9 @@ if [ $2 = 'init_openwrt' ] ; then
       echo "----------------------------------------------------"
       mv  $WWW_FOLDER  $PIRATEBOX_FOLDER/www_old 
       ln -sf   $pb_usbdir/www_alt  $WWW_FOLDER
+      echo "  Copy over >>fake internet detection-stuff<<"
+      cp -v  $PIRATEBOX_FOLDER/www_old/ncsi.txt $pb_usbdir/www_alt
+      cp -rv $PIRATEBOX_FOLDER/www_old/library  $pb_usbdir/www_alt
       echo "  Done. Now, you are on your own! "
     fi
  fi
