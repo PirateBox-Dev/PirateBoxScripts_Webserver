@@ -59,6 +59,8 @@ if [ $2 = 'init_openwrt' ] ; then
       echo "  Copy over >>fake internet detection-stuff<<"
       cp -v  $PIRATEBOX_FOLDER/www_old/ncsi.txt $pb_usbdir/www_alt
       cp -rv $PIRATEBOX_FOLDER/www_old/library  $pb_usbdir/www_alt
+      echo "  Copy over >>redirect.html<< for automatic redirect on  wrong entered page<<"
+      cp -v  $PIRATEBOX_FOLDER/www_old/redirect.html $pb_usbdir/www_alt
       echo "  Done. Now, you are on your own! "
     fi
  fi
