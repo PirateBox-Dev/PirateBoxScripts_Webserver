@@ -127,13 +127,13 @@ generate_lighttpd_env() {
 
         LIGHTTPD_ENV_BR_LINE=""
 	if [ "$GLOBAL_CHAT" = "yes" ] ; then
-	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , \n"
+	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , "
 	fi
 
 	LIGHTTPD_ENV="setenv.add-environment = ( 
-	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", \n
-	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" , \n
-	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , \n
+	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
+	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" , 
+	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , 
 	   $LIGHTTPD_ENV_BR_LINE 
 
         )"
