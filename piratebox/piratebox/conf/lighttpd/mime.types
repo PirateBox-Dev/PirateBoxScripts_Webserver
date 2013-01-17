@@ -59,6 +59,7 @@ mimetype.assign             = (
   ".asf"          =>      "video/x-ms-asf",
   ".asx"          =>      "video/x-ms-asf",
   ".wmv"          =>      "video/x-ms-wmv",
+  ".mp4"          =>      "video/mp4",
   ".bz2"          =>      "application/x-bzip",
   ".tbz"          =>      "application/x-bzip-compressed-tar",
   ".tar.bz2"      =>      "application/x-bzip-compressed-tar",
