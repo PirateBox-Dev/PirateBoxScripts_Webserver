@@ -80,6 +80,7 @@ fi
 
 
 if [ $2 = 'part2' ] ; then
+   echo "Starting initialize PirateBox Part2.."
 #Create directories 
 #   mkdir -p $PIRATEBOX_FOLDER/share/Shared
    mkdir -p $UPLOADFOLDER
