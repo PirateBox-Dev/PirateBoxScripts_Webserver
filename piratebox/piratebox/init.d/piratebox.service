@@ -1,0 +1,11 @@
+[Unit]
+Description=PirateBox Daemon
+
+[Service]
+Type=forking
+ExecStart=/opt/piratebox/bin/piratebox.sh start
+ExecStop=/opt/piratebox/bin/piratebox.sh stop
+PIDFile=/var/run/piratebox.pid
+
+[Install]
+WantedBy=multi-user.target
