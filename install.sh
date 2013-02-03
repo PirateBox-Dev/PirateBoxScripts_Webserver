@@ -13,8 +13,8 @@
 #         NOTES:  ---
 #        AUTHOR: Cale 'TerrorByte' Black, cablack@rams.colostate.edu
 #       COMPANY:  ---
-#       CREATED: 02.02.2013 14:10:24 MST
-#      REVISION:  0.2
+#       CREATED: 02.02.2013 17:56:24 MST
+#      REVISION:  0.3
 #=======================================================================
 CURRENT_CONF=piratebox/piratebox/conf/piratebox.conf
 #import piratebox conf to install
@@ -42,10 +42,16 @@ fi
 if [[ -d /opt ]]; then
 	cp -rv piratebox/piratebox /opt &> /dev/null
 	echo "Finished copying files..."
+	chmod 777 /opt/piratebox/chat/cgi-bin/data.pso
+	echo "192.168.77.1 piratebox.lan">>/etc/hosts
+	echo "192.168.77.1 piratebox">>/etc/hosts
 else
 	mkdir /opt
 	cp -rv piratebox/piratebox /opt &> /dev/null
 	echo "Finished copying files..."
+	chmod 777 /opt/piratebox/chat/cgi-bin/data.pso
+	echo "192.168.77.1 piratebox.lan">>/etc/hosts
+	echo "192.168.77.1 piratebox">>/etc/hosts
 fi
 
 if [[ -d /etc/systemd/system/ ]]; then
