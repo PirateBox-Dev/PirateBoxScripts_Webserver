@@ -13,8 +13,8 @@
 #         NOTES:  ---
 #        AUTHOR: Cale 'TerrorByte' Black, cablack@rams.colostate.edu
 #       COMPANY:  ---
-#       CREATED: 02.02.2013 17:56:24 MST
-#      REVISION:  0.3
+#       CREATED: 02.02.2013 19:50:34 MST
+#      REVISION:  0.3.1
 #=======================================================================
 CURRENT_CONF=piratebox/piratebox/conf/piratebox.conf
 #import piratebox conf to install
@@ -56,7 +56,7 @@ fi
 
 if [[ -d /etc/systemd/system/ ]]; then
 	ln -s /opt/piratebox/init.d/piratebox.service /etc/systemd/system/piratebox.service
-	systemctl enable piratebox
+#	systemctl enable piratebox #This enables PirateBox at start up... could be useful for Live
 else
 	#link between opt and etc/pb
 	ln -s /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
