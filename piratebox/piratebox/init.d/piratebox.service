@@ -1,10 +1,11 @@
 [Unit]
-Description=PirateBox Daemon
+Description=PirateBox Service
 
 [Service]
 Type=forking
 ExecStart=/opt/piratebox/bin/piratebox.sh start
 ExecStop=/opt/piratebox/bin/piratebox.sh stop
+Restart=/opt/piratebox/bin/piratebox.sh restart
 PIDFile=/var/run/piratebox.pid
 
 [Install]

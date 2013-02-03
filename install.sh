@@ -132,6 +132,6 @@ echo "##############################"
 echo "#PirateBox has been installed#"
 echo "##############################"
 echo ""
-echo "Use: service piratebox <start|stop|restart|link>"
-echo "or for systemd systems Use: systemctl <start|stop|restart|link> piratebox"
+echo "Use: service piratebox <start|stop>"
+echo "or for systemd systems Use: systemctl <start|stop|restart> piratebox"
 exit 0
