@@ -54,13 +54,13 @@ else
 	echo "192.168.77.1 piratebox">>/etc/hosts
 fi
 
-if [[ -d /etc/systemd/system/ ]]; then
-	ln -s /opt/piratebox/init.d/piratebox.service /etc/systemd/system/piratebox.service
+if [[ -d /etc/init.d/ ]]; then
+	ln -s /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
+	update-rc.d piratebox defaults
 #	systemctl enable piratebox #This enables PirateBox at start up... could be useful for Live
 else
 	#link between opt and etc/pb
-	ln -s /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
-	update-rc.d piratebox defaults
+	ln -s /opt/piratebox/init.d/piratebox.service /etc/systemd/system/piratebox.service
 fi
 
 #install dependencies
