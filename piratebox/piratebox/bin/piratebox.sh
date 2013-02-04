@@ -97,7 +97,9 @@ case "$1" in
        	if  [ "$USE_APN" =  "yes" ] ;  then
          	echo "Starting hostap... "
          	/usr/sbin/hostapd --  $CONF_APN & #TODO Possible to change PIDFILE of hostapd?
-         	echo $?
+        	if [ $? -ne 0 ]; then 
+			echo $?
+		fi
        	fi
 
       	#BRIDGE
@@ -106,14 +108,18 @@ case "$1" in
          	sleep 1
          	BR_CMD="brctl addif  $BRIDGE  $INTERFACE"
          	( $BR_CMD ; )
-         	echo $?
+         	if [ $? -ne 0 ]; then
+			echo $?
+		fi
       	fi
 
        	if [ "$USE_DNSMASQ" = "yes" ] ;  then
          	echo  "Starting dnsmasq... "
    		# pidfile is written by dnsmasq
          	/usr/sbin/dnsmasq  --  $CMD_DNSMASQ  
-         	echo $?
+         	if [ $? -ne 0 ]; then
+            		echo $?
+                fi	
        	fi
 
 
@@ -140,13 +146,17 @@ case "$1" in
        	#Start here the lighttpd i.e.
        	echo "Starting lighttpd..."
        	/usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
-       	echo $?
+       	if [ $? -ne 0 ]; then
+        	echo $?
+        fi
 
        	#Start Global Chat daemon if needed.
        	if [ "$GLOBAL_CHAT" = "yes" ] ; then
           	echo "Starting global chat service..."
           	$PIRATEBOX/bin/shoutbox_daemon.sh -- $CONF
-          	echo $?
+          	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
        	fi
 fi
 
@@ -163,31 +173,41 @@ stop)
     	if [  "$USE_APN"  = "yes" ] ;  then
        		echo  "Stopping hostapd... "
        		systemctl stop hostapd
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
     	
 	if [ "$USE_DNSMASQ" = "yes" ] ;  then 
     	   	echo "Stopping dnsmasq..."
        		systemctl stop dnsmasq  
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
     	#Stop Global Chat daemon
     	if [ "$GLOBAL_CHAT" = "yes" ] ; then
           	echo "Stopping global chat service..."
           	kill $PIDFILE_SHOUTBOX #TODO better way?
-          	echo $?
+          	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
     	echo "Stopping lighttpd..."
     	systemctl stop lighttpd
-    	echo $?
+    	if [ $? -ne 0 ]; then
+        	echo $?
+        fi
 
     	if [ "$DROOPY_ENABLED" = "yes" ] ; then
        		#Kill Droopy
        		echo "Stopping droopy... "
        		pkill -9 -f python /opt/piratebox/bin/droopy
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
      	if [ "$DO_IFCONFIG" = yes ] ; then
@@ -203,7 +223,9 @@ stop)
          	echo "Remove Bridge..."
          	BR_CMD="brctl delif  $BRIDGE  $INTERFACE"
          	( $BR_CMD ; )
-         	echo $?
+         	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
      	fi
 
 $PIRATEBOX/bin/hooks/hook_piratebox_stop_done.sh  "$CONF"
@@ -220,31 +242,41 @@ restart)
     	if [  "$USE_APN"  = "yes" ] ;  then
        		echo  "Stopping hostapd... "
        		systemctl stop hostapd
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
     	
 	if [ "$USE_DNSMASQ" = "yes" ] ;  then 
     	   	echo "Stopping dnsmasq..."
        		systemctl stop dnsmasq  
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
     	#Stop Global Chat daemon
     	if [ "$GLOBAL_CHAT" = "yes" ] ; then
           	echo "Stopping global chat service..."
           	kill $PIDFILE_SHOUTBOX #TODO better way?
-          	echo $?
+          	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
     	echo "Stopping lighttpd..."
     	systemctl stop lighttpd
-    	echo $?
+    	if [ $? -ne 0 ]; then
+		echo $?
+        fi
 
     	if [ "$DROOPY_ENABLED" = "yes" ] ; then
        		#Kill Droopy
        		echo "Stopping droopy... "
        		pkill -9 -f python /opt/piratebox/bin/droopy
-       		echo $?
+       		if [ $? -ne 0 ]; then
+                        echo $?
+                fi
     	fi
 
      	if [ "$DO_IFCONFIG" = yes ] ; then
@@ -260,7 +292,9 @@ restart)
          	echo "Remove Bridge..."
          	BR_CMD="brctl delif  $BRIDGE  $INTERFACE"
          	( $BR_CMD ; )
-         	echo $?
+         	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
      	fi
 
 $PIRATEBOX/bin/hooks/hook_piratebox_stop_done.sh  "$CONF"
@@ -296,7 +330,9 @@ echo "Starting script piratebox "
        	if  [ "$USE_APN" =  "yes" ] ;  then
          	echo "Starting hostap... "
          	/usr/sbin/hostapd --  $CONF_APN & #TODO Possible to change PIDFILE of hostapd?
-         	echo $?
+         	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
        	fi
 
       	#BRIDGE
@@ -305,14 +341,18 @@ echo "Starting script piratebox "
          	sleep 1
          	BR_CMD="brctl addif  $BRIDGE  $INTERFACE"
          	( $BR_CMD ; )
-         	echo $?
+         	if [ $? -ne 0 ]; then
+                        echo $?
+                fi	
       	fi
 
        	if [ "$USE_DNSMASQ" = "yes" ] ;  then
          	echo  "Starting dnsmasq... "
    		# pidfile is written by dnsmasq
          	/usr/sbin/dnsmasq  --  $CMD_DNSMASQ  
-         	echo $?
+         	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
        	fi
 
 
@@ -329,7 +369,9 @@ echo "Starting script piratebox "
           	fi
           	echo "Starting droopy..."
           	$PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
-          	echo $?
+          	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
        	fi
 
        	#Do shoutbox stuff
@@ -339,13 +381,17 @@ echo "Starting script piratebox "
        	#Start here the lighttpd i.e.
        	echo "Starting lighttpd..."
        	/usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
-       	echo $?
+       	if [ $? -ne 0 ]; then
+		echo $?
+        fi
 
        	#Start Global Chat daemon if needed.
        	if [ "$GLOBAL_CHAT" = "yes" ] ; then
           	echo "Starting global chat service..."
           	$PIRATEBOX/bin/shoutbox_daemon.sh -- $CONF
-          	echo $?
+          	if [ $? -ne 0 ]; then
+                        echo $?
+                fi
        	fi
 fi
 
