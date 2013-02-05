@@ -42,16 +42,17 @@ fi
 if [[ -d /opt ]]; then
 	cp -rv piratebox/piratebox /opt &> /dev/null
 	echo "Finished copying files..."
-	chmod 777 /opt/piratebox/chat/cgi-bin/data.pso
-	echo "192.168.77.1 piratebox.lan">>/etc/hosts
-	echo "192.168.77.1 piratebox">>/etc/hosts
+	chmod 777 /opt/piratebox/www/cgi-bin/data.pso
+	echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
+	echo "$NET.$IP_SHORT piratebox">>/etc/hosts
 else
 	mkdir /opt
 	cp -rv piratebox/piratebox /opt &> /dev/null
 	echo "Finished copying files..."
 	chmod 777 /opt/piratebox/chat/cgi-bin/data.pso
-	echo "192.168.77.1 piratebox.lan">>/etc/hosts
-	echo "192.168.77.1 piratebox">>/etc/hosts
+        echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
+        echo "$NET.$IP_SHORT piratebox">>/etc/hosts
+
 fi
 
 if [[ -d /etc/init.d/ ]]; then
