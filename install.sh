@@ -61,11 +61,7 @@ fi
 #install dependencies
 #TODO missing anything in $DEPENDENCIES?
 # Modified Script by martedì at http://www.mirkopagliai.it/bash-scripting-check-for-and-install-missing-dependencies/
-#DEPENDENCIES=(hostapd lighttpd dnsmasq)
 PKGSTOINSTALL="hostapd lighttpd dnsmasq"
-#PKG=( $PKGSTOINSTALL )
-
-#if [[ ! `dpkg -l | grep -w "ii  ${DEPENDENCIES[$i]} "` ]]; then
 
 # If some dependencies are missing, asks if user wants to install
 if [ "$PKGSTOINSTALL" != "" ]; then
@@ -114,19 +110,10 @@ case "$1" in
 		;;
 esac
 
-#if [[ -n $2 ]]; then
-#	ln -s $2 /opt/piratebox/share
-#	echo "Files placed on $2 will be shared"
-#	echo "In order to change this remove the symlink between $2 and /opt/piratebox/share"
-#else
-#	echo "USB not found, not creating a link between the PirateBox share folder and the USB drive"
-#	echo "If you want to create a link between a USB drive and the share folder then run piratebox link '<USB Drive full path>'"
-#fi`
-
 echo "##############################"
 echo "#PirateBox has been installed#"
 echo "##############################"
 echo ""
-echo "Use: service piratebox <start|stop>"
-echo "or for systemd systems Use: systemctl <start|stop|restart> piratebox"
+echo "Use: sudo service piratebox <start|stop>"
+echo "or for systemd systems Use: sudo systemctl <start|stop|restart> piratebox"
 exit 0
