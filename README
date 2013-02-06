@@ -2,12 +2,20 @@
 #  (c) 2012 Matthias Strubel   licenced under GPL-3
 #           matthias.strubel@aod-rpg.de
 #
-# Sources for Running PirateBox with Webserver <enter Webserver here>
+#  Maintained by Matthias Struble
+#  	    	 	matthias.strubel@aod-rpg.de
+# 		 Cale Black
+# 		 	cablack@rams.colostate.edu
+# 
+# Sources for Running PirateBox with Webserver lighttpd 
 #    Contains:  Shoutbox, Forum
 #
-#              
-#   
+#                
+PirateBox is a collection of scripts / programs that allows you to use your wireless card
+as a local network to share files and chat anonymously. For more information please visit
+http://daviddarts.com/
 
+----- Info -----
 Packages contains only scripts based PirateBox scripts with running lighttpd webserver.
 
 PirateBox scripts can:
@@ -29,5 +37,44 @@ PirateBox scripts can:
 
 
 Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
+and by PirateBox Manager https://github.com/TerrorByte/PirateBox-Manager
 
+----- Installation -----
+PirateBox should be in most common repositories soon, but in the mean time you can use this method:
 
+Download the package:
+https://github.com/MaStr/PirateBoxScripts_Webserver/archive/master.zip
+
+Unzip the package:
+$unzip master.zip
+
+Run the installer in the unzipped folder:
+$ cd PirateBoxScripts_Webserver
+$ sudo ./install.sh default #Default can be substituted with 'board' if you want an image board on your PB
+
+Starting / Stopping PirateBox
+WARNING: Some major distributions have changed from init.d to systemd which means you should use the 
+commands that are labeled under your distribution or what your distribution is based on. It should 
+also be noted that as of recently Ubuntu has systemd enabled but not set as the default init system
+which means that you may have to use the systemctl commands.
+
+Newest versions of Ubuntu, Fedora, Arch, OpenSUSE, Mageia, and Mandriva:
+$ systemctl start piratebox
+$ systemctl start piratebox
+$ systemctl restart piratebox
+
+Older Ubuntu (xubuntu, lubuntu, etc), Mint, Debian, most Debian based distros: 
+$ service piratebox start
+$ service piratebox stop
+$ service piratebox restart
+
+----- Changelog -----
+Version: 0.7a
+NOTE: This may only be a partial changelog, check github / your package manager for more info.
+
+* [New] push of systemd structure
+* [New] install method
+	* [New] install dependencies
+* [New] can now use restart in init
+* [Fixed] General cleaning
+* [Removed] [Testing] Executable, we will stick to service based
