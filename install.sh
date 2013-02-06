@@ -16,8 +16,15 @@
 #       CREATED: 02.02.2013 19:50:34 MST
 #      REVISION:  0.3.1
 #=======================================================================
+#Import PirateBox conf
 CURRENT_CONF=piratebox/piratebox/conf/piratebox.conf
-#import piratebox conf to install
+
+#Must be root
+if [[ $EUID -ne 0 ]]; then
+        echo "This script must be run as root" #1>&2
+        exit 0
+fi
+
 if [[ $1 ]]; then
 	echo "Installing..."
 else
@@ -29,12 +36,6 @@ if [[ -f  $CURRENT_CONF ]]; then
 	. $CURRENT_CONF 2> /dev/null
 else
 	echo "PirateBox config is not in its normal directory"
-	exit 0
-fi
-
-#must be run as root, due to installing in /opt/
-if [[ $EUID -ne 0 ]]; then
-	echo "This script must be run as root" #1>&2
 	exit 0
 fi
 
