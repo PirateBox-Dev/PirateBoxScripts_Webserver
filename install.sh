@@ -40,21 +40,14 @@ else
 fi
 
 #begin setting up piratebox's home dir
-if [[ -d /opt ]]; then
-	cp -rv piratebox/piratebox /opt &> /dev/null
-	echo "Finished copying files..."
-	chmod 777 /opt/piratebox/www/cgi-bin/data.pso
-	echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
-	echo "$NET.$IP_SHORT piratebox">>/etc/hosts
-else
-	mkdir /opt
-	cp -rv piratebox/piratebox /opt &> /dev/null
-	echo "Finished copying files..."
-	chmod 777 /opt/piratebox/chat/cgi-bin/data.pso
-        echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
-        echo "$NET.$IP_SHORT piratebox">>/etc/hosts
-
+if [[ ! -d /opt ]]; then
+	mkdir -p /opt
 fi
+
+cp -rv piratebox/piratebox /opt &> /dev/null
+echo "Finished copying files..."
+echo "$NET.$IP_SHORT piratebox.lan">>/etc/hosts
+echo "$NET.$IP_SHORT piratebox">>/etc/hosts
 
 if [[ -d /etc/init.d/ ]]; then
 	ln -s /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
