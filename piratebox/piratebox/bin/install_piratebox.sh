@@ -14,7 +14,6 @@
 if [ -z  $1 ] || [ -z $2 ]; then 
   echo "Usage install_piratebox my_config <part>"
   echo "   Parts: "
-  echo "       init_openwrt   : Stuff needed on openwrt-systems"
   echo "       part2          : sets Permissions and links correctly"
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
   echo "                        should be installed in <Piratebox-Folder>/share/board"
@@ -32,38 +31,6 @@ fi
 
 #Load config
 . $1 
-
-if [ $2 = 'init_openwrt' ] ; then
-  echo "-------------- Initialize PirateBoxScripts -----------"
-    #Load openwrt-common config and procedures file!
-    . /etc/piratebox.common
-    #  cp -v $pb_pbmount/src/* "$pb_share"
-    #  cp -v $pb_pbmount/src/.* $pb_share
-
-# not needed anymore    cp_src  $pb_pbmount/src $pb_share
-
-    # Copy Removed, File is included in lib folder.. 
-    #cp /usr/share/piratebox/CGIHTTPServer.py $pb_pbmount/chat
-    rm -r $pb_pbmount/share
-    ln -sf $pb_usbdir $pb_pbmount/share
-    chmod a+rw $CHATFILE
-
-    if [ -d $pb_usbdir/www_alt ] ; then
-      echo "----------------------------------------------------"
-      echo "####      Alternative www folder found          ####"
-      echo "####          $pb_usbdir/www_alt                ####"
-      echo "####         switching directories              ####"
-      echo "----------------------------------------------------"
-      mv  $WWW_FOLDER  $PIRATEBOX_FOLDER/www_old 
-      ln -sf   $pb_usbdir/www_alt  $WWW_FOLDER
-      echo "  Copy over >>fake internet detection-stuff<<"
-      cp -v  $PIRATEBOX_FOLDER/www_old/ncsi.txt $pb_usbdir/www_alt
-      cp -rv $PIRATEBOX_FOLDER/www_old/library  $pb_usbdir/www_alt
-      echo "  Copy over >>redirect.html<< for automatic redirect on  wrong entered page<<"
-      cp -v  $PIRATEBOX_FOLDER/www_old/redirect.html $pb_usbdir/www_alt
-      echo "  Done. Now, you are on your own! "
-    fi
- fi
 
 if [ $2 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
@@ -113,54 +80,6 @@ fi
 #Install the image-board
 if [ $2 = 'imageboard' ] ; then
    
-    if [ "$OPENWRT" = "yes" ] ; then
-      if ! opkg update 
-        then
-          echo "ERROR: Not Internet Conenction"
-          exit 5
-      fi
-
-#    for package in ${OPENWRT_PACKAGES[@]}
-#       do
-#         echo "Start install package $package ...."
-#         opkg -d piratebox install $package
-#         if [ $? ne 0 ] ; then
-#               echo "ERROR installing $package"
-#               exit 5
-#         fi
-#      done
-###------------------------------------------
-#  ASH does not support arrays :(
-###-----------------------------------------
-	opkg -d piratebox install perl
-	opkg -d piratebox install perlbase-base 
-	opkg -d piratebox install perlbase-cgi
-	opkg -d piratebox install perlbase-essential
-	opkg -d piratebox install perlbase-file
-	opkg -d piratebox install perlbase-bytes
-	opkg -d piratebox install perlbase-config 
-	opkg -d piratebox install perlbase-data
-	opkg -d piratebox install perlbase-db-file 
-	opkg -d piratebox install perlbase-digest
-	opkg -d piratebox install perlbase-encode
-	opkg -d piratebox install perlbase-encoding
-	opkg -d piratebox install perlbase-fcntl
-	opkg -d piratebox install perlbase-gdbm-file
-	opkg -d piratebox install perlbase-integer
-	opkg -d piratebox install perlbase-socket
-	opkg -d piratebox install perlbase-time
-	opkg -d piratebox install perlbase-unicode
-	opkg -d piratebox install perlbase-unicore
-	opkg -d piratebox install perlbase-utf8
-	opkg -d piratebox install perlbase-xsloader
-	opkg -d piratebox install unzip
-
-	ln -s /usr/local/bin/perl /usr/bin/perl
-	ln -s /usr/local/lib/perl* /usr/lib/
-    fi
-
-    echo "------------ Finished OpenWRT Packages ---------------"
-
     #Activate on mainpage
     cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
