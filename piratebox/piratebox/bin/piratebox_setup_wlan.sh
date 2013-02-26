@@ -49,6 +49,25 @@ fi
 ###  Do the stuff
 
 if [ $2 =  "start" ] ; then
+
+  if [ "$PROBE_INTERFACE" = "yes" ] ; then
+     echo -n "Probing interface $INTERFACE"
+     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+     TEST_OK=$?
+     CNT=$PROBE_TIME
+     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
+     do
+        echo -n "."
+        sleep 1
+        CNT=$(( $CNT - 1 ))
+        if [ "$CNT" = 0 ] ; then
+          exit 99
+        fi
+        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+        TEST_OK=$?
+     done
+  fi
+
   echo "Bringing up wifi interface $INTERFACE "
   ifconfig $INTERFACE up 
 
