@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 0.6C
+VERSION = 0.6D
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
