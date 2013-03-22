@@ -85,13 +85,13 @@ case "$1" in
        iw $PHY_IF interface add $INTERFACE type managed
     fi
 
-    if [ "$DO_IFCONFIG" = yes ] ; then
-      log_daemon_msg "  Setting up wlan"
+    if [ "$PROBE_INTERFACE" = yes ] ; then
+      log_daemon_msg "  Probing wlan"
       #Setting up WLAN Interface
-      piratebox_setup_wlan.sh  $CONF start
+      piratebox_setup_wlan.sh  $CONF probe
     fi
      if  [ $? -ne 0 ] ;  then
-       log_failure_msg "failed setting up Interface"
+       log_failure_msg "failed probe Interface"
      else
 
        # Only  activate
@@ -100,6 +100,16 @@ case "$1" in
          start-stop-daemon -m --start --background --pidfile $PIDFILE_HOSTAPN  --exec /usr/sbin/hostapd --  $CONF_APN
          log_end_msg $?
        fi
+
+      if [ "$DO_IFCONFIG" = yes ] ; then
+	log_daemon_msg "  Setting up wlan"
+        #Setting up WLAN Interface
+        piratebox_setup_wlan.sh  $CONF start
+        if  [ $? -ne 0 ] ;  then
+          log_failure_msg "failed setting up Interface"
+	  exit 99
+        fi
+      fi
 
       #BRIDGE
       if [ "$DO_BRIDGE" = "yes"  ] ; then
