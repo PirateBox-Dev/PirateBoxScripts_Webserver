@@ -1,0 +1,13 @@
+Welcome to IRC-Piratebox!
+
+Inspired by pirate radio and the free culture movment, PirateBox is a self-contained mobile collaboration and file sharing 
+device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks 
+where users can anonymously share images, video, audio, documents, and other digital content. 
+
+PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not 
+connected to the Internet in order to prevent tracking and preserve user privacy. 
+
+PirateBox was created by David Darts and is registered under a Free Art License (2011). To learn more about the project or 
+to find out how to build your own PirateBox system, please visit http://wiki.daviddarts.com/piratebox  
+
+ 
