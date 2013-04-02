@@ -31,7 +31,7 @@ def generate_html(content):
     stl =  css.read()
     css.close()
 
-    htmlstring =   "<html><head><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>" 
+    htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>" 
     htmlstring +=  "<style>" + stl   + "</style></head><body>"  
     htmlstring +=  content 
     htmlstring +=  "</body></html>" 
