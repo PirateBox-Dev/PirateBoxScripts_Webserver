@@ -47,6 +47,7 @@ fi
 
 
 if [ $2 = 'part2' ] ; then
+   echo "Starting initialize PirateBox Part2.."
 #Create directories 
 #   mkdir -p $PIRATEBOX_FOLDER/share/Shared
    mkdir -p $UPLOADFOLDER
@@ -65,8 +66,6 @@ if [ $2 = 'part2' ] ; then
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/tmp
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/tmp -R
 
-#Copy over the index.html for redirect to Droopy-Landing page
-   cp $PIRATEBOX_FOLDER/www/index.html $PIRATEBOX_FOLDER/share
 
 #Install a small script, that the link on the main page still works
    if  [ !  -f $PIRATEBOX_FOLDER/share/board/kareha.pl ] ; then  

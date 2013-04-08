@@ -3,10 +3,10 @@
 
 ### BEGIN INIT INFO
 # Provides:          piratebox
-# Required-Start:    $network
-# Required-Stop:     $network
+# Required-Start:    $all
+# Required-Stop:     $network $local_fs
 # Default-Start:     2 3 4 5
-# Default-Stop:      1 0
+# Default-Stop:      6 1 0
 # Short-Description: All services around piratebox
 # Description:       Based on /opt/piratebox/conf/piratebox.conf starts:  * DNSMASQ * HOSTAPD * DROOPY * WLAN-config * CHAT
 ### END INIT INFO
@@ -83,13 +83,13 @@ case "$1" in
        iw $PHY_IF interface add $INTERFACE type managed
     fi
 
-    if [ "$DO_IFCONFIG" = yes ] ; then
-      echo "  Setting up wlan"
+    if [ "$PROBE_INTERFACE" = yes ] ; then
+      echo "  Probe wlan"
       #Setting up WLAN Interface
-      piratebox_setup_wlan.sh  $CONF start
+      piratebox_setup_wlan.sh  $CONF probe
     fi
      if  [ $? -ne 0 ] ;  then
-       echo "failed setting up Interface"
+       echo "failed probing Interface"
      else
 
        # Only  activate
@@ -99,6 +99,15 @@ case "$1" in
          echo  $?
        fi
 
+       if [ "$DO_IFCONFIG" = yes ] ; then
+         echo "  Setting up wlan"
+         #Setting up WLAN Interface
+         piratebox_setup_wlan.sh  $CONF start
+         if  [ $? -ne 0 ] ;  then
+          echo "failed setting up Interface"
+          exit 255
+         fi
+      fi
       #BRIDGE
       if [ "$DO_BRIDGE" = "yes" ] ; then
          echo "Adding $INTERFACE to bridge $BRIDGE //  brctl addif $BRIDGE  $INTERFACE "

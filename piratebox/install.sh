@@ -17,7 +17,7 @@
 #      REVISION:  0.3.1
 #=======================================================================
 #Import PirateBox conf
-CURRENT_CONF=piratebox/piratebox/conf/piratebox.conf
+CURRENT_CONF=piratebox/conf/piratebox.conf
 
 #Must be root
 if [[ $EUID -ne 0 ]]; then
