@@ -11,7 +11,7 @@
 # Load configfile
 
 if [ -z  $1 ] || [ -z $2 ]; then 
-  echo "Usage piratebox_setup_wlan.sh my_config <start|stop>"
+  echo "Usage piratebox_setup_wlan.sh my_config <start|stop|probe>"
   exit 1
 fi
 
@@ -50,24 +50,6 @@ fi
 
 if [ $2 =  "start" ] ; then
 
-  if [ "$PROBE_INTERFACE" = "yes" ] ; then
-     echo -n "Probing interface $INTERFACE"
-     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-     TEST_OK=$?
-     CNT=$PROBE_TIME
-     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
-     do
-        echo -n "."
-        sleep 1
-        CNT=$(( $CNT - 1 ))
-        if [ "$CNT" = 0 ] ; then
-          exit 99
-        fi
-        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-        TEST_OK=$?
-     done
-  fi
-
   echo "Bringing up wifi interface $INTERFACE "
   ifconfig $INTERFACE up 
 
@@ -94,4 +76,29 @@ if [ $2 =  "start" ] ; then
 elif [ $2 = "stop" ] ; then
   echo "Stopping wifi interface $INTERFACE "
   ifconfig $INTERFACE down
+elif [ $ = "probe" ] ; then 
+   # simply check if the interface is available
+   probe
 fi
+
+
+probe() {
+  if [ "$PROBE_INTERFACE" = "yes" ] ; then
+     echo -n "Probing interface $INTERFACE"
+     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+     TEST_OK=$?
+     CNT=$PROBE_TIME
+     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
+     do
+        echo -n "."
+        sleep 1
+        CNT=$(( $CNT - 1 ))
+        if [ "$CNT" = 0 ] ; then
+          exit 99
+        fi
+        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+        TEST_OK=$?
+     done
+  fi
+}
+

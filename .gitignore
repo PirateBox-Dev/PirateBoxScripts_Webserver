@@ -3,3 +3,5 @@
 piratebox/piratebox/version
 piratebox/piratebox/www/chat_content.html
 image_stuff/*
+piratebox_ws_*
+piratebox-ws_*
