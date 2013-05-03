@@ -16,7 +16,7 @@ fi
 . $1 
 
 #Load openwrt-common config and procedures file!
-. /etc/piratebox.common
+. /etc/piratebox.config
 
 
 # You can uncommend this line to see when hook is starting:
