@@ -81,6 +81,7 @@ mimetype.assign             = (
   ".oth"          =>      "application/vnd.oasis.opendocument.text-web",
 
   ".epub"	 => 	"application/epub+zip",
+  ".fb2"         =>      "text/xml",
 
 # make the default mime type application/octet-stream.
   ""              =>      "application/octet-stream",
