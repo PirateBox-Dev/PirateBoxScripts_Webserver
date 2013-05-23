@@ -80,6 +80,8 @@ mimetype.assign             = (
   ".oti"          =>      "application/vnd.oasis.opendocument.image-template",
   ".oth"          =>      "application/vnd.oasis.opendocument.text-web",
 
+  ".epub"	 => 	"application/epub+zip",
+
 # make the default mime type application/octet-stream.
   ""              =>      "application/octet-stream",
 )
