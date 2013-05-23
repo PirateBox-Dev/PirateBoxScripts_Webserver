@@ -14,47 +14,43 @@
 	<nav id="top-nav">
 		<div id="logo"><img src="piratebox-logo-horizontal-white.png"></div>
 	</nav>
-
+	
 	<div id="content">
-
 		<div id="articles">
 			<article>
 				<h2>Welcome</h2>
 				<p>Now first of all, there is nothing illegal going on here, this is a social place where you can chat and share files with people around you, anonymously! This is an off-line network, specially designed and developed for file-sharing and chat services only. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people and feel free to share any files you may like.</p>
 			</article>
-</div>
-		<aside>
-				<div id="upload">
-					<h2>Upload a file!</h2>
-					<p>Please do not refresh this page during file upload!</p>
-					<iframe  width='350' height="80" src='http://piratebox.lan:8080'>
-						Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>
-					</iframe>
-					<br><br>
-					<h2><a href="/Shared">Browse Files -></a></h2>
-				</div>
-		</aside>
-<div id="articles">
 
 			<article>
 				<h2>Chat</h2>
 				<div class="shoutbox_content" id="shoutbox"></div>
 				<form method="POST" name="psowrte" id="sb_form" >
-					Name:<input type="text" value="Anonymous" name="name" size="10">&nbsp;&nbsp;
+					Name:<input type="text" value="Anonymous" name="name" size="10">&nbsp;&nbsp; 
 					Message:<input type="text" name="data" size="20" id='sb_form_text' >&nbsp;&nbsp;
 					<input type="submit" value="Say!" name="submit">
 					<br>
-					<b>Color:</b>
+					<b>Color:</b> 
 					Default <input type="radio" value="def" name="color" checked>
 					| <span class="blue">Blue</span> <input type="radio" value="blue" name="color">
 					| <span class="green">Green</span> <input type="radio" value="green" name="color">
 					| <span class="orange">Orange</span> <input type="radio" value="orange" name="color">
-					| <span class="red">Red</span> <input type="radio" value="red" name="color">
+					| <span class="red">Red</span> <input type="radio" value="red" name="color">			
 				</form>
 			</article>
 		</div>
 
-
+		<aside id="sidebar">
+			<div id="upload">
+				<h2>Upload a file!</h2>
+				<p>Please do not refresh this page during file upload!</p>
+				<iframe  width='350' height="80" src='http://piratebox.lan:8080'>
+					Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>
+				</iframe>
+				<br><br>
+				<h2><a href="/Shared">Browse Files -></a></h2>
+			</div>
+		</aside>
 	</div>
 
 	<footer id="page-footer">
@@ -62,10 +58,10 @@
 			<h2>About PirateBox</h2>
 			<p>Inspired by pirate radio and the free culture movment, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
 			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
-			<p>PirateBox was created by David Darts and is registered under a Free Art License (2011). To learn more about the project or to find out how to build your own PirateBox system, please visit <a href="http://wiki.daviddarts.com/piratebox">http://wiki.daviddarts.com/piratebox</a>.</p>
+			<p>To learn more about the project or to find out how to build your own PirateBox system, please visit <a href="http://wiki.daviddarts.com/piratebox">http://wiki.daviddarts.com/piratebox</a>.</p>
 		</article>
 
-		<small>PirateBox is Licensed under Free Art License (2011)</small>
+		<small>PirateBox is Licensed under GPLv3</small>
 	</footer>
 </div>
 </body>
