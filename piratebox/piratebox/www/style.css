@@ -1,8 +1,126 @@
-date		{ font-size: 10pt; color: #666666; font-family:Tahoma }
-name        { font-weight: bold; font-family:Tahoma }
-data		{ font-family: Tahoma }
-data.def	{ color: #000000 }
-data.blue	{ color: #0000FF }
-data.green	{ color: #008000 }
-data.orange	{ color: #FF8040 }
-data.red	{ color: #FF0000 }
+/* Reset */
+*{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:auto}html,body,div,object,iframe,fieldset{margin:0;padding:0;border:0}ol,ul{list-style:none;margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}header,footer,nav,section,article,hgroup,figure{display:block}legend{display:none}body{font-family:sans-serif;font-size:100%}h1,h2,h3,h4,h5,h6,p{margin:0}img{width:100%}
+
+/* Colors: 
+    Black:  #1B1D1E
+    White:  #FFFFFF
+*/
+
+/* Base */
+html {}
+
+body {
+	background: #E5E5E5;
+	color: #1B1D1E;
+}
+
+p {
+	margin: 0 0 1em;
+	line-height: 1.25em;
+}
+
+a {
+	color: rgb(173, 0, 11);
+	text-decoration: none;
+}
+
+.blue {
+	color: #0000FF;
+}
+
+.green {
+	color: #008000;
+}
+
+.orange {
+	color: #FF8040;
+}
+
+.red {
+	color: #FF0000;
+}
+
+input {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	color: #999;
+	cursor: text;
+	font-size: 12px;
+	height: 2em;
+	margin: 1em;
+	padding: 0;
+}
+
+input([type=submit] not:[type=radio]) {
+	padding: 0 1em;
+}
+
+/* Mobile */
+#top-nav, footer {
+	padding: 1em;
+	margin: 0;
+	clear: both;
+	background: #1B1D1E;
+	color: #F8F8F2;
+}
+
+#content {
+	width: 100%;
+	padding: 1em;
+}
+
+	#articles > article, #upload {
+		margin: 0 0 1em;
+		padding: 1em;
+		background: #ffffff;
+		border-radius: 3px;
+		box-shadow: 0px 3px 5px -3px #a8a8a8;
+	}
+
+	#shoutbox {
+	   text-align: left;
+	   width: 100%;
+	   min-height: 50px;
+	   height: 350px;
+	   max-height: 400px;
+	   overflow: hidden;
+	   border: 1px solid #a8a8a8;
+	}
+
+footer {}
+
+/* Desktop */
+@media screen and (min-width: 801px) {
+	#page-wrap {
+		max-width: 100%;
+		margin: 0 auto;
+	}
+
+	#logo {
+		float: left;
+		width: 35%;
+	}
+	
+	#content {
+		width: 80%;
+		margin: 0 auto;
+	}
+
+		#articles {
+			width: 60%;
+			float: left;
+		}
+
+			#articles > article {
+				margin-right: .5em;
+			}
+
+		aside {
+			width: 40%;
+			float: left;
+		}
+
+			#upload {
+				margin-left: .5em;
+			}
+}

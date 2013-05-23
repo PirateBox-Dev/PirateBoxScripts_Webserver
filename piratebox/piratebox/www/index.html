@@ -1,147 +1,73 @@
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="cache-control" content="no-cache">
-<LINK rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <title>PirateBox: Send a file</title>
-
-<style type="text/css">
-<!--
-* {margin: 0; padding: 0;}
-body {text-align: left; font-size: 1.0em; font-family: sans-serif;}
-.box {padding-top:10px; padding-bottom:0px;}
-#message {text-align: left; width: 310px;}
-#sending {display: none;}
-#wrapform {height: 40px;}
-#progress {display: inline;  border-collapse: separate; empty-cells: show;
-           border-spacing: 10px 0; padding: 0; vertical-align: bottom;}
-#progress td {height: 10px; width: 13px; background-color: #eee;
-              border: 1px solid #aaa; padding: 0px;}
-
-#station {font-size: 50%; }
-
-
-.shoutbox_content {
-   border-top: 1px solid black;
-   border-bottom: 1px solid black;
-   margin-top:   1%;
-   position:   relative;
-   text-align: left;
-   width: 50%;
-   min-height:  50px;
-   height:      25%;
-   max-height:  300px;
-   overflow: hidden;
-}
-
-
-
-date            { font-size: 10pt; color: #666666; font-family:Tahoma }
-name        { font-weight: bold; font-family:Tahoma }
-data            { font-family: Tahoma }
-data.def        { color: #000000 }
-data.blue       { color: #0000FF }
-data.green      { color: #008000 }
-data.orange     { color: #FF8040 }
-data.red        { color: #FF0000 }
-
-
---></style>
-
-<!--piratebox.lan-->
-
-<script type="text/javascript" src="jquery.min.js"></script>
-
-<script type="text/javascript">
-    $(document).ready(function() {
-           // do stuff when DOM is ready
-	   $.get('forum.html', function(data) {
-	          $('div#forum_link').html(data);
-	         } );
-	   $.get('forban_link.html', function(data) {
-	          $('div#forban_link').html(data);
-	         } );
-
-	   $.get('station_cnt.txt', function(data) {
-	          $('div#station').html(data);
-	         } );
-       $('div#shoutbox').ajaxError(function() {
-                 $(this).text( "Triggered ajaxError handler on shoutbox" );
-               });
-
-       $("#sb_form").submit(function(event) {
-
-		     /* stop form from submitting normally */
-	         event.preventDefault();
-		     post_shoutbox();
-
-            });
-       display_shoutbox();
-   });
-
-  function refresh_shoutbox () {
-          $.get('/chat_content.html', function(data) {
-                       $('div#shoutbox').html(data);
-                   } );
-  }
-  function refresh_time_sb () {
-     // Refresh rate in milli seconds
-     mytime=setTimeout('display_shoutbox()', 10000);
-
-  }
-
-  function post_shoutbox () {
-     $.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
-           .success(function() { refresh_shoutbox(); });
-     $('#sb_form_text').val("");
-  }
-
-
-  function display_shoutbox() {
-     refresh_shoutbox();
-     refresh_time_sb();
-  }
-
-  function fnGetDomain(url) {
-     return url.match(/:\/\/(.[^/]+)/)[1];
-  }
-
-</script>
-
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="style.css">
+	<title>PirateBox - Share Freely</title>
+	<script src="jquery.min.js"></script>
+	<script src="scripts.js"></script>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 </head>
+
 <body>
-<center>
+<div id="page-wrap">
+	<nav id="top-nav">
+		<div id="logo"><img src="piratebox-logo-horizontal-white.png"></div>
+	</nav>
 
-<div class="box"><img src="/piratebox-logo-small.png"/></div>
-<div id="message" class="box">
-<b>1.</b> Learn more about the project <a href="/.READ.ME.htm" target="_parent"><b>here</b></a>.<p>
-<b>2.</b> Click button below to begin sharing.</p>
-<b>3.</b> Browse and download files <a href="/Shared" target="_parent"><b>here</b></a>.<br>
-<div id="forum_link"></div>
-<div id="forban_link"></div>
+	<div id="content">
+
+		<div id="articles">
+			<article>
+				<h2>Welcome</h2>
+				<p>Now first of all, there is nothing illegal going on here, this is a social place where you can chat and share files with people around you, anonymously! This is an off-line network, specially designed and developed for file-sharing and chat services only. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people and feel free to share any files you may like.</p>
+			</article>
 </div>
+		<aside>
+				<div id="upload">
+					<h2>Upload a file!</h2>
+					<p>Please do not refresh this page during file upload!</p>
+					<iframe  width='350' height="80" src='http://piratebox.lan:8080'>
+						Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>
+					</iframe>
+					<br><br>
+					<h2><a href="/Shared">Browse Files -></a></h2>
+				</div>
+		</aside>
+<div id="articles">
+
+			<article>
+				<h2>Chat</h2>
+				<div class="shoutbox_content" id="shoutbox"></div>
+				<form method="POST" name="psowrte" id="sb_form" >
+					Name:<input type="text" value="Anonymous" name="name" size="10">&nbsp;&nbsp;
+					Message:<input type="text" name="data" size="20" id='sb_form_text' >&nbsp;&nbsp;
+					<input type="submit" value="Say!" name="submit">
+					<br>
+					<b>Color:</b>
+					Default <input type="radio" value="def" name="color" checked>
+					| <span class="blue">Blue</span> <input type="radio" value="blue" name="color">
+					| <span class="green">Green</span> <input type="radio" value="green" name="color">
+					| <span class="orange">Orange</span> <input type="radio" value="orange" name="color">
+					| <span class="red">Red</span> <input type="radio" value="red" name="color">
+				</form>
+			</article>
+		</div>
 
 
-<iframe  width='650' frameBorder='0' src='http://piratebox.lan:8080'>Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a></iframe>
- <br />
+	</div>
 
-<div>
-<form method="POST" name="psowrte" id="sb_form" >
-Name:<input type="text" value="anonymous" name="name" size="10">&nbsp;&nbsp; Message:<input type="text" name="data" size="20" id='sb_form_text' >&nbsp;&nbsp;
-<br /><b>Color:</b> Default<input type="radio" value="def" name="color" checked> |
-<font color="#0000FF">Blue</font><input type="radio" value="blue" name="color">
-| <font color="#008000">Green</font><input type="radio" value="green" name="color">
-| <font color="#FF8040">Orange</font><input type="radio" value="orange" name="color">
-| <font color="#FF0000">Red</font><input type="radio" value="red" name="color"></p>
-<input type="submit" value="Send" name="submit"  /><br>
-</form>
+	<footer id="page-footer">
+		<article>
+			<h2>About PirateBox</h2>
+			<p>Inspired by pirate radio and the free culture movment, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
+			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
+			<p>PirateBox was created by David Darts and is registered under a Free Art License (2011). To learn more about the project or to find out how to build your own PirateBox system, please visit <a href="http://wiki.daviddarts.com/piratebox">http://wiki.daviddarts.com/piratebox</a>.</p>
+		</article>
 
+		<small>PirateBox is Licensed under Free Art License (2011)</small>
+	</footer>
 </div>
+</body>
 
-
-<div class="shoutbox_content" id="shoutbox"></div>
-
-
-<div id="station"></div>
-
-</center>
-</body></html>
+</html>
