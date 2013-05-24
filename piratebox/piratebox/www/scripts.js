@@ -29,6 +29,11 @@ $(document).ready(function () {
 	});
 		
 	display_shoutbox();
+
+	//moves the upload section around
+	if ($(window).width() <= 800) {
+	    $('#sidebar').insertBefore('#articles');
+	}
 });
 
 function refresh_shoutbox () {
