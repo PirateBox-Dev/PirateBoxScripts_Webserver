@@ -51,11 +51,12 @@ echo "$NET.$IP_SHORT piratebox">>/etc/hosts
 
 if [[ -d /etc/init.d/ ]]; then
 	ln -s /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
-	update-rc.d piratebox defaults
+	echo "To make PirateBox start at boot run: update-rc.d piratebox defaults"
 #	systemctl enable piratebox #This enables PirateBox at start up... could be useful for Live
 else
 	#link between opt and etc/pb
 	ln -s /opt/piratebox/init.d/piratebox.service /etc/systemd/system/piratebox.service
+	echo "To make PirateBox start at boot run: systemctl enable piratebox"
 fi
 
 #install dependencies
