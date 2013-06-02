@@ -84,7 +84,7 @@ if [ $2 = 'imageboard' ] ; then
 
 
     if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
-       echo "init_done file Found in Kareha folder. Won't reinstall board."
+       echo "$PIRATEBOX_FOLDER/share/board/init_done file Found in Kareha folder. Won't reinstall board."
        exit 0;
     fi
 
