@@ -1,50 +1,39 @@
-function refresh() {
-	$("#station_cnt").load("station_cnt.txt", function () {
-		// There is no need to ask the user to refresh the page, as station_cnt will refresh itself.
-		$("#station_cnt a").attr("title", ""); 
-	});
-}
-
-$(document).ready(function () {
-	refresh();
-	// Every minute (station_cnt.txt refreshes every 2 minutes, but this way we are sure to have statistics which aren't too old)
-	interval = window.setInterval( 'refresh()', 60000 ); 
-
-	$.get('forum.html', function(data) {
-		$('div#forum_link').html(data);
-	});
-
+$(document).ready(function() {
+   	// do stuff when DOM is ready
+   	$.get('forum.html', function(data) {
+        $('div#forum_link').html(data);
+    });
+   	
+   	$.get('forban_link.html', function(data) {
+        $('div#forban_link').html(data);
+    });
+	
 	$.get('station_cnt.txt', function(data) {
-		$('div#station').html(data);
-	});
+        $('div#station').html(data);
+    });
+   	
+   	$('div#shoutbox').ajaxError(function() {
+        $(this).text( "Triggered ajaxError handler on shoutbox" );
+    });
+	
+	$("#sb_form").submit(function(event) {
+	    /* stop form from submitting normally */
+        event.preventDefault();
+	    post_shoutbox();
+    });
 
-	$('div#shoutbox').ajaxError(function() {
-	    $(this).text("Triggered ajaxError handler on shoutbox");
-	});
-
-	$('#sb_form').submit(function(event) {
-		// stop form from submitting normally
-		event.preventDefault();
-		post_shoutbox();
-	});
-		
-	display_shoutbox();
-
-	//moves the upload section around
-	if ($(window).width() <= 800) {
-	    $('#sidebar').insertBefore('#articles');
-	}
+    display_shoutbox();
 });
 
 function refresh_shoutbox () {
-	$.get('/cgi-bin/psoread.py', function(data) {
-		$('div#shoutbox').html(data);
-	});
+    $.get('chat_content.html', function(data) {
+   		$('div#shoutbox').html(data);
+   	});
 }
-
+  
 function refresh_time_sb () {
-	// Refresh rate in milliseconds
-	mytime=setTimeout('display_shoutbox()', 10000);
+    // Refresh rate in milli seconds
+    mytime=setTimeout('display_shoutbox()', 10000);
 }
 
 function post_shoutbox () {
