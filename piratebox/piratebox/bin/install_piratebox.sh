@@ -198,7 +198,10 @@ if [ $2 = 'imageboard' ] ; then
     	unzip kareha_* 
     fi
 
-
+    if [ "$?" != "0" ] ; then 
+    	echo "Error during unzipping kareha.. exiting."
+	exit 255
+    fi
     mv kareha/* $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
