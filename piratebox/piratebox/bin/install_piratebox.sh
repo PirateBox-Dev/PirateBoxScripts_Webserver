@@ -90,20 +90,21 @@ if [ $2 = 'imageboard' ] ; then
 
     echo "  Wgetting kareha-zip file "
     cd $PIRATEBOX_FOLDER/tmp
-    wget http://wakaba.c3.cx/releases/kareha_3.1.4.zip 
+    KAREHA_RELEASE=kareha_3.1.4.zip
+    wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
     if [ "$?" != "0" ] ; then
        echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
     fi
 
-    if [ -e  $PIRATEBOX_FOLDER/tmp/kareha* ] ; then
+    if [ -e  $PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE ] ; then
        echo "Kareha Zip found..."
     else 
        echo "No Zip found, abort "
        exit 255
     fi
     
-    /usr/local/bin/unzip kareha_* 
-    mv kareha/* $PIRATEBOX_FOLDER/share/board 
+    unzip $KAREHA_RELEASE
+    mv kareha $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
     cd  $PIRATEBOX_FOLDER/share/board  
