@@ -1,27 +1,32 @@
 /* Reset */
-*{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:auto}html,body,div,object,iframe,fieldset{margin:0;padding:0;border:0}ol,ul{list-style:none;margin:0;padding:0}table{border-collapse:collapse;border-spacing:0}header,footer,nav,section,article,hgroup,figure{display:block}legend{display:none}body{font-family:sans-serif;font-size:100%}h1,h2,h3,h4,h5,h6,p{margin:0}img{width:100%}
+*{overflow:auto;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}html,body,div,object,iframe,fieldset{margin:0;padding:0;border:0;}ol,ul{margin:0;padding:0;list-style:none;}table{border-spacing:0;border-collapse:collapse;}header,footer,nav,section,article,hgroup,figure{display:block;}legend{display:none;}body{font-size:100%;font-family:sans-serif;}h1,h2,h3,h4,h5,h6,p{margin:0;}img{width:100%;}
 
-/* Colors: 
-    Black:  #1B1D1E
-    White:  #FFFFFF
-*/
-
-/* Base */
-html {}
+/* Basic Styles */
+html { }
 
 body {
 	background: #E5E5E5;
 	color: #1B1D1E;
 }
 
-p {
-	margin: 0;
-	line-height: 1.25em;
+h1, h2 {
+	margin: 0 0 .25em;
+	font-size: 1.3em;
 }
 
-	p + p {
-		margin: 1em 0;
-	}
+h3 {
+	margin: 0 0 1em;
+	font-weight: 400;
+	font-size: 1em;
+}
+
+p {
+	line-height: 1.4em;
+}
+
+p + p {
+	margin: 1em 0;
+}
 
 a {
 	color: rgb(173, 0, 11);
@@ -45,91 +50,176 @@ a {
 }
 
 input {
-	background-color: #fff;
-	border: 1px solid #ddd;
-	color: #999;
-	cursor: text;
-	font-size: 12px;
+	padding: 0 .5em;
 	height: 2em;
-	margin: 1em;
-	padding: 0;
+	border: 1px solid #DDDDDD;
+	background-color: #FFFFFF;
+	color: #1B1D1E;
+	vertical-align: baseline;
+	font-size: 12px;
+	cursor: text;
 }
 
 input[type=submit] {
-	padding: 0 1em;
+	padding: 0;
+	border: none;
+	background: #999999;
+	color: #FFFFFF;
 }
 
-/* Mobile */
+input[type=radio] {
+	margin: 0 .2em;
+	height: 1.3em;
+}
+
+/* Mobile First! */
 .container {
-	width: 100%;
 	padding: 1em;
+	width: 100%;
 }
 
 header, footer {
-	margin: 0;
-	clear: both;
 	background: #1B1D1E;
-	color: #F8F8F2;
 }
 
 header {}
-
-	#logo {}
-
-	#welcome {
-		clear: both;
-		background: #FFFFFF;
-		color: #1B1D1E;
+	
+	#top-nav {
+		width: 100%;
 	}
 
-#content {}
-
-	#articles > article, #upload {
-		margin: 0 0 1em;
-		padding: 1em;
-		background: #ffffff;
-		border-radius: 3px;
-		box-shadow: 0px 3px 5px -3px #a8a8a8;
-	}
-
-	#shoutbox {
-	   text-align: left;
-	   width: 100%;
-	   min-height: 50px;
-	   height: 350px;
-	   max-height: 400px;
-	   overflow: hidden;
-	   border: 1px solid #a8a8a8;
-	}
-
-/* Desktop */
-@media screen and (min-width: 801px) {
-.container {
-	width: 80%;
-	margin: 0 auto;
-}
-
-header {}
-
-	#logo {
-		float: left;
-		width: 40%;
-		margin: 0 1em 0 0;
-	}
-
-#content {}
-
-	#articles {
-		width: 60%;
-		float: left;
-	}
-
-		#articles > article {
-			margin-right: 1em;
+		#top-nav ul {
+			margin: 0 auto;
+			text-align: center;
 		}
 
-	aside {
-		width: 40%;
+			#top-nav li {
+				display: inline;
+			}
+
+				#top-nav li a {
+					font-size: 1.5em;
+					margin: 0 .5em;
+				}
+
+#welcome {
+	background: #FFFFFF;
+	display: none;
+}
+
+#upload, #chat {
+	margin: 0 0 1em;
+	padding: 1em;
+	border-radius: 3px;
+	background: #FFFFFF;
+	box-shadow: 0px 3px 5px -3px #A8A8A8;
+}
+
+#chat { }
+
+	#shoutbox {
+	   overflow: auto;
+	   margin: 0 0 1em;
+	   padding: 0 1em;
+	   width: 100%;
+	   height: 350px;
+	   border: 1px solid #a8a8a8;
+	   text-align: left;
+	}
+
+		.comment {
+			margin: 0 0 .25em;
+		}
+
+			date {
+				font-size: .75em;
+				font-weight: 700;
+				color: #999999;
+			}
+
+			name {
+				font-weight: bold;
+			}
+
+			data {
+				line-height: 1.2em;
+			}
+
+		#shoutbox_input {
+			margin: 0 0 1em;
+		}
+
+			#shoutbox_nickname, #shoutbox_message, #shoutbox_submit {
+				margin: 0 0 1em;
+				width: 100%;
+			}
+
+footer {
+	color: #DDDDDD;
+}
+
+/* Tablets */
+@media screen and (min-width: 769px) { 
+	header { }
+
+		#logo {
+			float: left;
+			margin: 0 2em 0 0;
+			width: 40%;
+		}
+
+		#top-nav {
+			float: right;
+			width: 40%;
+			padding: 1em 0;
+		}
+
+		#welcome {
+			display: block;
+		}
+
+	#articles {
 		float: left;
+		width: 60%;
+	}
+
+		article { }
+
+			#chat {
+				margin: 0 1em 1em 0;
+			}
+
+				#shoutbox_input { }
+
+					#shoutbox_nickname {
+						float: left;
+						margin: 0 1em 0 0;
+						width: 20%;
+					}
+
+					#shoutbox_message {
+						float: left;
+						margin: 0;
+						width: 60%;
+					}
+
+					#shoutbox_submit {
+						float: right;
+						margin: 0;
+						width: 15%;
+					}
+
+	aside {
+		float: right;
+		margin: 0 0 1em;
+		width: 40%;
+	}
+}
+
+/* Desktop */
+@media screen and (min-width: 1025px) {
+	.container {
+		margin: 0 auto;
+		width: 80%;
 	}
 }

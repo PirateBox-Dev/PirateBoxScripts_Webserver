@@ -10,13 +10,13 @@
 </head>
 
 <body>
-<div id="page-wrap">
 	<header>
 		<div class="container">
 			<div id="logo">
-				<img src="piratebox-logo-horizontal-white.png">
+				<h1><img src="piratebox-logo-horizontal-white.png" alt="PirateBox"></h1>
 			</div>
-			<!-- optional page links
+			<!-- Optional Links! -->
+			<!--
 			<nav id="top-nav">
 				<ul>
 					<li><a href="#">Link 1</a></li>
@@ -26,48 +26,67 @@
 			</nav>
 			-->
 		</div>
+	</header>
 
+	<section>
 		<div id="welcome">
 			<div class="container">
 				<h2>Welcome</h2>
 				<p>Now first of all, there is nothing illegal going on here, this is a social place where you can chat and share files with people around you, anonymously! This is an off-line network, specially designed and developed for file-sharing and chat services only. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people and feel free to share any files you may like.</p>
 			</div>
 		</div>
-	</header>
-	
-	<div id="content" class="container">
-		<div id="articles">
-			<article>
-				<h2>Chat</h2>
-				<p>100% Anonymously!</p>
-				<div class="shoutbox_content" id="shoutbox"></div>
-				<form method="POST" name="psowrte" id="sb_form" >
-					Name:<input type="text" value="Anonymous" name="name" size="10">&nbsp;&nbsp; 
-					Message:<input type="text" name="data" size="20" id='sb_form_text' >&nbsp;&nbsp;
-					<input type="submit" value="Say!" name="submit">
-					<br>
-					<b>Color:</b> 
-					Default <input type="radio" value="def" name="color" checked>
-					| <span class="blue">Blue</span> <input type="radio" value="blue" name="color">
-					| <span class="green">Green</span> <input type="radio" value="green" name="color">
-					| <span class="orange">Orange</span> <input type="radio" value="orange" name="color">
-					| <span class="red">Red</span> <input type="radio" value="red" name="color">			
-				</form>
-			</article>
-		</div>
+	</section>
 
-		<aside id="sidebar">
-			<div id="upload">
-				<h2>Upload</h2>
-				<p>Please do not refresh this page during file upload!</p>
-				<iframe  width='350' height="80" src='http://piratebox.lan:8080'>
-					Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>
-				</iframe>
-				<br><br>
-				<h2><a href="/Shared">Browse Files -></a></h2>
-			</div>
-		</aside>
-	</div>
+	<section>
+		<div class="container">
+			<aside>
+				<div id="upload">
+					<hgroup>
+						<h2>Upload</h2>
+						<h3>Please do not refresh this page during file upload!</h3>
+					</hgroup>
+					<iframe width="100%" height="80" src='http://piratebox.lan:8080'>
+						Your browser does not supprt Iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>
+					</iframe>
+					<br><br>
+					<h2><a href="/Shared">Browse Files -></a></h2>
+				</div>
+			</aside>
+
+			<section id="articles">
+				<article>
+					<div id="chat">
+						<hgroup>
+							<h2>Chat</h2>
+							<h3>100% Anonymous!</h3>
+						</hgroup>
+						<div id="shoutbox" class="shoutbox_content"></div>
+						<form method="POST" name="psowrte" id="sb_form" >
+							<div id="shoutbox_input">
+								<input id="shoutbox_nickname" type="text" name="name" value="Anonymous" placeholder="Anonymous">
+								<input id="shoutbox_message" type="text" name="data" id="sb_form_text" placeholder="Message...">
+								<input id="shoutbox_submit" type="submit" name="submit" value="Send">
+							</div>
+							
+							<div id="shoutbox_options">
+								<p>Choose a color:</p>
+								<input type="radio" value="def" id="def" name="color" checked>
+									<label for="def">Default</label> | 
+								<input type="radio" value="blue" id="blue" name="color">
+									<label for="blue" class="blue">Blue</label> | 
+								<input type="radio" value="green" id="green" name="color">
+									<label for="green" class="green">Green</label>  | 
+								<input type="radio" value="orange" id="orange" name="color">
+									<label for="orange" class="orange">Orange</label>  | 
+								<input type="radio" value="red" id="red" name="color">
+									<label for="red"class="red">Red</label> 
+							</div>
+						</form>
+					</div>
+				</article>
+			</section>
+		</div>
+	</section>
 
 	<footer>
 		<div class="container">
@@ -76,10 +95,8 @@
 			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
 			<p>To learn more about the project or to find out how to build your own PirateBox system, please visit <a href="http://wiki.daviddarts.com/piratebox">http://wiki.daviddarts.com/piratebox</a>.</p>
 
-			<small>PirateBox is Licensed under GPLv3.</small>
+			<small>PirateBox is licensed under GPLv3.</small>
 		</div>
 	</footer>
-</div>
 </body>
-
 </html>
