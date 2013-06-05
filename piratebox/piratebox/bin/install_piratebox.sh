@@ -184,7 +184,21 @@ if [ $2 = 'imageboard' ] ; then
        exit 255
     fi
     
-    /usr/local/bin/unzip kareha_* 
+    # Temporary Fix for OpenWRT and Normal notebooks.
+    #    Currently, /usr/local/bin/ is not in PATH on OpenWRT
+    #    so just using "unzip" will break compatibilities
+    #    So we are going to check if that file exists,
+    #    we call it directly.
+    #    If not, we just try to run unzip. 
+    #    if unzip  fails, we end the script now to prevent 
+    #    more inconsistencies.
+    if [ "$OPENWRT" = "yes"  ] ; then
+	    /usr/local/bin/unzip kareha_* 
+    else 
+    	unzip kareha_* 
+    fi
+
+
     mv kareha/* $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
