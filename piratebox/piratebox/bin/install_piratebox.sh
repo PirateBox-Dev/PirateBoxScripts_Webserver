@@ -171,7 +171,7 @@ if [ $2 = 'imageboard' ] ; then
     fi
 
     echo "  Wgetting kareha-zip file "
-    cd $PIRATEBOX_FOLDER/timp
+    cd $PIRATEBOX_FOLDER/tmp
     KAREHA_RELEASE=kareha_3.1.4.zip
     wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
     if [ "$?" != "0" ] ; then
