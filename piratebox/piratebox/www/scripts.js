@@ -41,7 +41,7 @@ function post_shoutbox () {
 	.success(function() { 
 		refresh_shoutbox(); 
 	});
-	$('#sb_form_text').val("");
+	$('#shoutbox_message').val('');
 }
 
 function display_shoutbox() {
