@@ -196,7 +196,7 @@ if [ $2 = 'imageboard' ] ; then
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
 
     #Activate on mainpage
-    mv $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
+    cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
     echo "Errors in chown occurs if you are using vfat on the USB stick"
     echo "   . don't Panic!"
