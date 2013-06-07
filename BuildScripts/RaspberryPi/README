@@ -54,6 +54,8 @@ cd /opt/piratebox
 sed 's:DROOPY_USE_USER="no":DROOPY_USE_USER="yes":' -i  /opt/piratebox/conf/piratebox.conf
 sed 's:PROBE_INTERFACE="no":PROBE_INTERFACE="yes":' -i  /opt/piratebox/conf/piratebox.conf
 ln /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
+cd ../../ 
+rm -rv piratebox/ piratebox-ws_current.tar.gz
 
 
 
