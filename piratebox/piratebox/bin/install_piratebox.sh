@@ -104,7 +104,7 @@ if [ $2 = 'imageboard' ] ; then
     fi
     
     unzip $KAREHA_RELEASE
-    mv kareha $PIRATEBOX_FOLDER/share/board 
+    mv kareha/* $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
     cd  $PIRATEBOX_FOLDER/share/board  
