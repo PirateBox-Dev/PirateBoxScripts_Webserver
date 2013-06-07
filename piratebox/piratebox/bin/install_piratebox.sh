@@ -166,25 +166,43 @@ if [ $2 = 'imageboard' ] ; then
 
 
     if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
-       echo "init_done file Found in Kareha folder. Won't reinstall board."
+       echo "$PIRATEBOX_FOLDER/share/board/init_done file Found in Kareha folder. Won't reinstall board."
        exit 0;
     fi
 
     echo "  Wgetting kareha-zip file "
     cd $PIRATEBOX_FOLDER/tmp
-    wget http://wakaba.c3.cx/releases/kareha_3.1.4.zip 
+    KAREHA_RELEASE=kareha_3.1.4.zip
+    wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
     if [ "$?" != "0" ] ; then
        echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
     fi
 
-    if [ -e  $PIRATEBOX_FOLDER/tmp/kareha* ] ; then
+    if [ -e  $PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE ] ; then
        echo "Kareha Zip found..."
     else 
        echo "No Zip found, abort "
        exit 255
     fi
     
-    /usr/local/bin/unzip kareha_* 
+    # Temporary Fix for OpenWRT and Normal notebooks.
+    #    Currently, /usr/local/bin/ is not in PATH on OpenWRT
+    #    so just using "unzip" will break compatibilities
+    #    So we are going to check if that file exists,
+    #    we call it directly.
+    #    If not, we just try to run unzip. 
+    #    if unzip  fails, we end the script now to prevent 
+    #    more inconsistencies.
+    UNZIP=unzip
+    if [ "$OPENWRT" = "yes"  ] ; then
+	UNZIP=/usr/local/bin/unzip
+    fi
+
+    $UNZIP $KAREHA_RELEASE
+    if [ "$?" != "0" ] ; then 
+    	echo "Error during unzipping kareha.. exiting."
+	exit 255
+    fi
     mv kareha/* $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
@@ -196,12 +214,13 @@ if [ $2 = 'imageboard' ] ; then
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
 
     #Activate on mainpage
-    mv $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
+    cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
     echo "Errors in chown occurs if you are using vfat on the USB stick"
     echo "   . don't Panic!"
     echo "Generating index page"
-    wget http://127.0.0.1/board/kareha.pl -q 
+    cd /tmp
+    wget -q http://127.0.0.1/board/kareha.pl 
     echo "finished!"
     echo "Now Edit your kareha settings file to change your ADMIN_PASS and SECRET : "
     echo "  # vi $PIRATEBOX_FOLDER/www/board/config.pl "
