@@ -120,7 +120,8 @@ if [ $2 = 'imageboard' ] ; then
     echo "Errors in chown occurs if you are using vfat on the USB stick"
     echo "   . don't Panic!"
     echo "Generating index page"
-    wget http://127.0.0.1/board/kareha.pl -q 
+    cd /tmp
+    wget -q http://127.0.0.1/board/kareha.pl 
     echo "finished!"
     echo "Now Edit your kareha settings file to change your ADMIN_PASS and SECRET : "
     echo "  # vi $PIRATEBOX_FOLDER/www/board/config.pl "
