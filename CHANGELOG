@@ -1,0 +1,4 @@
+CHANGELOG
+
+=== v0.6G ===
+* Hide dot files in directory-listing which are usually hidden files
