@@ -30,6 +30,7 @@ if [ !  -f $1 ] ; then
 fi
 
 #Load config
+PIRATEBOX_CONFIG=$1
 . $1 
 
 if [ $2 = 'pyForum' ] ; then
@@ -148,3 +149,21 @@ if [ $2 = "flush_dns_reg" ] ; then
     [ "$?" != "0" ] && echo "an error occured" && exit 254
     echo "Installed crontab for flushing dnsmasq requlary"
 fi
+
+
+set_Hostname() {
+	local name=$1 ; shift;
+        echo '
+	<html>
+	<head><title>Redirect...</title>
+	<meta http-equiv="refresh" content="0;url=http://$1/" />
+	<meta http-equiv="cache-control" content="no-cache">
+	</head>
+	<body>
+	Redirect
+	</body>
+	</html>'  > $WWW_FOLDER/redirect.html
+
+        sed "s|HOST=\"$HOSTNAME\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
+}
+
