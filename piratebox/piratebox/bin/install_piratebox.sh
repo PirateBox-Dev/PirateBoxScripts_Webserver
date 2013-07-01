@@ -18,8 +18,9 @@ if [ -z  $1 ] || [ -z $2 ]; then
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
   echo "                        should be installed in <Piratebox-Folder>/share/board"
   echo "       pyForum        : Simple PythonForum"
-  echo "       station_cnt    : Adds Statio counter to your Box - crontab entry"
-  echo "       flush_dns_reg  : Installs crontask to flush dnsmasq regulary"
+  echo "       station_cnt        : Adds Statio counter to your Box - crontab entry"
+  echo "       flush_dns_reg      : Installs crontask to flush dnsmasq regulary"
+  echo "       hostname  'name'   : Exchanges the Hostname displayed in browser"
   exit 1
 fi
 
@@ -150,20 +151,25 @@ if [ $2 = "flush_dns_reg" ] ; then
     echo "Installed crontab for flushing dnsmasq requlary"
 fi
 
-
 set_Hostname() {
 	local name=$1 ; shift;
-        echo '
+        echo "
 	<html>
 	<head><title>Redirect...</title>
-	<meta http-equiv="refresh" content="0;url=http://$1/" />
-	<meta http-equiv="cache-control" content="no-cache">
+	<meta http-equiv='refresh' content='0;url=http://$1/' />
+	<meta http-equiv='cache-control' content='no-cache'>
 	</head>
 	<body>
 	Redirect
 	</body>
-	</html>'  > $WWW_FOLDER/redirect.html
+	</html>"  > $WWW_FOLDER/redirect.html
 
-        sed "s|HOST=\"$HOSTNAME\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
+        sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
 }
+
+if [ $2 = "hostname" ] ; then
+	echo "Switching hostname to $3"
+	set_hostname "$3"
+	echo "..done"
+fi	
 
