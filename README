@@ -74,7 +74,7 @@ $ service piratebox stop
 $ service piratebox restart
 
 ----- Changelog -----
-Version: 0.7a
+Version: 1.0.0
 NOTE: This may only be a partial changelog, check github / your package manager for more info.
 
 * [New] push of systemd structure

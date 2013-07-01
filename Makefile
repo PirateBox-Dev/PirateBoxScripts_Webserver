@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 0.7A
+VERSION = 1.0.0
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -8,8 +8,8 @@ PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
 
-IMAGE_FILE=piratebox_ws_0.7_img.gz
-TGZ_IMAGE_FILE=piratebox_ws_0.7_img.tar.gz
+IMAGE_FILE=piratebox_ws_1.0_img.gz
+TGZ_IMAGE_FILE=piratebox_ws_1.0_img.tar.gz
 SRC_IMAGE=image_stuff/OpenWRT.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/piratebox_img
 MOUNT_POINT=image_stuff/image
