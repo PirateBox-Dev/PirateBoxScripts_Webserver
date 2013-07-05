@@ -114,10 +114,10 @@ def prepare_line ( name, indata, color  ):
     data = re.sub(">", "&gt;", datapass)
     curdate = datetime.datetime.now()
     # Trying to make it look like this: 
-    # <div class="comment">
+    # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
     # </div>
-    content = "<div class='comment'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
+    content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
     return content
 
 #--------------
