@@ -13,33 +13,22 @@
 	<header>
 		<div class="container">
 			<div id="logo">
-				<h1><img src="piratebox-logo-horizontal-white.png" alt="PirateBox"></h1>
+				<h1><a href="/"><img src="piratebox-logo-horizontal-white.png" alt="PirateBox"></a></h1>
 			</div>
 			<!-- Optional Links! -->
-			<!--
 			<nav id="top-nav">
 				<ul>
-					<li><a href="#">Link 1</a></li>
-					<li><a href="#">Link 2</a></li>
-					<li><a href="#">Link 3</a></li>
+					<li><a href="board/">Forum</a></li>
+					<li><a href="/Shared">Files</a></li>
+					<li><a href="#about">About</a></li>
 				</ul>
 			</nav>
-			-->
 		</div>
 	</header>
 
-	<section>
-		<div id="welcome">
-			<div class="container">
-				<h2>Welcome</h2>
-				<p>Now first of all, there is nothing illegal going on here, this is a social place where you can chat and share files with people around you, anonymously! This is an off-line network, specially designed and developed for file-sharing and chat services only. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people and feel free to share any files you may like.</p>
-			</div>
-		</div>
-	</section>
-
-	<section>
+	<section id="content">
 		<div class="container">
-			<aside>
+			<div id="sidebar">
 				<div id="upload">
 					<hgroup>
 						<h2>Upload</h2>
@@ -51,46 +40,44 @@
 					<br><br>
 					<h2><a href="/Shared">Browse Files -></a></h2>
 				</div>
-			</aside>
+			</div>
 
-			<section id="articles">
-				<article>
-					<div id="chat">
-						<hgroup>
-							<h2>Chat</h2>
-							<h3>100% Anonymous!</h3>
-						</hgroup>
-						<div id="shoutbox" class="shoutbox_content"></div>
-						<form method="POST" name="psowrte" id="sb_form" >
-							<div id="shoutbox_input">
-								<input id="shoutbox_nickname" type="text" name="name" value="Anonymous" placeholder="Anonymous">
-								<input id="shoutbox_message" type="text" name="data" id="sb_form_text" placeholder="Message...">
-								<input id="shoutbox_submit" type="submit" name="submit" value="Send">
-							</div>
-							
-							<div id="shoutbox_options">
-								<p>Choose a color:</p>
-								<input type="radio" value="def" id="def" name="color" checked>
-									<label for="def">Default</label> | 
-								<input type="radio" value="blue" id="blue" name="color">
-									<label for="blue" class="blue">Blue</label> | 
-								<input type="radio" value="green" id="green" name="color">
-									<label for="green" class="green">Green</label>  | 
-								<input type="radio" value="orange" id="orange" name="color">
-									<label for="orange" class="orange">Orange</label>  | 
-								<input type="radio" value="red" id="red" name="color">
-									<label for="red"class="red">Red</label> 
-							</div>
-						</form>
-					</div>
-				</article>
-			</section>
+			<div id="main">
+				<div id="chat">
+					<hgroup>
+						<h2>Chat</h2>
+						<h3>100% Anonymous!</h3>
+					</hgroup>
+					<div id="shoutbox" class="shoutbox_content"></div>
+					<form method="POST" name="psowrte" id="sb_form" >
+						<div id="shoutbox_input">
+							<input id="shoutbox_nickname" type="text" name="name" value="Anonymous" placeholder="Anonymous">
+							<input id="shoutbox_message" type="text" name="data" placeholder="Message...">
+							<input id="shoutbox_submit" type="submit" name="submit" value="Send">
+						</div>
+						
+						<div id="shoutbox_options">
+							<p>Choose a color:</p>
+							<input type="radio" value="def" id="def" name="color" checked>
+								<label for="def">Default</label> | 
+							<input type="radio" value="blue" id="blue" name="color">
+								<label for="blue" class="blue">Blue</label> | 
+							<input type="radio" value="green" id="green" name="color">
+								<label for="green" class="green">Green</label>  | 
+							<input type="radio" value="orange" id="orange" name="color">
+								<label for="orange" class="orange">Orange</label>  | 
+							<input type="radio" value="red" id="red" name="color">
+								<label for="red"class="red">Red</label> 
+						</div>
+					</form>
+				</div>
+			</div>
 		</div>
 	</section>
 
 	<footer>
 		<div class="container">
-			<h2>About PirateBox</h2>
+			<h2 id="about">About PirateBox</h2>
 			<p>Inspired by pirate radio and the free culture movment, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
 			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
 			<p>To learn more about the project or to find out how to build your own PirateBox system, please visit <a href="http://wiki.daviddarts.com/piratebox">http://wiki.daviddarts.com/piratebox</a>.</p>
