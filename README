@@ -22,6 +22,7 @@ PirateBox scripts can:
    * Setup WLAN Interface via iw
    * Setup hotspot functionality (hostapd)
    * Setup IP Adresses of wlan interface
+   * Proping until USB-WLAN is available
    * Can add wlan interface to an existing bridge
    * Sets Up a DHCP Server with redirect to wlan-interface IP
    * Upload landing page  (via iframe droopy)
@@ -37,6 +38,8 @@ PirateBox scripts can:
    * Optional Poll for WLAN device until it available (for USB wifi cards)
 
 
+More information can be found ont http://piratebox.aod-rpg.de
+Installation-HowTo und current Download-Link: http://piratebox.aod-rpg.de/dokuwiki/doku.php/piratebox_lighttpd
 
 Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
 and by PirateBox Manager https://github.com/TerrorByte/PirateBox-Manager
@@ -73,13 +76,3 @@ $ service piratebox start
 $ service piratebox stop
 $ service piratebox restart
 
------ Changelog -----
-Version: 1.0.0
-NOTE: This may only be a partial changelog, check github / your package manager for more info.
-
-* [New] push of systemd structure
-* [New] install method
-	* [New] install dependencies
-* [New] can now use restart in init
-* [Fixed] General cleaning
-* [Removed] [Testing] Executable, we will stick to service based

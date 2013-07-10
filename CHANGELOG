@@ -1,4 +1,16 @@
 CHANGELOG
 
+
+=== 1.0.0 ===
+NOTE: This may only be a partial changelog, check github / your package manager for more info.
+
+* [New] push of systemd structure
+* [New] install method
+        * [New] install dependencies
+	* [New] can now use restart in init
+	* [Fixed] General cleaning
+	* [Removed] [Testing] Executable, we will stick to service based
+
+
 === v0.6G ===
-* Hide dot files in directory-listing which are usually hidden files
+* [Fixed] Hide dot files in directory-listing which are usually hidden files
