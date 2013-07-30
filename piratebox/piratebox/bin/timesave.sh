@@ -57,6 +57,13 @@ if [ "$2" = "install" ] ; then
 fi
 
 if [ "$2" = "save" ] ; then
+    if [ -e $TIMESAVE ] ; then
+	if [ `date +%C%g%m%d%H%M` -lt  `cat $TIMESAVE` ] ; then
+		 logger -s "$0 : sorry, current date-time is lower then saved one, don't save it this time"
+		 exit 1
+	fi
+    fi
+
     #Save Datetime in a recoverable format...
     date +%C%g%m%d%H%M  > $TIMESAVE
     exit 0
