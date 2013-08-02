@@ -11,6 +11,7 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 	* [Fixed] General cleaning
 	* [Removed] [Testing] Executable, we will stick to service based
 * [Fixed] Overwritten saved timestamp with 1970 one
+* [New] possibility in install_piratebox.sh to exchange the hostname easily
 
 === v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
