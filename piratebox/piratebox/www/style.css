@@ -1,8 +1,271 @@
-date		{ font-size: 10pt; color: #666666; font-family:Tahoma }
-name        { font-weight: bold; font-family:Tahoma }
-data		{ font-family: Tahoma }
-data.def	{ color: #000000 }
-data.blue	{ color: #0000FF }
-data.green	{ color: #008000 }
-data.orange	{ color: #FF8040 }
-data.red	{ color: #FF0000 }
+* {
+  overflow: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body, div, object, iframe, fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+ol, ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+header, footer, nav, section, article, hgroup, figure {
+  display: block;
+}
+
+legend {
+  display: none;
+}
+
+body {
+  font-size: 100%;
+  font-family: sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+}
+
+body {
+  color: #1b1d1e;
+  font-family: sans-serif;
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.5em;
+  margin: 0;
+}
+
+h1, h2 {
+  font-size: 1.3em;
+  font-weight: bold;
+  line-height: auto;
+  margin: 0 0 0.25em;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: bold;
+  line-height: auto;
+  margin: 0 0 1em;
+}
+
+p {
+  font-size: 1em;
+  font-weight: normal;
+  line-height: 1.4em;
+  margin: 0;
+}
+
+p + p {
+  margin: 1em 0;
+}
+
+a {
+  color: #ad000b;
+  text-decoration: none;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: green;
+}
+
+.blue {
+  color: blue;
+}
+
+.orange {
+  color: #ff8040;
+}
+
+html, body {
+  background: #e5e5e5;
+}
+
+.container {
+  padding: 1em;
+  width: 100%;
+}
+
+img {
+  width: 100%;
+}
+
+header, footer {
+  background: #1b1d1e;
+}
+
+#top-nav {
+  width: 100%;
+}
+#top-nav ul {
+  margin: 0 auto;
+  text-align: center;
+}
+#top-nav li {
+  display: inline;
+}
+#top-nav li a {
+  font-size: 1.5em;
+  margin: 0 .5em;
+}
+
+#content .container {
+  padding: 1em 0;
+}
+
+#upload, #chat {
+  background: white;
+  border-radius: 3px;
+  margin: 0 0 1em;
+  padding: 1em;
+  -webkit-box-shadow: #a8a8a8 0px 3px 0px;
+  -moz-box-shadow: #a8a8a8 0px 3px 0px;
+  box-shadow: #a8a8a8 0px 3px 0px;
+}
+
+#shoutbox {
+  border: 1px solid #a8a8a8;
+  height: 350px;
+  overflow: auto;
+  width: 100%;
+  margin: 0 0 1em;
+  padding: 0 1em;
+}
+
+.message {
+  margin: 0 0 .25em;
+}
+
+date {
+  color: #a8a8a8;
+  font-size: .75em;
+  font-weight: 700;
+}
+
+name {
+  font-weight: bold;
+}
+
+data {
+  line-height: 1.2em;
+}
+
+#shoutbox_input {
+  margin: 0 0 1em;
+}
+
+#shoutbox_nickname, #shoutbox_message, #shoutbox_submit {
+  margin: 0 0 1em;
+  width: 100%;
+}
+
+footer {
+  color: #e5e5e5;
+}
+
+input {
+  background-color: white;
+  border: 1px solid #a8a8a8;
+  color: #1b1d1e;
+  cursor: text;
+  font-size: .75em;
+  height: 3em;
+  padding: 0 .5em;
+  vertical-align: baseline;
+}
+
+input[type=submit] {
+  background: #a8a8a8;
+  border: none;
+  color: white;
+  padding: 0;
+}
+
+input[type=radio] {
+  height: 1.3em;
+  margin: 0 .2em;
+}
+
+@media screen and (min-width: 769px) {
+  #logo {
+    float: left;
+    margin: 0;
+    width: 60%;
+  }
+
+  #logo img {
+    width: 80%;
+  }
+
+  #top-nav {
+    float: right;
+    margin: 1em 0;
+    width: 40%;
+  }
+  #top-nav ul {
+    text-align: left;
+  }
+  #top-nav li a {
+    margin: 0 1em 0 0;
+  }
+
+  #content .container {
+    padding: 1em;
+  }
+
+  #sidebar {
+    float: right;
+    margin: 0 0 1em;
+    width: 40%;
+  }
+
+  #main {
+    float: left;
+    width: 60%;
+  }
+
+  #chat {
+    margin: 0 1em 1em 0;
+  }
+
+  #shoutbox_nickname {
+    float: left;
+    margin: 0 1em 0 0;
+    width: 20%;
+  }
+
+  #shoutbox_message {
+    float: left;
+    margin: 0;
+    width: 60%;
+  }
+
+  #shoutbox_submit {
+    float: right;
+    margin: 0;
+    width: 15%;
+  }
+}
+@media screen and (min-width: 1025px) {
+  .container {
+    margin: 0 auto;
+    width: 80%;
+  }
+}
