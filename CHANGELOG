@@ -9,5 +9,5 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 	* [New] install dependencies
 	* [Fixed] General cleaning
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
-
+* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 
