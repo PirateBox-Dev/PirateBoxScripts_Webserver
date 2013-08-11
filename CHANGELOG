@@ -8,7 +8,6 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] install method
 	* [New] install dependencies
 	* [Fixed] General cleaning
-
-
-=== v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
+
+
