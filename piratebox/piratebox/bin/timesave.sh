@@ -27,7 +27,6 @@ fi
 
 . $1
 
-TIMESAVE="$PIRATEBOX_FOLDER/timesave_file"
 
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
@@ -38,19 +37,10 @@ if [ "$2" = "install" ] ; then
     touch $TIMESAVE
     chmod a+rw $TIMESAVE
 
-    if [  "$OPENWRT" = "yes" ] ; then
-        echo "Placing Timerecover on Startup" 
-        echo " $0 $1 recover " >> /etc/rc.local 
-	sed  's:exit:#exit:g' -i /etc/rc.local 
-        echo "Activating cron-service.."
-	/etc/init.d/cron enable
-	/etc/init.d/cron start
-	echo "done"
-    else 
-       echo "Remember to have cron active..."
-       echo "  on OpenWrt run:  /etc/init.d/cron enable"
-       echo "                   /etc/init.d/cron start"
-    fi
+    echo "Remember to have cron active..."
+    echo "  on OpenWrt run:  /etc/init.d/cron enable"
+    echo "                   /etc/init.d/cron start"
+
     #Save the current time
     $0 $1 "save"
     exit 0
@@ -70,9 +60,14 @@ if [ "$2" = "save" ] ; then
 fi
 
 if [ "$2" = "recover" ] ; then
-    date  `cat $TIMESAVE `
-    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
-    echo "Time recovered"
-    exit 0
+    if [ `date +%C%g%m%d%H%M` -lt  `cat $TIMESAVE` ] ;
+	    date  `cat $TIMESAVE `
+	    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
+	    echo "Time recovered"
+	    exit 0
+    else
+	   echo "Sorry, changing timebackward via timesave is not possible"
+	   exit 1
+    fi
 fi
 
