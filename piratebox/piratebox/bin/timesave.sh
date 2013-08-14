@@ -32,7 +32,6 @@ fi
 
 . $1
 
-TIMESAVE="$PIRATEBOX_FOLDER/timesave_file"
 
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
