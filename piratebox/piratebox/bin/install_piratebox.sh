@@ -151,7 +151,7 @@ if [ $2 = "flush_dns_reg" ] ; then
     echo "Installed crontab for flushing dnsmasq requlary"
 fi
 
-set_Hostname() {
+set_hostname() {
 	local name=$1 ; shift;
 
 	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/redirect.html
