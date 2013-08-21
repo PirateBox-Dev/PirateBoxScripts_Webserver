@@ -14,6 +14,9 @@ Contributors for modifications:
        # someguy  - Modifications for running on OpenWRT
        # ToM'aSs  - Languag-Support
 
+Design:
+   * David Brooks
+
 Based on Software:
    * Droopy     - http://stackp.online.fr/?p=28
    * forest.py  - http://www.triv.org.uk/~nelis/forest/
