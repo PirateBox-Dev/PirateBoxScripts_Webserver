@@ -3,7 +3,8 @@
 # This script distributes a set of files into $1 folder
 
 #Script for single stuff
-PIRATEBOX_FOLDER=${4:=/opt/piratebox}
+PIRATEBOX_FOLDER=$4
+PIRATEBOX_FOLDER=${PIRATEBOX_FOLDER:=/opt/piratebox}
 script=$PIRATEBOX_FOLDER/bin/distribute_file_into_directory.sh
 
 
