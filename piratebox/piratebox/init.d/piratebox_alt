@@ -74,6 +74,9 @@ case "$1" in
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
+    echo "Copy over design files"
+    $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
+
 
 
     if [ "$DO_IW" = "yes" ] ; then
