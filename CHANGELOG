@@ -5,6 +5,12 @@ CHANGELOG
 NOTE: This may only be a partial changelog, check github / your package manager for more info.
 
 * Overwork into new Responsive design
+  * New Frontpage
+  * Directory Listing in design
+        * Configuration in lighttpd.conf
+	* During startup README.txt & HEADER.txt get copied into /opt/piratebox/share/Shared folder
+	   ->   Exisiting files won't be overwritten!
+	   -> 	Scripts can be used in console with overwrite parameter do distribute your own files
 * [New] install method
 	* [New] install dependencies
 	* [Fixed] General cleaning
