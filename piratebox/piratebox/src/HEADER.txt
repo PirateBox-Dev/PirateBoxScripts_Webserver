@@ -1,7 +1,7 @@
 <head>
 	<title>PirateBox - Share Freely!</title>
-	<script src="../jquery.min.js"></script>
-	<script src="../scripts.js"></script>
+	<script src="/jquery.min.js"></script>
+	<script src="/scripts.js"></script>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 </head>
 <header id="header">
@@ -9,11 +9,11 @@
 		<div id="logo">
 			<h1>
 				<a href="/">
-					<img src="../piratebox-logo-horizontal-white.png" alt="PirateBox" title="PirateBox - Share Freely">
+					<img src="/piratebox-logo-horizontal-white.png" alt="PirateBox" title="PirateBox - Share Freely">
 				</a>
 			</h1>
 		</div>
-		<div id="menu-icon"><img src="../menu.png" alt="Menu"></div>
+		<div id="menu-icon"><img src="/menu.png" alt="Menu"></div>
 		<nav id="top-nav">
 			<ul>
 				<li><a href="/">Home</a></li>
