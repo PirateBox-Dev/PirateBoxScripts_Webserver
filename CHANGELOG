@@ -18,3 +18,10 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
 * [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 
+=== 1.0.0 beta3 ===
+
+* [Fix] Timesave script does not contain parts for OpenWRT anymore
+* [Fix] Timesave-file location is now configured in piratebox.conf 
+* [Fix] Fix in Changing hostname functionality
+* [New] Hostname changing generates the redirect.html now based on a Schema file
+* [New] Added JSON Mime-Type
