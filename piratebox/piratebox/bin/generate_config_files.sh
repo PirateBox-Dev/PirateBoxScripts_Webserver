@@ -45,7 +45,7 @@ set_pathnames() {
   DEFAULT_HOSTS=$CONFIG_PATH/hosts
   DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
-  LEASE_FILE=$1/tmp/leases
+  LEASE_FILE=$LEASE_FILE_LOCATION
   LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/env
 }
 

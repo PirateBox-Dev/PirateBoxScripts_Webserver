@@ -7,11 +7,12 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] push of systemd structure
 * [New] install method
         * [New] install dependencies
-	* [New] can now use restart in init
 	* [Fixed] General cleaning
 	* [Removed] [Testing] Executable, we will stick to service based
 * [Fixed] Overwritten saved timestamp with 1970 one
 * [New] possibility in install_piratebox.sh to exchange the hostname easily
+* [Fixed] Hide dot files in directory-listing which are usually hidden files
+* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 
 === v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
