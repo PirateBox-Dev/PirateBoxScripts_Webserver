@@ -53,6 +53,19 @@ else
    exit 1
 fi
 
+
+if [[ -f $PIRATEBOX/conf/init_done ]] ; then
+   INIT=OK
+else
+   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"
+   $PIRATEBOX/bin/install_piratebox.sh "$CONF" part2
+   $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
+   touch   $PIRATEBOX/conf/init_done
+fi
+
+
+
+
 # Command Line for DNSMASQ,  use extra config file generated from command above
 CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
 
