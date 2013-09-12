@@ -25,3 +25,4 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [Fix] Fix in Changing hostname functionality
 * [New] Hostname changing generates the redirect.html now based on a Schema file
 * [New] Added JSON Mime-Type
+* [Fix] Enable unescaped blanks in Upload-Folder
