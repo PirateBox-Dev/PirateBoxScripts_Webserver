@@ -26,4 +26,4 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 
 === v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
-
+* [Fix] Fixed captive Portal detection for iOS7
