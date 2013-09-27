@@ -15,7 +15,6 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 	* [New] install dependencies
 	* [Fixed] General cleaning
 * [New] possibility in install_piratebox.sh to exchange the hostname easily
-* [Fixed] Hide dot files in directory-listing which are usually hidden files
 * [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 
 === 1.0.0 beta3 ===
@@ -26,3 +25,7 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] Hostname changing generates the redirect.html now based on a Schema file
 * [New] Added JSON Mime-Type
 * [Fix] Enable unescaped blanks in Upload-Folder
+
+=== v0.6G ===
+* [Fix] Hide dot files in directory-listing which are usually hidden files
+* [Fix] Fixed captive Portal detection for iOS7
