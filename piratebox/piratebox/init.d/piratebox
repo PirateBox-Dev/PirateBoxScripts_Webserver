@@ -29,6 +29,7 @@ PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
 PIDFILE_LIGHTTPD=/opt/piratebox/tmp/lighttpd.pid
 PIDFILE_SHOUTBOX=/opt/piratebox/tmp/shoutbox_daemon.pid
+PIDFILE_RADVD=/opt/piratebox/tmp/radvd.pid
 
 PIRATEBOX=/opt/piratebox
 CONF=$PIRATEBOX/conf/piratebox.conf
@@ -37,6 +38,8 @@ CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
 #Some extra config files for dnsmasq
 CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
+
+CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf
 
@@ -130,6 +133,12 @@ case "$1" in
          log_end_msg $?
        fi
 
+	if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
+	  log_daemon_msg "Starting radvd..."
+	  start-stop-daemon --start --quiet --exec radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
+	  log_end_msg $?
+ 	fi
+
 
         if [ "$DROOPY_ENABLED" = "yes" ] ; then
           #Start here the PirateBox-Parts droopy i.e.
@@ -181,6 +190,12 @@ case "$1" in
        log_daemon_msg "Stopping dnsmasq..."
        start-stop-daemon --stop --quiet  --pidfile $PIDFILE_DNSMASQ  
        log_end_msg $?
+    fi
+
+    if [ -e $PIDFILE_RADVD ] ; then
+	log_daemon_msg "Stopping radvd..."
+	start-stop-daemon --stop --quite --pidfile $PIDFILE_RADVD
+  	log_end_msg $?
     fi
 
     #Stop Global Chat daemon
