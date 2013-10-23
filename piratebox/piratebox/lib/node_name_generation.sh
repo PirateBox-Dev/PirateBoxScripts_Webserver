@@ -16,14 +16,14 @@ generate_node_name() {
 
 	local complete_node_name=$in_node_name"."$in_host
 
-	if [ "$in_node_gen" = "no" ] : then
+	if [ "$in_node_gen" = "no" ] ; then
         	complete_node_name=$in_node_name
 	fi
      	if [ "$in_node_name" = "" ] ;  then
 		complete_node_name=$in_host
 	fi
 	if [ "$complete_node_name" != "" ] ; then
-		export NODE_GEN_OUTPUT=$output_name
+		export NODE_GEN_OUTPUT=$complete_node_name
 		return 0
 	else
         	echo "Error: No valid node-name found"
