@@ -178,8 +178,19 @@ generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
 generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
 
-if [ "$NODE_CONFIG_ACTIVE" == "yes" ] ; then
+if [ "$NODE_CONFIG_ACTIVE" = "yes" ] ; then
      echo "Appending local node-name hosts entry"
-     echo $NODE_NAME"."$HOST   $NODE_IPV6_IP" >> "$HOSTS_CONFIG	
+     local complete_node_name=$NODE_NAME"."$HOST
+     if [ "$NODE_GEN" = "no" ] : then
+	complete_node_name=$NODE_NAME
+     fi
+     if [ "$NODE_NAME" = "" ] ;  then
+	complete_node_name=$HOST
+     fi
+     if [ "$complete_node_name" != "" ] ; then
+     	echo $complete_node_name   $NODE_IPV6_IP" >> "$HOSTS_CONFIG	
+     else
+	echo "Error: No valid node-config found, skipping"
+     fi
 fi
 
