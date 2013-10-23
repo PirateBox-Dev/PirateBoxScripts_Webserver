@@ -24,7 +24,18 @@
 #    GEN_CHATFILE      = generated html chatfile
 #    PIRATEBOX         = PirateBox Folder
 #    CHATFILE          = data store for Shoutbox-content
-#    
+#    NODE_CONFIG       = Config file for Mesh-Node parameters
+#  -
+#  ipv6.conf (loaded within piratebox.conf)
+#    IPV6_ENABLE	= enables IPv6 config
+#    IPV6_ADVERT	= which service for advertising IPv6 Prefix
+#    IPV6_MASK		= Netmask
+#    IPV6_PREFIX	= Which prefix should be announced.
+#  -
+#  node.conf
+#    NODE_CONFIG_ACTIVE = if yes, configure special ipv6-node-hostname
+#    NODE_IPV6_IP	= Device specific IP
+#    NODE_NAME & NODE_GEN = Settings for setting up Hostname
 #
 #  Matthias Strubel    -- 08.06.2012
 #    licenced with GPL-3
@@ -162,7 +173,7 @@ fi
 . $1
 
 . $NODE_CONFIG
-
+. $PIRATEBOX_FOLDER/lib/node_name_generation.sh
 
 IPV6="#"
 
@@ -180,17 +191,10 @@ generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHA
 
 if [ "$NODE_CONFIG_ACTIVE" = "yes" ] ; then
      echo "Appending local node-name hosts entry"
-     local complete_node_name=$NODE_NAME"."$HOST
-     if [ "$NODE_GEN" = "no" ] : then
-	complete_node_name=$NODE_NAME
-     fi
-     if [ "$NODE_NAME" = "" ] ;  then
-	complete_node_name=$HOST
-     fi
-     if [ "$complete_node_name" != "" ] ; then
-     	echo $complete_node_name   $NODE_IPV6_IP" >> "$HOSTS_CONFIG	
-     else
-	echo "Error: No valid node-config found, skipping"
+     if generate_node_name "$HOST" "$NODE_NAME" "$NODE_GEN" ; then
+	echo $NODE_GEN_OUTPUT   $NODE_IPV6_IP" >> "$HOSTS_CONFIG 
+     else 
+	 echo "Error: No valid node-name-config found, skipping"
      fi
 fi
 
