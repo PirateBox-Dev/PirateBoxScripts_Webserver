@@ -47,6 +47,8 @@ DEFAULT_HOSTS=""
 LEASE_FILE=""
 RADVD_CONFIG=""
 LIGHTTPD_ENV_CONFIG=""
+AVAHI_SRC=""
+AVAHI_CONFIG=""
 
 set_pathnames() {
   CONFIG_PATH=$1/conf
@@ -58,6 +60,9 @@ set_pathnames() {
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
   LEASE_FILE=$LEASE_FILE_LOCATION
   LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/env
+  AVAHI_CONFIG=$CONFIG_PATH/avahi/avahi-daemon.conf
+  AVAHI_SRC=$CONFIG_PATH/avahi/avahi-daemon.conf.schema
+
 }
 
 generate_hosts() {
@@ -189,13 +194,24 @@ generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
 generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
 
+COMPLETE_HOST=$HOST
+
 if [ "$NODE_CONFIG_ACTIVE" = "yes" ] ; then
      echo -n "Appending local node-name hosts entry"
      if generate_node_name "$HOST" "$NODE_NAME" "$NODE_GEN" ; then
 	echo $NODE_GEN_OUTPUT
 	echo "$NODE_IPV6_IP   $NODE_GEN_OUTPUT  " >> $HOSTS_CONFIG
+	COMPLETE_HOST=$NODE_GEN_OUTPUT
      else 
 	 echo "Error: No valid node-name-config found, skipping"
      fi
 fi
 
+#We want a long hostname and not only the hostname itself...
+### PirateBox Scripts generates its own config in  /opt/piratebox/conf/avahi
+###   but, the daemon works per default only on /etc/avahi
+### If you want to enable avahi, then you have to link /etc/avahi to /opt/piratebox/conf/avahi
+### On OpenWRT this should happen, if avahi is available before installing the piratebox
+###  automtically. 
+AVAHI_HOST=$( echo $COMPLETE_HOST | sed 's|\.|_|g' )
+sed "s|#####MASKED_HOSTNAME#####|$AVAHI_HOST|" $AVAHI_SRC > $AVAHI_CONFIG
