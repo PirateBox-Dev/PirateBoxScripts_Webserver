@@ -24,6 +24,14 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] Added JSON Mime-Type
 * [Fix] Enable unescaped blanks in Upload-Folder
 
+=== 1.0.0 beta4 ===
+
+* [Fix] iOS 7 captive Portal fix
+
+=== 1.0.0 beta5 ===
+
+* [New] Sample configuration for UPnP Server
+
 === v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
 * [Fix] Fixed captive Portal detection for iOS7
