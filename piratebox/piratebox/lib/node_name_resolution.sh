@@ -15,7 +15,7 @@ resolve_node_hostname() {
 
    local AVAHI_HOST=$( echo $in_nodename | sed 's|\.|_|g' )
    local bonjour_hostname="$AVAHI_HOST"".local"
-   local output=$( avahi-resolve-host-name $bonjour_hostname )
+   local output=$( avahi-resolve-host-name -6 $bonjour_hostname )
 
    if [ ! -z "$output" ] ; then
 	echo "Found host: $output"
