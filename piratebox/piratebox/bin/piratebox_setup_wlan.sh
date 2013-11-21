@@ -71,6 +71,8 @@ if [ $2 =  "start" ] ; then
      IPv6="$IPV6_IP"/"$IPV6_MASK"
      echo  "  $INTERFACE  -->$IPv6<--"
      ifconfig $INTERFACE  add  $IPv6
+     #That ip is a local IP only
+     ip addr change  $IPv6   dev $INTERFACE  scope link
   fi
 
   . $NODE_CONFIG
