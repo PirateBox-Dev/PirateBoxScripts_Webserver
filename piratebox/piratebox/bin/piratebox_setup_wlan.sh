@@ -68,14 +68,28 @@ if [ $2 =  "start" ] ; then
 
   if [ $IPV6_ENABLE = "yes" ] ; then
      echo  "Setting up IPv6 stuff"
-     IPv6="$IPV6_PREFIX:$IPV6_IP"/"$IPV6_MASK"
+     IPv6="$IPV6_IP"/"$IPV6_MASK"
      echo  "  $INTERFACE  -->$IPv6<--"
      ifconfig $INTERFACE  add  $IPv6
+     #That ip is a local IP only
+     ip addr change  $IPv6   dev $INTERFACE  scope link
+  fi
+
+  . $NODE_CONFIG
+
+  if [ "$NODE_CONFIG_ACTIVE" == "yes" ] && [ "$NODE_IPV6_SET_IP" == "yes" ]; then
+	echo "Setting up IPv6 Mesh-Node IP on interface $NODE_INTERFACE"
+	ifconfig $NODE_INTERFACE add $NODE_IPV6_IP"$NODE_IPV6_MASK"
   fi
 
 elif [ $2 = "stop" ] ; then
   echo "Stopping wifi interface $INTERFACE "
   ifconfig $INTERFACE down
+
+  if [ "$NODE_CONFIG_ACTIVE" == "yes" ] && [ "$NODE_IPV6_SET_IP" == "yes" ] ; then
+	echo "Removing the Node-Address again..."
+        ifconfig $NODE_INTERFACE del $NODE_IPV6_IP"$NODE_IPV6_MASK"
+  fi
 elif [ $ = "probe" ] ; then 
    # simply check if the interface is available
    probe
