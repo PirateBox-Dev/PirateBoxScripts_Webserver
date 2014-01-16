@@ -10,7 +10,7 @@ VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
 
 IMAGE_FILE=piratebox_ws_1.0_img.gz
 TGZ_IMAGE_FILE=piratebox_ws_1.0_img.tar.gz
-SRC_IMAGE=image_stuff/OpenWRT.img.gz
+SRC_IMAGE=image_stuff/OpenWRT_ext4_50MB.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/piratebox_img
 MOUNT_POINT=image_stuff/image
 OPENWRT_FOLDER=image_stuff/openwrt
