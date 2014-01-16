@@ -34,6 +34,10 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 
 * [New] Sample configuration for UPnP Server
 
+=== 1.0.0 beta6 ===
+
+* [New] Image file is ext4 and 50MB
+
 === v0.6G ===
 * [Fix] Hide dot files in directory-listing which are usually hidden files
 * [Fix] Fixed captive Portal detection for iOS7
