@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Matthias Strubel - 2012-09-15
+# Matthias Strubel - (c)2012-2014 with GPL-3
 #
 # Only calls generate-Routing in piratebox-folder
 #   gets Piratebox-Folder into www 

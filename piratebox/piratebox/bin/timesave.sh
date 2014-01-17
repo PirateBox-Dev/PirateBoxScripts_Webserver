@@ -8,7 +8,7 @@
 #  gives a sort of stability to complete standalone 
 #  systems.
 #
-#  Licenced under GPL-2  @ 2012
+#  Licenced under GPL-3  @ 2012-2014
 #    Matthias Strubel    matthias.strubel@aod-rgp.de
 
 ##function for similar saving & getting time
