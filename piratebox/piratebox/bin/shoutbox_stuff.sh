@@ -22,7 +22,7 @@ export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
 
 #Writing init-message and reset chat..
 if [ "$RESET_CHAT"  = "yes" ] ; then
-   echo $CHATMSG > $CHATFILE
+   cat $PIRATEBOX_FOLDER/conf/chat_init.txt > $CHATFILE
 fi
 
 #Generate content file

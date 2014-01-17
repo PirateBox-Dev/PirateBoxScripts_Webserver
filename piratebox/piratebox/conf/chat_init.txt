@@ -1,0 +1,1 @@
+<div class='message'><date>00:00:00</date> <name>PirateBox:</name> <data class='def'>Chat and share files anonymously!</data></div>
