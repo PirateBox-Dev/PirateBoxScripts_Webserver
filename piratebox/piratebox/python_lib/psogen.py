@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Modificated ShoutBox Library
+# Modificated ShoutBox Library    (C)2013-2014
 #   enables further modifications for the ShoutBox
 #   Run without to generate htmlfile
 #   Run the following to enter a new line from command line
