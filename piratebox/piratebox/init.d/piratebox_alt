@@ -80,7 +80,9 @@ case "$1" in
       $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
     fi
 
-
+    if [ "$PBX_JSON_GENERATION" = "yes" ]; then
+        $PIRATEBOX_FOLDER/bin/json_generation.sh  $CONF
+    fi
 
     if [ "$DO_IW" = "yes" ] ; then
        log_daemon_msg " Setting up Interface (iw) "
