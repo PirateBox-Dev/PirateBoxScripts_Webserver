@@ -28,6 +28,13 @@ fi
 #Generate content file
 python psogen.py generate
 
+if [ "$SHOUTBOX_ENABLED" = "no" ] ; then
+        # If the shoutbox is disabled, we remove the writable flag
+        echo -n "Making shoutbox readonly..."
+        chmod a-w $CHATFILE
+        echo "done"
+fi
+
 #Set correct permissions
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_CHATFILE
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
