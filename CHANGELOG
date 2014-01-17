@@ -1,5 +1,7 @@
 CHANGELOG
 
+=== 1.1.0 ===
+* Enable / Disable file provisioning for custom lighttpd directory listing
 
 === 1.0.0 ===
 NOTE: This may only be a partial changelog, check github / your package manager for more info.

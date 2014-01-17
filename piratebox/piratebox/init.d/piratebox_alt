@@ -74,8 +74,11 @@ case "$1" in
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
-    echo "Copy over design files"
-    $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
+
+    if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
+      echo "Copy over design files"
+      $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
+    fi
 
 
 
