@@ -147,7 +147,7 @@ case "$1" in
             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
           fi
           log_daemon_msg "Starting droopy..."
-          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER" -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
+          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
           log_end_msg $?
        fi
 
