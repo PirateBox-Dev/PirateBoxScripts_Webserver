@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 0.6G
+VERSION = 1.0.0
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -8,14 +8,14 @@ PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
 
-IMAGE_FILE=piratebox_ws_0.6_img.gz
-TGZ_IMAGE_FILE=piratebox_ws_0.6_img.tar.gz
-SRC_IMAGE=image_stuff/OpenWRT.img.gz
+IMAGE_FILE=piratebox_ws_1.0_img.gz
+TGZ_IMAGE_FILE=piratebox_ws_1.0_img.tar.gz
+SRC_IMAGE=image_stuff/OpenWRT_ext4_50MB.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/piratebox_img
 MOUNT_POINT=image_stuff/image
 OPENWRT_FOLDER=image_stuff/openwrt
 OPENWRT_CONFIG_FOLDER=$(OPENWRT_FOLDER)/conf
-
+OPENWRT_BIN_FOLDER=$(OPENWRT_FOLDER)/bin
 
 .DEFAULT_GOAL = package
 
@@ -26,7 +26,7 @@ $(PACKAGE):  $(VERSION)
 	tar czf $@ $(PB_FOLDER) 
 
 
-$(IMAGE_FILE): $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER)
+$(IMAGE_FILE): $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
 	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
@@ -48,6 +48,12 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
 	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
+	sed 's:LEASE_FILE_LOCATION=$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
+
+$(OPENWRT_BIN_FOLDER):
+	mkdir -p $@
+	cp -v  $(PB_SRC_FOLDER)/bin/droopy $@
+	sed "s:libc.so.6:libc.so.0:" -i $@/droopy
 
 $(TGZ_IMAGE_FILE):
 	tar czf  $(TGZ_IMAGE_FILE) $(SRC_IMAGE_UNPACKED) 

@@ -1,5 +1,30 @@
 CHANGELOG
 
+=== 1.0.0 ===
+NOTE: This may only be a partial changelog, check github / your package manager for more info.
+
+* Overwork into new Responsive design
+  * New Frontpage
+  * Directory Listing in design
+        * Configuration in lighttpd.conf
+	* During startup README.txt & HEADER.txt get copied into /opt/piratebox/share/Shared folder
+	   ->   Exisiting files won't be overwritten!
+	   -> 	Scripts can be used in console with overwrite parameter do distribute your own files
+* [New] install method
+	* [New] install dependencies
+	* [Fixed] General cleaning
+* [New] possibility in install_piratebox.sh to exchange the hostname easily
+* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
+* [Fix] Timesave script does not contain parts for OpenWRT anymore
+* [Fix] Timesave-file location is now configured in piratebox.conf 
+* [Fix] Fix in Changing hostname functionality
+* [New] Hostname changing generates the redirect.html now based on a Schema file
+* [New] Added JSON Mime-Type
+* [Fix] Enable unescaped blanks in Upload-Folder
+* [Fix] iOS 7 captive Portal fix
+* [New] Sample configuration for UPnP Server
+* [New] Image file is ext4 and 50MB
+
 === v0.6G ===
-* Hide dot files in directory-listing which are usually hidden files
-* Fixed captive Portal detection for iOS7
+* [Fix] Hide dot files in directory-listing which are usually hidden files
+* [Fix] Fixed captive Portal detection for iOS7

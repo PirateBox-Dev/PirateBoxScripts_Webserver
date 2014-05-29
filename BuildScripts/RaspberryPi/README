@@ -1,0 +1,81 @@
+http://blog.mx17.net/2012/07/13/raspberry-pi-tip-mount-raspbmc-images/
+
+http://schloesser-edv.de/tips-und-tricks/linux/chroot-mount.html
+
+..
+
+things done for image preparation
+
+Download: Raspbian “wheezy”
+mount image  (like first link)
+
+
+mount -o bind /dev /mnt/dev
+mount -t proc none /mnt/proc
+
+sudo chroot /mnt/ /bin/bash
+
+do:
+---
+
+ apt-get -y install lighttpd
+ /etc/init.d/lighttpd stop
+ update-rc.d lighttpd remove
+ apt-get -y install dnsmasq 
+ /etc/init.d/dnsmasq  stop
+ update-rc.d dnsmasq remove 
+ apt-get -y  install hostapd
+ /etc/init.d/hostapd  stop
+ update-rc.d hostapd remove 
+ apt-get -y install iw
+ rm /bin/sh
+ ln /bin/bash /bin/sh
+ chmod a+rw /bin/sh
+
+Edit network config file /etc/network/interfaces
+  auto lo
+ 
+  iface lo inet loopback
+  iface eth0 inet dhcp
+ 
+  iface wlan0 inet manual
+  ### disalbed for PirateBox
+  #allow-hotplug wlan0
+  #wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+  #iface default inet dhcp
+
+
+wget  http://downloads.piratebox.de/piratebox-ws_current.tar.gz
+tar xzf piratebox-ws_current.tar.gz
+cd piratebox
+mkdir -p  /opt
+cp -rv  piratebox /opt
+cd /opt/piratebox
+sed 's:DROOPY_USE_USER="no":DROOPY_USE_USER="yes":' -i  /opt/piratebox/conf/piratebox.conf
+sed 's:PROBE_INTERFACE="no":PROBE_INTERFACE="yes":' -i  /opt/piratebox/conf/piratebox.conf
+ln /opt/piratebox/init.d/piratebox /etc/init.d/piratebox
+cd ../../ 
+rm -rv piratebox/ piratebox-ws_current.tar.gz
+
+
+
+
+-----------------------
+
+Install Raspberry as normal: http://elinux.org/RPi_Easy_SD_Card_Setup
+
+   Use my Image instead of the rpi.org one
+   Boot as normal with a Monitor, Keyboard & connected LAN (DHCP with Internet access) 
+   Do the following steps in Raspi-Config
+   Enable SSH Server via raspberry-config 
+   change Password
+   Expand FS
+   Finish & reboot now 
+
+Wait until reboot is finished- needs a while because the OS is resizing the filesystem during this reboot
+
+If you want to run it via default:
+
+   sudo update-rc.d piratebox  defaults 
+   sudo /etc/init.d/piratebox start
+   sudo touch /opt/piratebox/conf/init_done 
