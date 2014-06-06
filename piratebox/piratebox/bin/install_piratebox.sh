@@ -73,9 +73,9 @@ if [ $2 = 'part2' ] ; then
    if  [ !  -f $PIRATEBOX_FOLDER/share/board/kareha.pl ] ; then  
       cp $PIRATEBOX_FOLDER/src/kareha.pl $PIRATEBOX_FOLDER/share/board
    fi
-   
-   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
-   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
+  
+   [[ ! -L $PIRATEBOX_FOLDER/www/board  ]] &&   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
+   [[ ! -L $PIRATEBOX_FOLDER/www/Shared ]] &&   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
 fi 
 
 #Install the image-board
