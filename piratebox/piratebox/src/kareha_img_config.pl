@@ -6,8 +6,8 @@
 #
 
 # System config
- use constant ADMIN_PASS => 'CHANGEME';			# Admin password. For fucks's sake, change this.
- use constant SECRET => 'CHANGEME';				# Cryptographic secret. CHANGE THIS to something totally random, and long.
+# use constant ADMIN_PASS => 'CHANGEME';			# Admin password. For fucks's sake, change this.
+# use constant SECRET => 'CHANGEME';				# Cryptographic secret. CHANGE THIS to something totally random, and long.
 #use constant CAPPED_TRIPS => ('!!example1'=>' capcode','!!example2'=>' <em>cap</em>');	# Admin tripcode hash, for startng threads when locked down, and similar. Format is '!trip'=>'capcode', where 'capcode' is what is shown instead of the trip. This can contain HTML, but keep it valid XHTML!
 
 # Page look
