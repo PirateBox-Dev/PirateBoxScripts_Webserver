@@ -17,7 +17,7 @@
 		<nav id="top-nav">
 			<ul>
 				<li><a href="/">Home</a></li>
-				<li><a href="board/">Forum</a></li>
+				<li><a href="/board/">Forum</a></li>
 				<li><a href="/Shared/" class="current">Files</a></li>
 				<li><a href="#about">About</a></li>
 			</ul>
