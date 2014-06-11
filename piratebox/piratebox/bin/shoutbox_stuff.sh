@@ -31,6 +31,7 @@ python psogen.py generate
 #Set correct permissions
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_CHATFILE
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
-chmod ug+rw  $SHOUTBOX_CHATFILchmod ug+rw  $SHOUTBOX_CHATFILEE
+chmod ug+rw  $SHOUTBOX_CHATFILE
+chmod ug+rw  $SHOUTBOX_CHATFILE
 
 
