@@ -243,7 +243,6 @@ input[type=radio] {
   border: 0;
   color: white;
   margin: 0;
-  padding: 1em;
 }
 
 .button:active {
