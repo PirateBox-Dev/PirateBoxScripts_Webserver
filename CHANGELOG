@@ -11,6 +11,17 @@ CHANGELOG
 * [Fix] License Adjustments
 
 
+=== 1.0.1 ===
+* [Fix] Fixed setting permissions of shoutbox datafile
+* [New] Service File for RPi image
+* [Fix] Several typos in scripts
+* [Fix] Typo in front page and directory listing
+* [Fix] in timsave.sh while restoring date&time 
+* [Fix] [OpenWRT] Timesave create bootup restore 
+* [Fix] No dublicates symlink after double "part2" via install_piratebox.sh
+* [New] Remove # in front of secret & password to force user to change it before using the board
+* [Fix] Button padding in UI
+* [Fix] Board Link out of nested Shared folder
 
 === 1.0.0 ===
 NOTE: This may only be a partial changelog, check github / your package manager for more info.
