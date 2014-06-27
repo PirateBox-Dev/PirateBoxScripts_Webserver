@@ -29,6 +29,22 @@
 #    PIRATEBOX         = PirateBox Folder
 #    CHATFILE          = data store for Shoutbox-content
 #    
+#    NODE_CONFIG       = Config file for Mesh-Node parameters
+#  -
+#  ipv6.conf (loaded within piratebox.conf)
+#    IPV6_ENABLE	= enables IPv6 config
+#    IPV6_ADVERT	= which service for advertising IPv6 Prefix
+#    IPV6_MASK		= Netmask
+#    IPV6_PREFIX	= Which prefix should be announced.
+#  -
+#  node.conf
+#    NODE_CONFIG_ACTIVE = if yes, configure special ipv6-node-hostname
+#    NODE_IPV6_IP	= Device specific IP
+#    NODE_NAME & NODE_GEN = Settings for setting up Hostname
+#
+#  Matthias Strubel    -- 08.06.2012
+#    licenced with GPL-3
+
 CONFIG_PATH="conf"
 DNSMASQ_CONFIG=""
 HOSTS_CONFIG=""
@@ -36,6 +52,8 @@ DEFAULT_HOSTS=""
 LEASE_FILE=""
 RADVD_CONFIG=""
 LIGHTTPD_ENV_CONFIG=""
+AVAHI_SRC=""
+AVAHI_CONFIG=""
 
 set_pathnames() {
   CONFIG_PATH=$1/conf
@@ -47,6 +65,9 @@ set_pathnames() {
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
   LEASE_FILE=$LEASE_FILE_LOCATION
   LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/env
+  AVAHI_CONFIG=$CONFIG_PATH/avahi/avahi-daemon.conf
+  AVAHI_SRC=$CONFIG_PATH/avahi/avahi-daemon.conf.schema
+
 }
 
 generate_hosts() {
@@ -57,6 +78,7 @@ generate_hosts() {
    cat  $DEFAULT_HOSTS                 >  $HOSTS_CONFIG
    echo "$set_ipv4     $set_hostname " >> $HOSTS_CONFIG
    echo "$set_ipv6     $set_hostname " >> $HOSTS_CONFIG
+
 }
 
 generate_dnsmasq() {
@@ -97,6 +119,7 @@ generate_radvd(){
   mask=$2
   interface=$3
 
+  echo "Generating config for radvd.." 
   echo "#---- generated file ---"               > $RADVD_CONFIG  
   echo "
     interface $interface {
@@ -159,6 +182,9 @@ fi
 
 . $1
 
+. $NODE_CONFIG
+. $PIRATEBOX_FOLDER/lib/node_name_generation.sh
+
 IPV6="#"
 
 set_pathnames  $PIRATEBOX_FOLDER
@@ -166,12 +192,31 @@ set_pathnames  $PIRATEBOX_FOLDER
 ipv6_call=''
 if [ "$IPV6_ENABLE" = "yes" ] ; then
    ipv6_call=$IPV6_PREFIX
-   IPV6=$IPV6_PREFIX:$IPV6_IP
+   IPV6=$IPV6_IP
    [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
 generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
 
+COMPLETE_HOST=$HOST
 
+if [ "$NODE_CONFIG_ACTIVE" = "yes" ] ; then
+     echo -n "Appending local node-name hosts entry "
+     if generate_node_name "$HOST" "$NODE_NAME" "$NODE_GEN" ; then
+	echo $NODE_GEN_OUTPUT
+	echo "$NODE_IPV6_IP   $NODE_GEN_OUTPUT  " >> $HOSTS_CONFIG
+	COMPLETE_HOST=$NODE_GEN_OUTPUT
+     else 
+	 echo "Error: No valid node-name-config found, skipping"
+     fi
+fi
 
+#We want a long hostname and not only the hostname itself...
+### PirateBox Scripts generates its own config in  /opt/piratebox/conf/avahi
+###   but, the daemon works per default only on /etc/avahi
+### If you want to enable avahi, then you have to link /etc/avahi to /opt/piratebox/conf/avahi
+### On OpenWRT this should happen, if avahi is available before installing the piratebox
+###  automtically. 
+AVAHI_HOST=$( echo $COMPLETE_HOST | sed 's|\.|_|g' )
+sed "s|#####MASKED_HOSTNAME#####|$AVAHI_HOST|" $AVAHI_SRC > $AVAHI_CONFIG

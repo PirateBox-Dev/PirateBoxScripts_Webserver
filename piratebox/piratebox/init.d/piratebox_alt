@@ -27,6 +27,8 @@ PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
 PIDFILE_LIGHTTPD=/opt/piratebox/tmp/lighttpd.pid
 PIDFILE_SHOUTBOX=/opt/piratebox/tmp/shoutbox_daemon.pid
+PIDFILE_RADVD=/opt/piratebox/tmp/radvd.pid
+
 
 
 PIRATEBOX=/opt/piratebox
@@ -36,6 +38,8 @@ CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
 #Some extra config files for dnsmasq
 CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
+
+CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf 
 
@@ -130,9 +134,16 @@ case "$1" in
          echo  $?
        fi
 
+        if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
+          echo  "Starting radvd..."
+          start-stop-daemon  -S -q -x radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD 
+          echo $?
+        fi
+
+
+
        if [ "$DROOPY_ENABLED" = "yes" ] ; then
-         #Start here the PirateBox-Parts droopy i.e.
-         echo "Starting droopy..."
+         #Start here the PirateBox-Parts droopy i.e.        echo "Starting droopy..."
          find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
          #Delete 0 Byte Files
          delete_empty.sh  $UPLOADFOLDER
@@ -179,7 +190,14 @@ case "$1" in
        echo "Stopping dnsmasq..."
        start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ  
        echo  $?
+   fi
+
+     if [ -e $PIDFILE_RADVD ] ; then
+        echo "Stopping radvd..."
+        start-stop-daemon -K -q -p $PIDFILE_RADVD
+        echo  $?
     fi
+
 
     if [ "$DROOPY_ENABLED" = "yes" ] ; then
        #Kill Droopy

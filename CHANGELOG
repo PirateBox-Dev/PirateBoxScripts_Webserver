@@ -18,6 +18,7 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 	* [New] install dependencies
 	* [Fixed] General cleaning
 	* [Removed] [Testing] Executable, we will stick to service based
+* [Fixed] Overwritten saved timestamp with 1970 one
 * [New] possibility in install_piratebox.sh to exchange the hostname easily
 * [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 * [Fix] Timesave script does not contain parts for OpenWRT anymore
@@ -26,13 +27,7 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] Hostname changing generates the redirect.html now based on a Schema file
 * [New] Added JSON Mime-Type
 * [Fix] Enable unescaped blanks in Upload-Folder
-
-=== 1.0.0 beta4 ===
-
 * [Fix] iOS 7 captive Portal fix
-
-=== 1.0.0 beta5 ===
-
 * [New] Sample configuration for UPnP Server
 
 === v0.6G ===
