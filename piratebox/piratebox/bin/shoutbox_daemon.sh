@@ -3,8 +3,8 @@
 # Starts deamon for global shoutbox service
 #  requires  piratebox.conf as first parameter
 #
-#  Matthias Strubel - 2012
-#  Licenced with GPL
+#  Matthias Strubel - 2012-2014
+#  Licenced with GPL-3
 
 . $1
 

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Author: Matthias Strubel   / Feb. 2011
+# Author: Matthias Strubel   (c) 2011-2014 GPL-3
 #  Script for setting up the wlan interface
 #  Parameter 1 i used for the config file providing the parameters
 
-#   IP-Adress
+#   IP-Adress  IPv4 + IPv6
 #   Netmask
 #   Interface
 

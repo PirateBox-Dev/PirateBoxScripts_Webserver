@@ -1,4 +1,4 @@
-#   PirateBox send Message lib
+#   PirateBox send Message lib  (C)2012-2014
 #    modified by Matthias Strubel
 #
 #  Original Version by

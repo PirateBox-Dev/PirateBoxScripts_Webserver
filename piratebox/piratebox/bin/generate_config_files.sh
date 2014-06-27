@@ -1,10 +1,14 @@
 #!/bin/sh
 
+#  Matthias Strubel    (c) 2013-2014
+#    licenced with GPL-3
+#
 # Generate severall configuration files out of piratebox.conf
 #     conf/hosts_generated
 #     conf/dnsmasq_generated.conf
 #     conf/radvd_generated.conf
 #     conf/lighttpd/env
+#     conf/hosts_mesh
 #
 # There are files for default configuration or adding custom stuff:
 #     conf/hosts
@@ -25,10 +29,6 @@
 #    PIRATEBOX         = PirateBox Folder
 #    CHATFILE          = data store for Shoutbox-content
 #    
-#
-#  Matthias Strubel    -- 08.06.2012
-#    licenced with GPL-3
-
 CONFIG_PATH="conf"
 DNSMASQ_CONFIG=""
 HOSTS_CONFIG=""
