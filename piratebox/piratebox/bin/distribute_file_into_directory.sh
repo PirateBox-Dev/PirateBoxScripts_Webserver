@@ -1,6 +1,5 @@
 #!/bin/sh
 
-#  Matthias Strubel (c) 2014  - GPL3
 #   matthias.strubel@aod-rpg.de
 #
 #  The following script is used to distribute a specific file into directories of the givien folder

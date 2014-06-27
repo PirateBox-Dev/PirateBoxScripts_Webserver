@@ -1,6 +1,5 @@
 #!/bin/sh
 
-
 #  Matthias Strubel (c) 2014  - GPL3
 #   matthias.strubel@aod-rpg.de
 #

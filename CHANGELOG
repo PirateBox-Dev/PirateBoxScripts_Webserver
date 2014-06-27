@@ -10,7 +10,6 @@ CHANGELOG
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [Fix] License Adjustments
 
-
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
 * [New] Service File for RPi image
@@ -55,4 +54,5 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 
 === v0.6G ===
 * [Fixed] Hide dot files in directory-listing which are usually hidden files
+* [New] Image file is ext4 and 50MB
 * [Fix] Fixed captive Portal detection for iOS7
