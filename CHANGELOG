@@ -3,6 +3,14 @@ CHANGELOG
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
+* [New] Disable the Shoutbox to prevent writing into it
+* [New] Enable PHP using as default parsing language to enable easier modification
+* [New] Mesh implementation
+* [New] JSON config file to direct client side applications, like "share apps"
+* [New] Simply python IRC Server installed and prepareable for automatic start
+* [Fix] License Adjustments
+
+
 
 === 1.0.0 ===
 NOTE: This may only be a partial changelog, check github / your package manager for more info.
