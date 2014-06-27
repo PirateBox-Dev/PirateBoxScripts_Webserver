@@ -7,6 +7,10 @@ CHANGELOG
 * [Fix] Typo in front page and directory listing
 * [Fix] in timsave.sh while restoring date&time 
 * [Fix] [OpenWRT] Timesave create bootup restore 
+* [Fix] [OpenWRT] Fix for not working "already installed" recognition to skip parts 
+* [Fix] [OpenWRT] Fix for errors during installing piratebox-mod-imageboard because of duplicate links
+* [Fix] [OpenWRT] Fix for LED flashing during auto install (box-installer on image) 
+* [Fix] [OpenWRT] Fix error messages on package reinstall. (extendRoot)
 * [Fix] No dublicates symlink after double "part2" via install_piratebox.sh
 * [New] Remove # in front of secret & password to force user to change it before using the board
 * [Fix] Button padding in UI
