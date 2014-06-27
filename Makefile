@@ -21,6 +21,8 @@ OPENWRT_BIN_FOLDER=$(OPENWRT_FOLDER)/bin
 
 $(VERSION):	
 	echo "$(PACKAGE_NAME)" >  $(VERSION_FILE)
+	echo `git status -sb --porcelain` >> $(VERSION_FILE)
+	echo ` git log -1 --oneline` >>  $(VERSION_FILE)
 
 $(PACKAGE):  $(VERSION)
 	tar czf $@ $(PB_FOLDER) 
