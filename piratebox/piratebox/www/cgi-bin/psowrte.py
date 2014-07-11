@@ -11,9 +11,11 @@ print "Content-type:text/html\r\n\r\n"
 
 values = cgi.FieldStorage()
 if values.has_key("name"):
-  name = values["name"].value
+  rawname = values["name"].value
 else:
-  name = "&nbsp;"
+  rawname = "&nbsp;"
+namepass = re.sub("<", "&lt;", rawname)
+name = re.sub(">", "&gt;", namepass)
 if values.has_key("data"):
   rawdata = values["data"].value
 else:
@@ -23,7 +25,7 @@ data = re.sub(">", "&gt;", datapass)
 color = values["color"].value
 curdate = datetime.datetime.now()
 
-process_form( name , rawdata , color )
+process_form( rawname , rawdata , color )
 
 print """<html><body>ok</body></html>"""
 
