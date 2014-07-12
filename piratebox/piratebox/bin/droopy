@@ -166,7 +166,7 @@ userinfo = '''
 <div id="message" class="box"> %(message)s </div>
 '''
 
-maintmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(maintitle)s</title>
+maintmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s/favicon.ico" type="image/x-icon" /><title>%(maintitle)s</title>
 ''' + style + '''
 <center>
 ''' + userinfo + '''
@@ -219,7 +219,7 @@ function onunload() {
 </body></html>
 '''
 
-successtmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(successtitle)s</title>
+successtmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s/favicon.ico" type="image/x-icon" /><title>%(successtitle)s</title>
 ''' + style + '''
 </head>
 <body>
@@ -239,7 +239,7 @@ successtmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s
 </html>
 '''
 
-errortmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s:8001/favicon.ico" type="image/x-icon" /><title>%(errortitle)s</title>
+errortmpl = '''<html><head><LINK rel="shortcut icon" href="http://%(hostname)s/favicon.ico" type="image/x-icon" /><title>%(errortitle)s</title>
 ''' + style + '''
 </head>
 <body>
