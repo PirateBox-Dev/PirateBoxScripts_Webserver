@@ -79,6 +79,7 @@ cleanimage:
 	- rm -f  $(SRC_IMAGE_UNPACKED)
 	- rm -fr $(OPENWRT_CONFIG_FOLDER)
 	- rm -v  $(IMAGE_FILE)
+	- rm -rv $(OPENWRT_BIN_FOLDER)
 
 
 shortimage: $(IMAGE_FILE) $(TGZ_IMAGE_FILE)
