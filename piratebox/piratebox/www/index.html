@@ -51,7 +51,7 @@
 			<div id="chat" class="card">
 				<h2>Chat</h2>
 				<div id="shoutbox" class="shoutbox_content"></div>
-				<form method="POST" name="psowrte" id="sb_form" >
+				<form method="POST" name="psowrte" id="sb_form" onsubmit='getTime();'>
 					<div id="shoutbox-input">
 						<input class="nickname" type="text" 	name="name" 	value="Anonymous" placeholder="Nickname">
 						<input class="message" 	type="text" 	name="data" 	placeholder="Message...">
@@ -65,6 +65,21 @@
 						<label for="orange" class="bg-orange">	<input name="color" type="radio" value="orange" id="orange"		>Orange</label>
 						<label for="red" 	class="bg-red">		<input name="color" type="radio" value="red" 	id="red"		>Red</label>
 					</div>
+					<input type="hidden" name="time" id="time">
+					<script language='JavaScript'>
+						function getTime(){
+						var date = new Date();
+						var h = date.getUTCHours();
+						var hour = (h < 10) ? '0' + h : h;
+						var mi = date.getUTCMinutes();
+						var minute = (mi < 10) ? '0' + mi : mi;
+						var sc = date.getUTCSeconds();
+						var second = (sc < 10) ? '0' + sc : sc;
+						var loctime = hour + "." + minute + "." + second;
+
+						document.getElementById('time').value = loctime;
+						}
+					</script>
 				</form>
 			</div>
 		</div>

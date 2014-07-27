@@ -71,8 +71,8 @@ def read_data_file():
 #--------------
 # Function for saving new Shoubox-Content & Regenerate static HTML file -- usually called by HTML-Form
 #--------------
-def process_form( name , indata , color ):
-    content = save_input(  name , indata , color ) 
+def process_form( name , indata , color , time ):
+    content = save_input( name , indata , color , time ) 
 
     if broadcast_destination == False:
           generate_html_into_file ( content )
@@ -81,9 +81,9 @@ def process_form( name , indata , color ):
 #--------------
 # Acutally Saves SB-Content to datafile
 #--------------
-def save_input( name , indata , color ):
+def save_input( name , indata , color , time ):
 
-    content = prepare_line ( name, indata, color  )
+    content = prepare_line ( name, indata, color , time )
 
     if broadcast_destination != False:
         return writeToNetwork( content , broadcast_destination )
@@ -109,7 +109,7 @@ def writeToDisk ( content ):
 	return finalcontent 
 
 
-def prepare_line ( name, indata, color  ):
+def prepare_line ( name, indata, color , time ):
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
     curdate = datetime.datetime.now()
@@ -117,7 +117,8 @@ def prepare_line ( name, indata, color  ):
     # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
     # </div>
-    content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
+    #content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
+    content = "<div class='message'><date>" + time + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
     return content
 
 #--------------
