@@ -71,8 +71,8 @@ def read_data_file():
 #--------------
 # Function for saving new Shoubox-Content & Regenerate static HTML file -- usually called by HTML-Form
 #--------------
-def process_form( name , indata , color , time ):
-    content = save_input( name , indata , color , time ) 
+def process_form( name , indata , color , timestamp ):
+    content = save_input( name , indata , color , timestamp ) 
 
     if broadcast_destination == False:
           generate_html_into_file ( content )
@@ -81,9 +81,9 @@ def process_form( name , indata , color , time ):
 #--------------
 # Acutally Saves SB-Content to datafile
 #--------------
-def save_input( name , indata , color , time ):
+def save_input( name , indata , color , timestamp ):
 
-    content = prepare_line ( name, indata, color , time )
+    content = prepare_line ( name, indata, color , timestamp )
 
     if broadcast_destination != False:
         return writeToNetwork( content , broadcast_destination )
@@ -109,16 +109,16 @@ def writeToDisk ( content ):
 	return finalcontent 
 
 
-def prepare_line ( name, indata, color , time ):
+def prepare_line ( name, indata, color , timestamp ):
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
-    curdate = datetime.datetime.now()
+    curdate = datetime.datetime.fromtimestamp(timestamp)
     # Trying to make it look like this: 
     # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
     # </div>
-    #content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
-    content = "<div class='message'><date>" + time + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
+    #
+    content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
     return content
 
 #--------------
