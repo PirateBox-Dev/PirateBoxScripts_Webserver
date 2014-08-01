@@ -67,16 +67,16 @@ package:  $(PACKAGE)
 
 all: package  shortimage
 
-clean: cleanimage 
-	rm -f $(PACKAGE)
-	rm -f $(VERSION_FILE)
-
 cleanimage:
 	- rm -f  $(TGZ_IMAGE_FILE)
 	- rm -f  $(SRC_IMAGE_UNPACKED)
 	- rm -fr $(OPENWRT_CONFIG_FOLDER)
 	- rm -v  $(IMAGE_FILE)
+	- rm -rv $(OPENWRT_BIN_FOLDER)
 
+clean: cleanimage 
+	rm -f $(PACKAGE)
+	rm -f $(VERSION_FILE)
 
 shortimage: $(IMAGE_FILE) $(TGZ_IMAGE_FILE)
 
