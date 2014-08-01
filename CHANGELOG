@@ -17,6 +17,7 @@ CHANGELOG
 * [Fix] Board Link out of nested Shared folder
 * [Fix] Russian Translation in Droopy
 * [Fix] ReDistribute DirectoryListing files upon initialization on first Startup
+* [Fix] [OpenWRT] Fixing customization of lease-file location for OpenWRT
 
 === 1.0.0 ===
 NOTE: This may only be a partial changelog, check github / your package manager for more info.

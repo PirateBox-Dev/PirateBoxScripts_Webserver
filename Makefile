@@ -48,7 +48,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
 	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
-	sed 's:LEASE_FILE_LOCATION=$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
+	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
 
 $(OPENWRT_BIN_FOLDER):
 	mkdir -p $@
