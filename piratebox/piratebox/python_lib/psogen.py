@@ -12,6 +12,7 @@ import messages, broadcast
 
 datafilename = os.environ["SHOUTBOX_CHATFILE"]
 htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
+clienttimestamp =os.environ["SHOUTBOX_CLIENT_TIMESTAMP"]
 
 try:
      raw_dest =  os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"]
@@ -112,7 +113,10 @@ def writeToDisk ( content ):
 def prepare_line ( name, indata, color , timestamp ):
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
-    curdate = datetime.datetime.fromtimestamp(timestamp)
+    if clienttimestamp == 'yes':
+        curdate = datetime.datetime.fromtimestamp(timestamp)
+    else:
+        curdate = datetime.datetime.now()
     # Trying to make it look like this: 
     # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
