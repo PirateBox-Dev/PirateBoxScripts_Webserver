@@ -12,6 +12,7 @@ import messages, broadcast
 
 datafilename = os.environ["SHOUTBOX_CHATFILE"]
 htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
+clienttimestamp =os.environ["SHOUTBOX_CLIENT_TIMESTAMP"]
 
 try:
      raw_dest =  os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"]
@@ -71,8 +72,8 @@ def read_data_file():
 #--------------
 # Function for saving new Shoubox-Content & Regenerate static HTML file -- usually called by HTML-Form
 #--------------
-def process_form( name , indata , color ):
-    content = save_input(  name , indata , color ) 
+def process_form( name , indata , color , timestamp ):
+    content = save_input( name , indata , color , timestamp ) 
 
     if broadcast_destination == False:
           generate_html_into_file ( content )
@@ -81,9 +82,9 @@ def process_form( name , indata , color ):
 #--------------
 # Acutally Saves SB-Content to datafile
 #--------------
-def save_input( name , indata , color ):
+def save_input( name , indata , color , timestamp ):
 
-    content = prepare_line ( name, indata, color  )
+    content = prepare_line ( name, indata, color , timestamp )
 
     if broadcast_destination != False:
         return writeToNetwork( content , broadcast_destination )
@@ -109,14 +110,18 @@ def writeToDisk ( content ):
 	return finalcontent 
 
 
-def prepare_line ( name, indata, color  ):
+def prepare_line ( name, indata, color , timestamp ):
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
-    curdate = datetime.datetime.now()
+    if clienttimestamp == 'yes':
+        curdate = datetime.datetime.fromtimestamp(timestamp)
+    else:
+        curdate = datetime.datetime.now()
     # Trying to make it look like this: 
     # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
     # </div>
+    #
     content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
     return content
 

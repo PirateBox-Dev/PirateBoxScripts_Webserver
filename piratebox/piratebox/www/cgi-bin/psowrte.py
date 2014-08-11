@@ -21,9 +21,10 @@ else:
 datapass = re.sub("<", "&lt;", rawdata)
 data = re.sub(">", "&gt;", datapass)
 color = values["color"].value
+timestamp = float(values["timestamp"].value)
 curdate = datetime.datetime.now()
 
-process_form( name , rawdata , color )
+process_form( name , rawdata , color , timestamp )
 
 print """<html><body>ok</body></html>"""
 

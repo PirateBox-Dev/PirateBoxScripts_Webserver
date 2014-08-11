@@ -8,7 +8,9 @@ CHANGELOG
 * [New] Mesh implementation
 * [New] JSON config file to direct client side applications, like "share apps"
 * [New] Simply python IRC Server installed and prepareable for automatic start
+* [New] Shoutbox-Time via Client-Date possible
 * [Fix] License Adjustments
+
 
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
