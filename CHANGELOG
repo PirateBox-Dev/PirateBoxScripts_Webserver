@@ -10,6 +10,7 @@ CHANGELOG
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [New] Shoutbox-Time via Client-Date possible
 * [Fix] License Adjustments
+* [Fix] Prevent JS Injection in Shoutbox
 
 
 === 1.0.1 ===
