@@ -18,6 +18,7 @@ cd python_lib
 
 export SHOUTBOX_CHATFILE=$CHATFILE
 export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
+export SHOUTBOX_CLIENT_TIMESTAMP=$SHOUTBOX_CLIENT_TIMESTAMP
 
 
 #Writing init-message and reset chat..

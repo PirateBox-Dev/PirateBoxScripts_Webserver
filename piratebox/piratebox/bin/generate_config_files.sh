@@ -145,6 +145,7 @@ generate_lighttpd_env() {
 	local SHOUTBOX_GEN_HTMLFILE=$4
 	local PIRATEBOX=$5
 	local SHOUTBOX_CHATFILE=$6
+	local SHOUTBOX_CLIENT_TIMESTAMP=$7
 
         echo "Generating Environment-config for lighttpd ....."
 
@@ -157,6 +158,7 @@ generate_lighttpd_env() {
 	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
 	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" , 
 	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , 
+	   \"SHOUTBOX_CLIENT_TIMESTAMP\" => \"$SHOUTBOX_CLIENT_TIMESTAMP\" , 
 	   $LIGHTTPD_ENV_BR_LINE 
 
         )"
@@ -197,7 +199,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
-generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE
+generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP
 
 COMPLETE_HOST=$HOST
 
