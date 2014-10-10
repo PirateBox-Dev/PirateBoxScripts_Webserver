@@ -7,12 +7,16 @@ Live CD & Installer by:
    TerrorByte 
 
 Contributors for modifications:
+   * General Support
+       # stylesuxx   - Makefile and development support
+       # FriedZombie - OpenWRT and scripting support
    * Droopy
        # someguy   - Droopy Directory support
        # Reventlov - Modification for better iOS Support
    * python Forum
        # someguy  - Modifications for running on OpenWRT
        # ToM'aSs  - Languag-Support
+       # Liblor   - Fixes
 
 Design:
    * David Brooks

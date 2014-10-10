@@ -60,7 +60,9 @@ if [ $2 = 'part2' ] ; then
 #Copy Forban-Link spacer
    cp $PIRATEBOX_FOLDER/src/no_link.html $PIRATEBOX_FOLDER/www/forban_link.html
 
-#Set permissions
+   #Distribute the Directory Listing files
+   $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   #Set permissions
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/www -R
@@ -73,9 +75,9 @@ if [ $2 = 'part2' ] ; then
    if  [ !  -f $PIRATEBOX_FOLDER/share/board/kareha.pl ] ; then  
       cp $PIRATEBOX_FOLDER/src/kareha.pl $PIRATEBOX_FOLDER/share/board
    fi
-   
-   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
-   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
+  
+   [[ ! -L $PIRATEBOX_FOLDER/www/board  ]] &&   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
+   [[ ! -L $PIRATEBOX_FOLDER/www/Shared ]] &&   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
 fi 
 
 #Install the image-board

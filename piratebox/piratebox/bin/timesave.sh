@@ -65,7 +65,7 @@ if [ "$2" = "save" ] ; then
 fi
 
 if [ "$2" = "recover" ] ; then
-    if [ `get_datetime` -lt  `cat $TIMESAVE` ] ;
+    if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
 	    date  `cat $TIMESAVE `
 	    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
 	    echo "Time recovered"

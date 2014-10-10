@@ -123,7 +123,7 @@ generate_lighttpd_env() {
 	local PIRATEBOX=$5
 	local SHOUTBOX_CHATFILE=$6
 
-        echo "Generating Environment-config for ligttpd ....."
+        echo "Generating Environment-config for lighttpd ....."
 
         LIGHTTPD_ENV_BR_LINE=""
 	if [ "$GLOBAL_CHAT" = "yes" ] ; then

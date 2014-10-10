@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 1.0.0
+VERSION = 1.0.1
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -48,7 +48,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
 	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
-	sed 's:LEASE_FILE_LOCATION=$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
+	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
 
 $(OPENWRT_BIN_FOLDER):
 	mkdir -p $@
@@ -67,16 +67,16 @@ package:  $(PACKAGE)
 
 all: package  shortimage
 
-clean: cleanimage 
-	rm -f $(PACKAGE)
-	rm -f $(VERSION_FILE)
-
 cleanimage:
 	- rm -f  $(TGZ_IMAGE_FILE)
 	- rm -f  $(SRC_IMAGE_UNPACKED)
 	- rm -fr $(OPENWRT_CONFIG_FOLDER)
 	- rm -v  $(IMAGE_FILE)
+	- rm -rv $(OPENWRT_BIN_FOLDER)
 
+clean: cleanimage 
+	rm -f $(PACKAGE)
+	rm -f $(VERSION_FILE)
 
 shortimage: $(IMAGE_FILE) $(TGZ_IMAGE_FILE)
 
