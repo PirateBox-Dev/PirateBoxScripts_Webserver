@@ -1,0 +1,28 @@
+PirateBox RPi-Image 1.0.1
+PirateBox Version 1.0.1
+      Website: http://piratebox.cc
+        Forum: http://forum.piratebox.cc
+          IRC: #piratebox   on irc.Freenode.net
+
+Want to start a not enabled piratebox, run
+      # systemctl start piratebox
+
+Next Steps after first flashing:
+0. Change password:
+       # passwd
+1. If you want to have PirateBox enabled on startup:
+       # systemctl enable piratebox
+       # systemctl start piratebox
+2. Enable Fake-Timeservice
+       2.1 Set time like
+       #  date 101016112014   for "Fri Oct 10 16:11:00 2014"  format is: MMDDhhmmCCYY
+       # /opt/piratebox/bin/timesave.sh /opt/piratebox/conf/piratebox.conf install
+3. Activate the Kareha Image and Discussion Board by using editor
+   change the admin username and password (ADMIN_PASS and SECRET)
+       # nano /opt/piratebox/www/board/config.pl
+       # wget http://127.0.0.1/board/kareha.pl
+4. If you want, enable UPnP Media Server
+       # cp /etc/minidlna.conf /etc/minidlna.conf.bkp
+       # cp  /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
+       # systemctl start minidlna
+       # systemctl enable minidlna
