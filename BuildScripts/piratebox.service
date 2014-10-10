@@ -2,7 +2,8 @@
 Description=PirateBox Service
 
 [Service]
-Type=forking
+Type=idle
+RemainAfterExit=yes
 ExecStart=/opt/piratebox/init.d/piratebox_alt start
 ExecStop=/opt/piratebox/init.d/piratebox_alt stop
 #Restart=/opt/piratebox/init.d/piratebox_alt restart
