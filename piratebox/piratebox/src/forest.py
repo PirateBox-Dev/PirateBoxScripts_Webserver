@@ -338,7 +338,7 @@ def new_subject(field_storage):
         raise ValueError( ERR_NO_SUBJECT )
     elif not body:
         raise ValueError( ERR_NO_BODY )
-    subject = subject.replace('\t', ' ')
+    subject = strip_html(subject.replace('\t', ' '))
     row_hash = update_thread( author, subject )
     new_post( author, subject, body, row_hash )
     return row_hash

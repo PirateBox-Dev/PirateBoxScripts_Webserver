@@ -21,6 +21,7 @@ CHANGELOG
 * [Fix] [OpenWRT] Fixes issues when extendRoot couldn't get initilized correctly
 * [New] [OpenWRT] Optimized handling of mount options in extendRoot
 * [Fix] [RPi] Bootup issue with some USB-wifi sticks.
+* [Fix] Prevent XSS in forest.py
 
 === 1.0.0 ===
 NOTE: This may only be a partial changelog, check github / your package manager for more info.
