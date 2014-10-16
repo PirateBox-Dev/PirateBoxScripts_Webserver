@@ -14,9 +14,11 @@ Next Steps after first flashing:
        # systemctl enable piratebox
        # systemctl start piratebox
 2. Enable Fake-Timeservice
-       2.1 Set time like
+       2.1 Set time like (if needed)
        #  date 101016112014   for "Fri Oct 10 16:11:00 2014"  format is: MMDDhhmmCCYY
+       2.2 Enable timsave script
        # /opt/piratebox/bin/timesave.sh /opt/piratebox/conf/piratebox.conf install
+       # systemctl enable timesave.service
 3. Activate the Kareha Image and Discussion Board by using editor
    change the admin username and password (ADMIN_PASS and SECRET)
        # nano /opt/piratebox/www/board/config.pl
