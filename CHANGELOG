@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.0.2 ===
+* [Fix] Settings for correct permission of shoutbox files
+
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
 * [New] Service File for RPi image
