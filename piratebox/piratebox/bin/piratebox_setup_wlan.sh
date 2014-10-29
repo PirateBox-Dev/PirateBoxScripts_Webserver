@@ -8,6 +8,28 @@
 #   Netmask
 #   Interface
 
+probe() {
+  if [ "$PROBE_INTERFACE" = "yes" ] ; then
+     echo -n "Probing interface $INTERFACE"
+     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+     TEST_OK=$?
+     CNT=$PROBE_TIME
+     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
+     do
+        echo -n "."
+        sleep 1
+        CNT=$(( $CNT - 1 ))
+        if [ "$CNT" = 0 ] ; then
+          exit 99
+        fi
+        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
+        TEST_OK=$?
+     done
+  fi
+}
+
+
+
 # Load configfile
 
 if [ -z  $1 ] || [ -z $2 ]; then 
@@ -82,23 +104,4 @@ elif [ $ = "probe" ] ; then
 fi
 
 
-probe() {
-  if [ "$PROBE_INTERFACE" = "yes" ] ; then
-     echo -n "Probing interface $INTERFACE"
-     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-     TEST_OK=$?
-     CNT=$PROBE_TIME
-     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
-     do
-        echo -n "."
-        sleep 1
-        CNT=$(( $CNT - 1 ))
-        if [ "$CNT" = 0 ] ; then
-          exit 99
-        fi
-        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-        TEST_OK=$?
-     done
-  fi
-}
 
