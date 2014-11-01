@@ -21,6 +21,14 @@ except KeyError:
      broadcast_destination = False 
 
 
+def html_escape(text):
+    """Remove HTML chars from the given text and replace them with HTML
+entities. """
+    html_escape_table = {
+        '"': "&quot;", "'": "&apos;", ">": "&gt;",
+        "<": "&lt;"}
+    return "".join(html_escape_table.get(c,c) for c in text)
+
 #--------------
 #  Generates Shoutbox-HTML-Frame  ... 
 #           Imports:
@@ -91,27 +99,27 @@ def save_input( name , indata , color ):
         return writeToDisk ( content )
 
 def writeToNetwork ( content , broadcast_destination ):
-        message = messages.shoutbox_message()
-	message.set(content)
-        casting = broadcast.broadcast( )
-	casting.setDestination(broadcast_destination)
-	casting.set( message.get_message() )
-	casting.send()
-	return None
+    message = messages.shoutbox_message()
+    message.set(content)
+    casting = broadcast.broadcast( )
+    casting.setDestination(broadcast_destination)
+    casting.set( message.get_message() )
+    casting.send()
+    return None
 
 def writeToDisk ( content ):
-        old = read_data_file()
-        finalcontent = content  + old 
-        datafile = open(datafilename, 'r+')
-        datafile.write(finalcontent)
-        #datafile.truncate(0)
-        datafile.close()
-	return finalcontent 
+    old = read_data_file()
+    finalcontent = content  + old 
+    datafile = open(datafilename, 'r+')
+    datafile.write(finalcontent)
+    #datafile.truncate(0)
+    datafile.close()
+    return finalcontent 
 
-
-def prepare_line ( name, indata, color  ):
-    datapass = re.sub("<", "&lt;", indata)
-    data = re.sub(">", "&gt;", datapass)
+def prepare_line (name, indata, color):
+    name = html_escape(name)
+    data = html_escape(indata)
+    color = html_escape(color)
     curdate = datetime.datetime.now()
     # Trying to make it look like this: 
     # <div class="message">
@@ -132,6 +140,3 @@ if __name__ == "__main__":
   
   generate_html_from_file ()
   print "Generated HTML-Shoutbox File."
-
-
-
