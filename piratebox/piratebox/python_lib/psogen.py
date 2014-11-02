@@ -22,6 +22,15 @@ except KeyError:
      broadcast_destination = False 
 
 
+def html_escape(text):
+    """Remove HTML chars from the given text and replace them with HTML
+entities. """
+    html_escape_table = {
+        '"': "&quot;", "'": "&apos;", ">": "&gt;",
+        "<": "&lt;"}
+    return "".join(html_escape_table.get(c,c) for c in text)
+
+
 #--------------
 #  Generates Shoutbox-HTML-Frame  ... 
 #           Imports:
@@ -111,8 +120,8 @@ def writeToDisk ( content ):
 
 
 def prepare_line ( name, indata, color , timestamp ):
-    datapass = re.sub("<", "&lt;", indata)
-    data = re.sub(">", "&gt;", datapass)
+    name = html_escape(name)
+    data = html_escape(indata)
     if clienttimestamp == 'yes':
         curdate = datetime.datetime.fromtimestamp(timestamp)
     else:
