@@ -11,7 +11,7 @@ CHANGELOG
 * [New] Shoutbox-Time via Client-Date possible
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
-
+* [Fix] Shoutbox, Unified HTML-character-escaping
 
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
