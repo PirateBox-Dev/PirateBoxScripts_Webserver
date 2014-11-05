@@ -1,5 +1,10 @@
 CHANGELOG
 
+
+=== 1.0.4 === 
+* [Fix] Some script cleanups
+* [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
+
 === 1.0.2 ===
 * [Fix] Settings for correct permission of shoutbox files
 * [Fix] Broken probe function in some shells
