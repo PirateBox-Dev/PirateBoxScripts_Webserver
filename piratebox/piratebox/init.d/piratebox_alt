@@ -11,9 +11,9 @@
 # Description:       Based on /opt/piratebox/conf/piratebox.conf starts:  * DNSMASQ * HOSTAPD * DROOPY * WLAN-config * CHAT
 ### END INIT INFO
 
-###  
+###
 #  Default start-stop script for piratebox services on a laptop
-#   written by Matthias Strubel  (matthias.strubel@aod-rpg.de) 2011-02-22 
+#   written by Matthias Strubel  (matthias.strubel@aod-rpg.de) 2011-02-22
 #  licenced by gpl, feel free to improve and send me comments
 
 
@@ -41,25 +41,25 @@ CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
 
 CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
-CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf 
+CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf
 
 export PYTHONPATH=:$PYTHONPATH:$PIRATEBOX_PYTHONPATH
 
 if [ -f $CONF ] ; then
-   . $CONF 
-else 
+   . $CONF
+else
    echo "Configuration file not found"
    exit 1
 fi
 
-#If you can't find this file 
+#If you can't find this file
 if [[ -f $PIRATEBOX/conf/init_done ]] ; then
    INIT=OK
 else
-   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF" 
+   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"
    $PIRATEBOX/bin/install_piratebox.sh "$CONF" part2
    $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
-   touch   $PIRATEBOX/conf/init_done 
+   touch   $PIRATEBOX/conf/init_done
 fi
 
 
@@ -73,7 +73,7 @@ case "$1" in
 
     # Generate hosts & dnsmasq file
     $PIRATEBOX/bin/generate_config_files.sh  "$CONF"
-    
+
     $PIRATEBOX/bin/hooks/hook_piratebox_start.sh  "$CONF"
 
     echo "Empty tmp folder"
@@ -93,7 +93,7 @@ case "$1" in
        iw $PHY_IF interface add $INTERFACE type managed
     fi
 
-    if [ "$PROBE_INTERFACE" = yes ] ; then
+    if [ "$PROBE_INTERFACE" = "yes" ] ; then
       echo "  Probe wlan"
       #Setting up WLAN Interface
       piratebox_setup_wlan.sh  $CONF probe
@@ -109,7 +109,7 @@ case "$1" in
          echo  $?
        fi
 
-       if [ "$DO_IFCONFIG" = yes ] ; then
+       if [ "$DO_IFCONFIG" = "yes" ] ; then
          echo "  Setting up wlan"
          #Setting up WLAN Interface
          piratebox_setup_wlan.sh  $CONF start
@@ -132,13 +132,13 @@ case "$1" in
        if [ "$USE_DNSMASQ" = "yes" ] ;  then
          echo  "Starting dnsmasq... "
    # pidfile is written by dnsmasq
-         start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ  
+         start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ
          echo  $?
        fi
 
         if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
           echo  "Starting radvd..."
-          start-stop-daemon  -S -q -x radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD 
+          start-stop-daemon  -S -q -x radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD
           echo $?
         fi
 
@@ -154,7 +154,7 @@ case "$1" in
          if [ "$DROOPY_USE_USER" = "yes" ] ; then
              DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
          fi
-         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT 
+         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
          echo  $?
        fi
 
@@ -172,7 +172,7 @@ case "$1" in
           echo  "Starting global chat service..."
           start-stop-daemon -S -m -b -p $PIDFILE_SHOUTBOX  -x $PIRATEBOX/bin/shoutbox_daemon.sh -- $CONF
           echo $?
-       fi 
+       fi
      fi
 
       $PIRATEBOX/bin/hooks/hook_piratebox_start_done.sh  "$CONF"
@@ -185,12 +185,12 @@ case "$1" in
 
     if [  "$USE_APN"  = "yes" ] ;  then
        echo  "Stopping hostap... "
-       start-stop-daemon -K  -q  -p $PIDFILE_HOSTAPN 
+       start-stop-daemon -K  -q  -p $PIDFILE_HOSTAPN
        echo   $?
     fi
-    if [ "$USE_DNSMASQ" = "yes" ] ;  then 
+    if [ "$USE_DNSMASQ" = "yes" ] ;  then
        echo "Stopping dnsmasq..."
-       start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ  
+       start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ
        echo  $?
    fi
 
@@ -204,7 +204,7 @@ case "$1" in
     if [ "$DROOPY_ENABLED" = "yes" ] ; then
        #Kill Droopy
        echo "Stopping droopy... "
-       start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY 
+       start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY
        echo  $?
     fi
 
@@ -213,7 +213,7 @@ case "$1" in
         echo  "Stopping global chat service..."
         start-stop-daemon -K  -q -p $PIDFILE_SHOUTBOX
         echo $?
-    fi 
+    fi
 
 
 
@@ -222,7 +222,7 @@ case "$1" in
     echo $?
 
 
-     if [ "$DO_IFCONFIG" = yes ] ; then
+     if [ "$DO_IFCONFIG" = "yes" ] ; then
        piratebox_setup_wlan.sh $CONF stop
      fi
 
@@ -232,7 +232,7 @@ case "$1" in
 
       #BRIDGE
       if [ "$DO_BRIDGE" = "yes" ] ; then
-         echo "Remove  $INTERFACE to bridge $BRIDGE //  brctl addif 
+         echo "Remove  $INTERFACE to bridge $BRIDGE //  brctl addif
 $BRIDGE  $INTERFACE "
          sleep 1
          BR_CMD="brctl delif  $BRIDGE  $INTERFACE"
