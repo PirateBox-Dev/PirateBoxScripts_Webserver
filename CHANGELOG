@@ -9,9 +9,11 @@ CHANGELOG
 * [New] JSON config file to direct client side applications, like "share apps"
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [New] Shoutbox-Time via Client-Date possible
+* [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
 * [Fix] Shoutbox, Unified HTML-character-escaping
+* [Fix] Some script cleanups
 
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
