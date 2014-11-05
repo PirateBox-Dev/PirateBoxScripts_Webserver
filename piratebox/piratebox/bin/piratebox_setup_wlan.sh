@@ -10,23 +10,23 @@
 
 # Load configfile
 
-if [ -z  $1 ] || [ -z $2 ]; then 
+if [ -z  $1 ] || [ -z $2 ]; then
   echo "Usage piratebox_setup_wlan.sh my_config <start|stop|probe>"
   exit 1
 fi
 
 
-if [ !  -f $1 ] ; then 
-  echo "Config-File $1 not found..." 
-  exit 1 
+if [ !  -f $1 ] ; then
+  echo "Config-File $1 not found..."
+  exit 1
 fi
 
 #Load config
-. $1 
+. $1
 
 
 ### Check config
-if [ -z $INTERFACE ]; then 
+if [ -z $INTERFACE ]; then
    echo "Please define i.e.  "
    echo "   INTERFACE=wlan0 "
    exit 1
@@ -51,9 +51,9 @@ fi
 if [ $2 =  "start" ] ; then
 
   echo "Bringing up wifi interface $INTERFACE "
-  ifconfig $INTERFACE up 
+  ifconfig $INTERFACE up
 
-  if  [ $?  -ne 0 ] ; then 
+  if  [ $?  -ne 0 ] ; then
      echo  "..failed ";
      exit 1
   fi
@@ -61,7 +61,7 @@ if [ $2 =  "start" ] ; then
   echo "Setting up $INTERFACE"
   ifconfig $INTERFACE  $IP netmask $NETMASK
 
-  if  [ $?  -ne 0 ] ; then 
+  if  [ $?  -ne 0 ] ; then
      echo  "..failed ";
      exit 1
   fi
@@ -90,7 +90,7 @@ elif [ $2 = "stop" ] ; then
 	echo "Removing the Node-Address again..."
         ifconfig $NODE_INTERFACE del $NODE_IPV6_IP"$NODE_IPV6_MASK"
   fi
-elif [ $ = "probe" ] ; then 
+elif [ $2 = "probe" ] ; then
    # simply check if the interface is available
    probe
 fi
