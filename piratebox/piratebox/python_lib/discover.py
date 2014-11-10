@@ -17,16 +17,16 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
         socket = self.request[1]
         if data[:9] == "piratebox":
             if data[10:12] == "sb":
-	       if data != lastmsg :
-   	   	    msg = messages.shoutbox_message()
-		    msg.set_message(data)
-		    content = msg.get()
-	            writeToDisk(content)
+                if data != lastmsg :
+                    msg = messages.shoutbox_message()
+                    msg.set_message(data)
+                    content = msg.get()
+                    writeToDisk(content)
                     generate_html_from_file()
-		    lastmsg = data
-	    else:
-	       print data[11:12]
-	       print data
+                    lastmsg = data
+            else:
+                print data[11:12]
+                print data
         else:
             print "debug : not a piratebox message"
 
