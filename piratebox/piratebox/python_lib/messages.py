@@ -1,53 +1,50 @@
 #   PirateBox  Message  lib  (C)2012-2014
-#      Matthias Strubel 
+#      Matthias Strubel
 
 import string
 import socket
-
 import base64
 import sys
 
+
 class message:
-     
-     def __init__(self, name="generate"  ):
-         if name == "generate":
-               self.name=socket.gethostname()
-	 else:
-	       self.name=name
+    def __init__(self, name="generate"):
+        if name == "generate":
+            self.name = socket.gethostname()
+        else:
+            self.name = name
 
-	 self.type="gc"
-	 self.decoded=""
+        self.type = "gc"
+        self.decoded = ""
 
-     def set ( self, content=" " ):
-         base64content = base64.b64encode (  content ) 
-         self.decoded="piratebox;"+ self.type + ";01;" + self.name + ";" + base64content 
-         
-     def get ( self ):
-         
-	 # TODO    Split decoded part
-	 message_parts = string.split ( self.decoded , ";" ) 
+    def set(self, content=" "):
+        base64content = base64.b64encode(content)
+        self.decoded = "piratebox;" + self.type + ";01;" + self.name + ";" + \
+                       base64content
 
-	 if  message_parts[0] != "piratebox" :
-	      return None 
+    def get(self):
+        # TODO    Split decoded part
+        message_parts = string.split(self.decoded, ";")
 
-	 b64_content_part = message_parts[4]
+        if message_parts[0] != "piratebox":
+            return None
 
-         content = base64.b64decode ( b64_content_part ) 
-         return content 
+        b64_content_part = message_parts[4]
 
-     def get_sendername (self):
-         return self.name
+        content = base64.b64decode(b64_content_part)
+        return content
 
-     def get_message ( self ):
-         return self.decoded
+    def get_sendername(self):
+        return self.name
 
-     def set_message ( self , decoded):
-         self.decoded = decoded
+    def get_message(self):
+        return self.decoded
+
+    def set_message(self, decoded):
+        self.decoded = decoded
 
 
 class shoutbox_message(message):
-     def __init__(self, name="generate" ):
-          message.__init__( self , name)
-	  self.type="sb"
-     
-
+    def __init__(self, name="generate"):
+        message.__init__(self, name)
+        self.type = "sb"
