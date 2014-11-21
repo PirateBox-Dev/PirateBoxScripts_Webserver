@@ -15,11 +15,11 @@ htmlfilename = os.environ["SHOUTBOX_GEN_HTMLFILE"]
 clienttimestamp =os.environ["SHOUTBOX_CLIENT_TIMESTAMP"]
 
 try:
-     raw_dest =  os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"]
-     finished_dest = re.sub ( '#' , '"' , raw_dest ) 
-     broadcast_destination = eval ( finished_dest ) 
+    raw_dest =  os.environ["SHOUTBOX_BROADCAST_DESTINATIONS"]
+    finished_dest = re.sub ( '#' , '"' , raw_dest )
+    broadcast_destination = eval ( finished_dest ) 
 except KeyError:
-     broadcast_destination = False 
+    broadcast_destination = False 
 
 
 def html_escape(text):
@@ -81,47 +81,48 @@ def read_data_file():
 #--------------
 # Function for saving new Shoubox-Content & Regenerate static HTML file -- usually called by HTML-Form
 #--------------
-def process_form( name , indata , color , timestamp ):
-    content = save_input( name , indata , color , timestamp ) 
+def process_form(name, indata, color, timestamp):
+    content = save_input(name, indata, color, timestamp) 
 
     if broadcast_destination == False:
-          generate_html_into_file ( content )
+        generate_html_into_file(content)
 
 
 #--------------
 # Acutally Saves SB-Content to datafile
 #--------------
-def save_input( name , indata , color , timestamp ):
+def save_input(name, indata, color, timestamp):
 
-    content = prepare_line ( name, indata, color , timestamp )
+    content = prepare_line(name, indata, color , timestamp)
 
     if broadcast_destination != False:
-        return writeToNetwork( content , broadcast_destination )
+        return writeToNetwork(content, broadcast_destination)
     else:
-        return writeToDisk ( content )
+        return writeToDisk(content)
 
 def writeToNetwork ( content , broadcast_destination ):
-        message = messages.shoutbox_message()
-	message.set(content)
-        casting = broadcast.broadcast( )
-	casting.setDestination(broadcast_destination)
-	casting.set( message.get_message() )
-	casting.send()
-	return None
+    message = messages.shoutbox_message()
+    message.set(content)
+    casting = broadcast.broadcast()
+    casting.setDestination(broadcast_destination)
+    casting.set(message.get_message())
+    casting.send()
+    return None
 
 def writeToDisk ( content ):
-        old = read_data_file()
-        finalcontent = content  + old 
-        datafile = open(datafilename, 'r+')
-        datafile.write(finalcontent)
-        #datafile.truncate(0)
-        datafile.close()
-	return finalcontent 
+    old = read_data_file()
+    finalcontent = content  + old 
+    datafile = open(datafilename, 'r+')
+    datafile.write(finalcontent)
+    #datafile.truncate(0)
+    datafile.close()
+    return finalcontent 
 
 
 def prepare_line ( name, indata, color , timestamp ):
     name = html_escape(name)
     data = html_escape(indata)
+    color = html_escape(color)
     if clienttimestamp == 'yes':
         curdate = datetime.datetime.fromtimestamp(timestamp)
     else:
@@ -138,14 +139,11 @@ def prepare_line ( name, indata, color , timestamp ):
 #  Testing or Generating static HTML File
 #--------------
 if __name__ == "__main__":
-  import sys
-  if sys.argv.count("input") >= 1 :
-     save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
-     generate_html_to_display_from_file()
-     print "Entered Text."
-  
-  generate_html_from_file ()
-  print "Generated HTML-Shoutbox File."
+    import sys
+    if sys.argv.count("input") >= 1:
+        save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
+        generate_html_to_display_from_file()
+        print "Entered Text."
 
-
-
+    generate_html_from_file()
+    print "Generated HTML-Shoutbox File."
