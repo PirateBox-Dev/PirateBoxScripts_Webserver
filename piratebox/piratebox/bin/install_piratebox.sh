@@ -14,13 +14,13 @@
 if [ -z  $1 ] || [ -z $2 ]; then 
   echo "Usage install_piratebox my_config <part>"
   echo "   Parts: "
-  echo "       init_openwrt   : Stuff needed on openwrt-systems"
   echo "       part2          : sets Permissions and links correctly"
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
   echo "                        should be installed in <Piratebox-Folder>/share/board"
   echo "       pyForum        : Simple PythonForum"
-  echo "       station_cnt    : Adds Statio counter to your Box - crontab entry"
-  echo "       flush_dns_reg  : Installs crontask to flush dnsmasq regulary"
+  echo "       station_cnt        : Adds Statio counter to your Box - crontab entry"
+  echo "       flush_dns_reg      : Installs crontask to flush dnsmasq regulary"
+  echo "       hostname  'name'   : Exchanges the Hostname displayed in browser"
   exit 1
 fi
 
@@ -31,39 +31,8 @@ if [ !  -f $1 ] ; then
 fi
 
 #Load config
+PIRATEBOX_CONFIG=$1
 . $1 
-
-if [ $2 = 'init_openwrt' ] ; then
-  echo "-------------- Initialize PirateBoxScripts -----------"
-    #Load openwrt-common config and procedures file!
-    . /etc/piratebox.common
-    #  cp -v $pb_pbmount/src/* "$pb_share"
-    #  cp -v $pb_pbmount/src/.* $pb_share
-
-# not needed anymore    cp_src  $pb_pbmount/src $pb_share
-
-    # Copy Removed, File is included in lib folder.. 
-    #cp /usr/share/piratebox/CGIHTTPServer.py $pb_pbmount/chat
-    rm -r $pb_pbmount/share
-    ln -sf $pb_usbdir $pb_pbmount/share
-    chmod a+rw $CHATFILE
-
-    if [ -d $pb_usbdir/www_alt ] ; then
-      echo "----------------------------------------------------"
-      echo "####      Alternative www folder found          ####"
-      echo "####          $pb_usbdir/www_alt                ####"
-      echo "####         switching directories              ####"
-      echo "----------------------------------------------------"
-      mv  $WWW_FOLDER  $PIRATEBOX_FOLDER/www_old 
-      ln -sf   $pb_usbdir/www_alt  $WWW_FOLDER
-      echo "  Copy over >>fake internet detection-stuff<<"
-      cp -v  $PIRATEBOX_FOLDER/www_old/ncsi.txt $pb_usbdir/www_alt
-      cp -rv $PIRATEBOX_FOLDER/www_old/library  $pb_usbdir/www_alt
-      echo "  Copy over >>redirect.html<< for automatic redirect on  wrong entered page<<"
-      cp -v  $PIRATEBOX_FOLDER/www_old/redirect.html $pb_usbdir/www_alt
-      echo "  Done. Now, you are on your own! "
-    fi
- fi
 
 if [ $2 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
@@ -80,6 +49,7 @@ fi
 
 
 if [ $2 = 'part2' ] ; then
+   echo "Starting initialize PirateBox Part2.."
 #Create directories 
 #   mkdir -p $PIRATEBOX_FOLDER/share/Shared
    mkdir -p $UPLOADFOLDER
@@ -90,7 +60,9 @@ if [ $2 = 'part2' ] ; then
 #Copy Forban-Link spacer
    cp $PIRATEBOX_FOLDER/src/no_link.html $PIRATEBOX_FOLDER/www/forban_link.html
 
-#Set permissions
+   #Distribute the Directory Listing files
+   $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   #Set permissions
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/www -R
@@ -98,69 +70,19 @@ if [ $2 = 'part2' ] ; then
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/tmp
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/tmp -R
 
-#Copy over the index.html for redirect to Droopy-Landing page
-   cp $PIRATEBOX_FOLDER/www/index.html $PIRATEBOX_FOLDER/share
 
 #Install a small script, that the link on the main page still works
    if  [ !  -f $PIRATEBOX_FOLDER/share/board/kareha.pl ] ; then  
       cp $PIRATEBOX_FOLDER/src/kareha.pl $PIRATEBOX_FOLDER/share/board
    fi
-   
-   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
-   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
+  
+   [[ ! -L $PIRATEBOX_FOLDER/www/board  ]] &&   ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
+   [[ ! -L $PIRATEBOX_FOLDER/www/Shared ]] &&   ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
 fi 
 
 #Install the image-board
 if [ $2 = 'imageboard' ] ; then
    
-    if [ "$OPENWRT" = "yes" ] ; then
-      if ! opkg update 
-        then
-          echo "ERROR: Not Internet Conenction"
-          exit 5
-      fi
-
-#    for package in ${OPENWRT_PACKAGES[@]}
-#       do
-#         echo "Start install package $package ...."
-#         opkg -d piratebox install $package
-#         if [ $? ne 0 ] ; then
-#               echo "ERROR installing $package"
-#               exit 5
-#         fi
-#      done
-###------------------------------------------
-#  ASH does not support arrays :(
-###-----------------------------------------
-	opkg -d piratebox install perl
-	opkg -d piratebox install perlbase-base 
-	opkg -d piratebox install perlbase-cgi
-	opkg -d piratebox install perlbase-essential
-	opkg -d piratebox install perlbase-file
-	opkg -d piratebox install perlbase-bytes
-	opkg -d piratebox install perlbase-config 
-	opkg -d piratebox install perlbase-data
-	opkg -d piratebox install perlbase-db-file 
-	opkg -d piratebox install perlbase-digest
-	opkg -d piratebox install perlbase-encode
-	opkg -d piratebox install perlbase-encoding
-	opkg -d piratebox install perlbase-fcntl
-	opkg -d piratebox install perlbase-gdbm-file
-	opkg -d piratebox install perlbase-integer
-	opkg -d piratebox install perlbase-socket
-	opkg -d piratebox install perlbase-time
-	opkg -d piratebox install perlbase-unicode
-	opkg -d piratebox install perlbase-unicore
-	opkg -d piratebox install perlbase-utf8
-	opkg -d piratebox install perlbase-xsloader
-	opkg -d piratebox install unzip
-
-	ln -s /usr/local/bin/perl /usr/bin/perl
-	ln -s /usr/local/lib/perl* /usr/lib/
-    fi
-
-    echo "------------ Finished OpenWRT Packages ---------------"
-
     #Activate on mainpage
     cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
@@ -170,12 +92,15 @@ if [ $2 = 'imageboard' ] ; then
        exit 0;
     fi
 
-    echo "  Wgetting kareha-zip file "
+    
     cd $PIRATEBOX_FOLDER/tmp
     KAREHA_RELEASE=kareha_3.1.4.zip
-    wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
-    if [ "$?" != "0" ] ; then
-       echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
+    if [ ! -e $PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE ] ; then
+	echo "  Wgetting kareha-zip file "
+    	wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
+	if [ "$?" != "0" ] ; then
+       		echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
+	 fi
     fi
 
     if [ -e  $PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE ] ; then
@@ -185,24 +110,7 @@ if [ $2 = 'imageboard' ] ; then
        exit 255
     fi
     
-    # Temporary Fix for OpenWRT and Normal notebooks.
-    #    Currently, /usr/local/bin/ is not in PATH on OpenWRT
-    #    so just using "unzip" will break compatibilities
-    #    So we are going to check if that file exists,
-    #    we call it directly.
-    #    If not, we just try to run unzip. 
-    #    if unzip  fails, we end the script now to prevent 
-    #    more inconsistencies.
-    UNZIP=unzip
-    if [ "$OPENWRT" = "yes"  ] ; then
-	UNZIP=/usr/local/bin/unzip
-    fi
-
-    $UNZIP $KAREHA_RELEASE
-    if [ "$?" != "0" ] ; then 
-    	echo "Error during unzipping kareha.. exiting."
-	exit 255
-    fi
+    unzip $KAREHA_RELEASE
     mv kareha/* $PIRATEBOX_FOLDER/share/board 
     rm  -rf $PIRATEBOX_FOLDER/tmp/kareha* 
     
@@ -247,3 +155,17 @@ if [ $2 = "flush_dns_reg" ] ; then
     [ "$?" != "0" ] && echo "an error occured" && exit 254
     echo "Installed crontab for flushing dnsmasq requlary"
 fi
+
+set_hostname() {
+	local name=$1 ; shift;
+
+	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/redirect.html
+        sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
+}
+
+if [ $2 = "hostname" ] ; then
+	echo "Switching hostname to $3"
+	set_hostname "$3"
+	echo "..done"
+fi
+

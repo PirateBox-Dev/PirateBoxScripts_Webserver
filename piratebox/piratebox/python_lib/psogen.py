@@ -27,12 +27,7 @@ except KeyError:
 #               content    -   String  containing preformatted data
 #--------------
 def generate_html(content):
-    css = open("style.css", 'r')
-    stl =  css.read()
-    css.close()
-
-    htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><style type='text/css'>" 
-    htmlstring +=  "<style>" + stl   + "</style></head><body>"  
+    htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='PyShoutOut'><title>Shout-Out Data</title><body>"  
     htmlstring +=  content 
     htmlstring +=  "</body></html>" 
     return htmlstring 
@@ -43,10 +38,6 @@ def generate_html(content):
 #               content    -   String  containing preformatted data
 #--------------
 def generate_html_into_file(content):
-    css = open("style.css", 'r')
-    stl =  css.read()
-    css.close()
-
     htmlstring = generate_html ( content )
 
     htmlfile = open( htmlfilename , 'w' )
@@ -122,7 +113,11 @@ def prepare_line ( name, indata, color  ):
     datapass = re.sub("<", "&lt;", indata)
     data = re.sub(">", "&gt;", datapass)
     curdate = datetime.datetime.now()
-    content = "<date>" + curdate.strftime("%H:%M:%S") + "</date>&nbsp;&nbsp;<name>" + name + ":</name>&nbsp;&nbsp;&nbsp;<data class='" + color + "'>" + data + "</data><br>\n" 
+    # Trying to make it look like this: 
+    # <div class="message">
+    #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">Lorem ipsum dolor sit amet</data>
+    # </div>
+    content = "<div class='message'><date>" + curdate.strftime("%H:%M:%S") + "</date> <name>" + name + ":</name> <data class='" + color + "'>" + data + "</data></div>\n" 
     return content
 
 #--------------

@@ -1,0 +1,14 @@
+[Unit]
+Description=PirateBox Service
+
+[Service]
+Type=idle
+RemainAfterExit=yes
+ExecStart=/opt/piratebox/init.d/piratebox_alt start
+ExecStop=/opt/piratebox/init.d/piratebox_alt stop
+#Restart=/opt/piratebox/init.d/piratebox_alt restart
+#PIDFile=/var/run/piratebox.pid
+
+[Install]
+WantedBy=multi-user.target
+

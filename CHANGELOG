@@ -1,0 +1,53 @@
+CHANGELOG
+
+=== 1.0.1 ===
+* [Fix] Fixed setting permissions of shoutbox datafile
+* [New] Service File for RPi image
+* [Fix] Several typos in scripts
+* [Fix] Typo in front page and directory listing
+* [Fix] in timsave.sh while restoring date&time 
+* [Fix] [OpenWRT] Timesave create bootup restore 
+* [Fix] [OpenWRT] Fix for not working "already installed" recognition to skip parts 
+* [Fix] [OpenWRT] Fix for errors during installing piratebox-mod-imageboard because of duplicate links
+* [Fix] [OpenWRT] Fix for LED flashing during auto install (box-installer on image) 
+* [Fix] [OpenWRT] Fix error messages on package reinstall. (extendRoot)
+* [Fix] No dublicates symlink after double "part2" via install_piratebox.sh
+* [New] Remove # in front of secret & password to force user to change it before using the board
+* [Fix] Button padding in UI
+* [Fix] Board Link out of nested Shared folder
+* [Fix] Russian Translation in Droopy
+* [Fix] ReDistribute DirectoryListing files upon initialization on first Startup
+* [Fix] [OpenWRT] Fixing customization of lease-file location for OpenWRT
+* [Fix] [OpenWRT] Fixes issues when extendRoot couldn't get initilized correctly
+* [New] [OpenWRT] Optimized handling of mount options in extendRoot
+* [Fix] [RPi] Bootup issue with some USB-wifi sticks.
+* [Fix] Prevent XSS in forest.py
+
+=== 1.0.0 ===
+NOTE: This may only be a partial changelog, check github / your package manager for more info.
+
+* Overwork into new Responsive design
+  * New Frontpage
+  * Directory Listing in design
+        * Configuration in lighttpd.conf
+	* During startup README.txt & HEADER.txt get copied into /opt/piratebox/share/Shared folder
+	   ->   Exisiting files won't be overwritten!
+	   -> 	Scripts can be used in console with overwrite parameter do distribute your own files
+* [New] install method
+	* [New] install dependencies
+	* [Fixed] General cleaning
+* [New] possibility in install_piratebox.sh to exchange the hostname easily
+* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
+* [Fix] Timesave script does not contain parts for OpenWRT anymore
+* [Fix] Timesave-file location is now configured in piratebox.conf 
+* [Fix] Fix in Changing hostname functionality
+* [New] Hostname changing generates the redirect.html now based on a Schema file
+* [New] Added JSON Mime-Type
+* [Fix] Enable unescaped blanks in Upload-Folder
+* [Fix] iOS 7 captive Portal fix
+* [New] Sample configuration for UPnP Server
+* [New] Image file is ext4 and 50MB
+
+=== v0.6G ===
+* [Fix] Hide dot files in directory-listing which are usually hidden files
+* [Fix] Fixed captive Portal detection for iOS7

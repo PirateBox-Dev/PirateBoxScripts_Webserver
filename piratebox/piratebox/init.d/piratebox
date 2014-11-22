@@ -22,7 +22,7 @@
 [ -f /etc/default/rcS ] && . /etc/default/rcS
 
 # PATH for /opt piratebox folder
-PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin/:/usr/local/sbin:/opt/piratebox/bin
+PATH=$PATH:/opt/piratebox/bin
 
 PIDFILE_DROOPY=/var/run/piratebox_droopy.pid
 PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
@@ -53,15 +53,18 @@ else
    exit 1
 fi
 
-# Do basic initialization on non-openWRT Systems, too
-if [ -f $PIRATEBOX/conf/init_done ] ; then
+
+if [[ -f $PIRATEBOX/conf/init_done ]] ; then
    INIT=OK
 else
-   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"  
+   $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"
    $PIRATEBOX/bin/install_piratebox.sh "$CONF" part2
    $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
-   touch $PIRATEBOX/conf/init_done
+   touch   $PIRATEBOX/conf/init_done
 fi
+
+
+
 
 # Command Line for DNSMASQ,  use extra config file generated from command above
 CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
@@ -79,6 +82,9 @@ case "$1" in
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
+
+    echo "Copy over design files"
+    $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
 
     if [ "$DO_IW" = "yes" ] ; then
        log_daemon_msg " Setting up Interface (iw) "
@@ -139,7 +145,7 @@ case "$1" in
             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
           fi
           log_daemon_msg "Starting droopy..."
-          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d $UPLOADFOLDER -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
+          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER" -c "" -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
           log_end_msg $?
        fi
 

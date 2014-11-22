@@ -11,6 +11,11 @@
 #  Licenced under GPL-2  @ 2012
 #    Matthias Strubel    matthias.strubel@aod-rgp.de
 
+##function for similar saving & getting time
+get_datetime() {
+	date +%C%g%m%d%H%M  
+}
+
 
 # Load configfile
 
@@ -27,7 +32,6 @@ fi
 
 . $1
 
-TIMESAVE="$PIRATEBOX_FOLDER/timesave_file"
 
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
@@ -35,37 +39,40 @@ if [ "$2" = "install" ] ; then
     echo " */5 * * * *   $PIRATEBOX_FOLDER/bin/timesave.sh $PIRATEBOX_FOLDER/conf/piratebox.conf save "  >> $PIRATEBOX_FOLDER/tmp/crontab
     crontab $PIRATEBOX_FOLDER/tmp/crontab
 
+    echo  "initialize timesave file"
     touch $TIMESAVE
     chmod a+rw $TIMESAVE
+    get_datetime  > $TIMESAVE
 
-    if [  "$OPENWRT" = "yes" ] ; then
-        echo "Placing Timerecover on Startup" 
-        echo " $0 $1 recover " >> /etc/rc.local 
-	sed  's:exit:#exit:g' -i /etc/rc.local 
-        echo "Activating cron-service.."
-	/etc/init.d/cron enable
-	/etc/init.d/cron start
-	echo "done"
-    else 
-       echo "Remember to have cron active..."
-       echo "  on OpenWrt run:  /etc/init.d/cron enable"
-       echo "                   /etc/init.d/cron start"
-    fi
-    #Save the current time
-    $0 $1 "save"
+
+    echo "Remember MAY have to cron active..."
+    echo "  on OpenWrt run:  /etc/init.d/piratebox enable"
+ 
     exit 0
 fi
 
 if [ "$2" = "save" ] ; then
+    if [ -e $TIMESAVE ] ; then
+	if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
+		 logger -s "$0 : sorry, current date-time is lower then saved one, don't save it this time"
+		 exit 1
+	fi
+    fi
+
     #Save Datetime in a recoverable format...
-    date +%C%g%m%d%H%M  > $TIMESAVE
+    get_datetime  > $TIMESAVE
     exit 0
 fi
 
 if [ "$2" = "recover" ] ; then
-    date  `cat $TIMESAVE `
-    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
-    echo "Time recovered"
-    exit 0
+    if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
+	    date  `cat $TIMESAVE `
+	    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
+	    echo "Time recovered"
+	    exit 0
+    else
+	   echo "Sorry, changing timebackward via timesave is not possible"
+	   exit 1
+    fi
 fi
 
