@@ -4,7 +4,7 @@ CHANGELOG
 * [Fix] Settings for correct permission of shoutbox files
 * [Fix] Broken probe function in some shells
 * [Fix] Issues with Python scripts on some plattforms
-
+* [Fix] Fixes XXS problems
 
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
