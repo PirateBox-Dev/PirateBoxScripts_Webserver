@@ -18,6 +18,7 @@
 #=======================================================================
 #Import PirateBox conf
 CURRENT_CONF=piratebox/conf/piratebox.conf
+scriptfile="$(readlink -f $0)"
 CURRENT_DIR="$(dirname ${scriptfile})"
 
 #Must be root
