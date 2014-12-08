@@ -54,7 +54,7 @@ else
 fi
 
 
-if [[ -f $PIRATEBOX/conf/init_done ]] ; then
+if [ -f $PIRATEBOX/conf/init_done ] ; then
    INIT=OK
 else
    $PIRATEBOX/bin/hooks/hook_pre_init.sh  "$CONF"

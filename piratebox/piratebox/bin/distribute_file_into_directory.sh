@@ -18,7 +18,7 @@ filename="${src_file##*/}"
  $DEBUG && echo "filename: $filename"
  $DEBUG && echo "Overwrite mode : $overwrite "
 
-if [ ! -e $directory/$filename ] || [ "$overwrite" == "true" ] ; then
+if [ ! -e $directory/$filename ] || [ "$overwrite" = true ] ; then
 	echo "Distribute $filename into $directory "
  	$DEBUG && echo "	cp $src_file $directory "
 	$TEST_RUN ||  cp $src_file $directory  
