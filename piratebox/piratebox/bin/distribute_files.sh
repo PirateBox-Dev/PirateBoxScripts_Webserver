@@ -28,7 +28,7 @@ destination=$1
 overwrite=$2
 overwrite=${overwrite:=false}
 src_file=$3
-src_file=${src_file:=all}
+src_file=${src_file:="all"}
 
 $DEBUG && echo "parameters:
   destination $destination
