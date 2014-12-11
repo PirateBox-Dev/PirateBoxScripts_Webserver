@@ -6,9 +6,8 @@
 
 # Changed by Matthias Strubel / 2011-02-27 for piratebox-path
 
-from psogen import generate_html_to_display_from_file 
+from psogen import generate_html_to_display_from_file
 
 print "Content-type:text/html\r\n\r\n"
 
 generate_html_to_display_from_file()
-
