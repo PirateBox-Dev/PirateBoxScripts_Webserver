@@ -20,7 +20,7 @@ class MyUDPHandler(SocketServer.BaseRequestHandler):
         socket = self.request[1]
         if data[:9] == "piratebox":
             if data[10:12] == "sb":
-                if data != lastmsg:
+                if data != lastmsg :
                     msg = messages.shoutbox_message()
                     msg.set_message(data)
                     content = msg.get()

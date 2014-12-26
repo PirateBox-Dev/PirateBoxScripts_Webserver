@@ -4,19 +4,24 @@ Script collection by:
    Matthias Strubel  http://piratebox.aod-rpg.de
 
 Live CD & Installer by:
-   TerrorByte 
+   TerrorByte ~ Cale Blac k
 
 Contributors for modifications:
-   * General Support
        # stylesuxx   - Makefile and development support
        # FriedZombie - OpenWRT and scripting support
-   * Droopy
        # someguy   - Droopy Directory support
        # Reventlov - Modification for better iOS Support
-   * python Forum
        # someguy  - Modifications for running on OpenWRT
        # ToM'aSs  - Languag-Support
-       # Liblor   - Fixes
+       # Liblor   - Fixes	
+       # Loris Reiff
+       # iamarf
+       # stylesuxx
+       # denis-d
+       # taffy-nay
+       # risca
+       # ... and all others I might have forgotten.
+
 
 Design:
    * David Brooks

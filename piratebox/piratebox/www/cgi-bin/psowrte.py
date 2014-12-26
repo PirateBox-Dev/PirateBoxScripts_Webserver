@@ -2,24 +2,25 @@
 
 # PyShoutOut by Joey C. (http://www.joeyjwc.x3fusion.com)
 # Writes the recieved information to the data file.
-import cgi
-from psogen import process_form
+import cgi, datetime
+from  psogen import process_form 
+
 
 print "Content-type:text/html\r\n\r\n"
 
 values = cgi.FieldStorage()
-if "name" in values:
-    rawname = values["name"].value
+if values.has_key("name"):
+  rawname = values["name"].value
 else:
-    rawname = "&nbsp;"
-if "data" in values:
-    rawdata = values["data"].value
+  rawname = "&nbsp;"
+if values.has_key("data"):
+  rawdata = values["data"].value
 else:
-    rawdata = "&nbsp;"
+  rawdata = "&nbsp;"
 
 color = values["color"].value
 timestamp = float(values["timestamp"].value)
 
-process_form(rawname, rawdata, color, timestamp)
+process_form(rawname, rawdata, color)
 
 print """<html><body>ok</body></html>"""

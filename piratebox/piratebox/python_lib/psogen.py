@@ -35,6 +35,19 @@ def html_escape(text):
     return "".join(html_escape_table.get(c, c) for c in text)
 
 
+def html_escape(text):
+    """Remove HTML chars from the given text and replace them with HTML
+entities. """
+    html_escape_table = {
+        '"': "&quot;", "'": "&apos;", ">": "&gt;",
+        "<": "&lt;"}
+    return "".join(html_escape_table.get(c,c) for c in text)
+
+#--------------
+#  Generates Shoutbox-HTML-Frame  ... 
+#           Imports:
+#               content    -   String  containing preformatted data
+#--------------
 def generate_html(content):
     """
     Generates Shoutbox-HTML-Frame...
@@ -141,8 +154,32 @@ def prepare_line(name, indata, color, timestamp):
     if clienttimestamp == 'yes':
         curdate = datetime.datetime.fromtimestamp(timestamp)
     else:
-        curdate = datetime.datetime.now()
-    # Trying to make it look like this:
+        return writeToDisk ( content )
+
+def writeToNetwork ( content , broadcast_destination ):
+    message = messages.shoutbox_message()
+    message.set(content)
+    casting = broadcast.broadcast( )
+    casting.setDestination(broadcast_destination)
+    casting.set( message.get_message() )
+    casting.send()
+    return None
+
+def writeToDisk ( content ):
+    old = read_data_file()
+    finalcontent = content  + old 
+    datafile = open(datafilename, 'r+')
+    datafile.write(finalcontent)
+    #datafile.truncate(0)
+    datafile.close()
+    return finalcontent 
+
+def prepare_line (name, indata, color):
+    name = html_escape(name)
+    data = html_escape(indata)
+    color = html_escape(color)
+    curdate = datetime.datetime.now()
+    # Trying to make it look like this: 
     # <div class="message">
     #     <date>00:00:00</date> <name>Nickname:</name> <data class="def">
     #        Lorem ipsum dolor sit amet</data>
@@ -157,11 +194,11 @@ def prepare_line(name, indata, color, timestamp):
 #  Testing or Generating static HTML File
 #--------------
 if __name__ == "__main__":
-    import sys
-    if sys.argv.count("input") >= 1:
-        save_input(sys.argv[2], sys.argv[3], sys.argv[4])
-        generate_html_to_display_from_file()
-        print "Entered Text."
-
-    generate_html_from_file()
-    print "Generated HTML-Shoutbox File."
+  import sys
+  if sys.argv.count("input") >= 1 :
+     save_input(  sys.argv[2] ,  sys.argv[3] ,  sys.argv[4] )
+     generate_html_to_display_from_file()
+     print "Entered Text."
+  
+  generate_html_from_file ()
+  print "Generated HTML-Shoutbox File."

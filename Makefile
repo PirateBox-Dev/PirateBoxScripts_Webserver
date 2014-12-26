@@ -86,4 +86,3 @@ shortimage: $(IMAGE_FILE) $(TGZ_IMAGE_FILE)
 
 
 .PHONY: all clean package shortimage
-
