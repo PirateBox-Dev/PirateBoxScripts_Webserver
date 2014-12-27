@@ -76,9 +76,11 @@ class broadcast:
 
     def send(self):
         for destination in self.destination:
-            if socket.has_ipv6 and re.search(":", destination) and not  self.ipv6_disabled == 1:
-                
-                self.__debugMessage(  "working in ipv6 part on destination " + destination )
+            if socket.has_ipv6 and re.search(":", destination) and not \
+                    self.ipv6_disabled == 1:
+
+                self.__debugMessage("working in ipv6 part on destination " +
+                                    destination)
 
                 # Even if Python is compiled with IPv6, it doesn't mean that
                 # the os is supporting IPv6. (like the Nokia N900)
