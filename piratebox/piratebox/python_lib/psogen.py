@@ -148,9 +148,9 @@ def prepare_line(name, indata, color, timestamp):
     #        Lorem ipsum dolor sit amet</data>
     # </div>
     #
-    content = "<div class='message'><date>{0}</date> <name>{1}:</name>" \
-              "<data class='{2}'>{3}</data></div>\n"
-    content.format(curdate.strftime("%H:%M:%S"), name, color, data)
+    content = "<div class='message'><date>%s</date> <name>%s:</name>" \
+              "<data class='%s'>%s</data></div>\n" \
+              % (curdate.strftime("%H:%M:%S"), name, color, data)
     return content
 
 #--------------
