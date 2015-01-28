@@ -3,12 +3,12 @@
 <head>
 	<link rel="stylesheet" href="style.css">
 	<title>PirateBox - Share Freely!</title>
-	<script src="jquery.min.js"></script>
-	<script src="scripts.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/scripts.js"></script>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
-    
-    <link rel="prefetch" type="application/l10n" href="locales/locales.ini" />
-    <script type="text/javascript" src="l10n.js"></script>
+
+	<link rel="prefetch" type="application/l10n" href="locales/locales.ini" />
+    <script type="text/javascript" src="/js/l10n.js"></script>
 
 </head>
 <body>
@@ -43,11 +43,8 @@
 		</div>
 		<div id="sidebar">
 			<div id="upload" class="card">
-				<h2 data-l10n-id="sidebarUpload">Upload</h2>
-				<iframe width="100%" height="80" src='http://piratebox.lan:8080' data-l10n-id="sidebarIframeNotSupported">
-					Your browser does not support iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080' data-l10n-id="link">Link</a>.
-				</iframe>
-				<h3><a href="/Shared" data-l10n-id="sidebarBrowseFiles">Browse Files -></a></h3>
+			<h3><a href="/upload-advanced.html" data-l10n-id="sidebarUpload">Go To Upload -></a></h3>
+			<h3><a href="/Shared" data-l10n-id="sidebarBrowseFiles">Browse Files -></a></h3>
 			</div>
 		</div>
 
