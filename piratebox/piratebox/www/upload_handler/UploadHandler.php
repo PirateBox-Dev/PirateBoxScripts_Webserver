@@ -47,7 +47,7 @@ class UploadHandler
 //            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
             'upload_dir' => $this->get_server_var('UPLOAD_PATH').'/' ,
 // this works only, if the upload directory is Shared   --->>> TODO
-	    'upload_url' => $this->get_full_url().'/../Shared',  
+	    'upload_url' => $this->get_full_url().'/../Shared/',  
             'user_dirs' => false,
             'mkdir_mode' => 0775,
             'param_name' => 'files',
