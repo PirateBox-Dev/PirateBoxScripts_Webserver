@@ -10,6 +10,9 @@ CHANGELOG
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [New] Shoutbox-Time via Client-Date possible
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
+* [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
+* [New] IRC Server Option
+* [Changed] Droopy is now disabled per default
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
 * [Fix] Shoutbox, Unified HTML-character-escaping
