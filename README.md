@@ -30,7 +30,7 @@ PirateBox scripts can:
    * Optional Inihibit starting upload-script
    * Optional Timesave script (for devices without RTC)  - can be found in piratebox/bin/timesave.sh 
    * Optional Poll for WLAN device until it available (for USB wifi cards)
-
+   * Optional IRC-Server
 
 More information can be found ont http://piratebox.aod-rpg.de
 Installation-HowTo und current Download-Link: http://piratebox.aod-rpg.de/dokuwiki/doku.php/piratebox_lighttpd

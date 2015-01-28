@@ -17,18 +17,31 @@ OPENWRT_FOLDER=image_stuff/openwrt
 OPENWRT_CONFIG_FOLDER=$(OPENWRT_FOLDER)/conf
 OPENWRT_BIN_FOLDER=$(OPENWRT_FOLDER)/bin
 
+WORKFOLDER=tmp
+
+###IRC deployment
+IRC_GITHUB_ULR=git://github.com/jrosdahl/miniircd.git
+IRC_WORK_FOLDER=$(WORKFOLDER)/irc
+IRC_SRC_SERVER=$(IRC_WORK_FOLDER)/miniircd
+IRC_TARGET_SERVER=$(PB_SRC_FOLDER)/bin/miniircd.py
+
 .DEFAULT_GOAL = package
+
+$(IRC_TARGET_SERVER): 
+	mkdir -p $(WORKFOLDER)
+	git clone $(IRC_GITHUB_ULR) $(IRC_WORK_FOLDER)
+	cp $(IRC_SRC_SERVER) $(IRC_TARGET_SERVER)
 
 $(VERSION):	
 	echo "$(PACKAGE_NAME)" >  $(VERSION_FILE)
 	echo `git status -sb --porcelain` >> $(VERSION_FILE)
 	echo ` git log -1 --oneline` >>  $(VERSION_FILE)
 
-$(PACKAGE):  $(VERSION)
+$(PACKAGE): $(IRC_TARGET_SERVER) $(VERSION)
 	tar czf $@ $(PB_FOLDER) 
 
 
-$(IMAGE_FILE): $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER)
+$(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
 	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
@@ -70,6 +83,13 @@ package:  $(PACKAGE)
 
 all: package  shortimage
 
+clean: cleanimage 
+	rm -fr $(WORKFOLDER)
+	rm -fr $(IRC_WORK_FOLDER)
+	rm -f $(IRC_TARGET_SERVER)
+	rm -f $(PACKAGE)
+	rm -f $(VERSION_FILE)
+
 cleanimage:
 	- rm -f  $(TGZ_IMAGE_FILE)
 	- rm -f  $(SRC_IMAGE_UNPACKED)
@@ -77,9 +97,6 @@ cleanimage:
 	- rm -v  $(IMAGE_FILE)
 	- rm -rv $(OPENWRT_BIN_FOLDER)
 
-clean: cleanimage 
-	rm -f $(PACKAGE)
-	rm -f $(VERSION_FILE)
 
 shortimage: $(IMAGE_FILE) $(TGZ_IMAGE_FILE)
 
