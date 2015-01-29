@@ -6,6 +6,7 @@ CHANGELOG
 * [Fix] Issues with Python scripts on some plattforms
 * [Fix] Fixes in installation script
 * [Fix] Distribute files did not work with folder containing whitespaces
+* [Fix] Fixed CSS issue with the shoutbox
 
 === 1.0.1 ===
 * [Fix] Fixed setting permissions of shoutbox datafile
