@@ -42,10 +42,18 @@ class UploadHandler
 
     function __construct($options = null, $initialize = true, $error_messages = null) {
         $this->response = array();
+
+	// This is a failsafe function, if the web-UI runs in an 
+	// non-piratebox script environment. That should help
+	// developing the website more easier.
+	$t_upload_dir = dirname($this->get_server_var('SCRIPT_FILENAME')).'/../Shared/';
+	if ( $this->get_server_var('UPLOAD_PATH') <> "" ) {
+		$t_upload_dir = $this->get_server_var('UPLOAD_PATH') ;
+	}
+
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
-//            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_dir' => $this->get_server_var('UPLOAD_PATH').'/' ,
+            'upload_dir' => $t_upload_dir  ,
 // this works only, if the upload directory is Shared   --->>> TODO
 	    'upload_url' => $this->get_full_url().'/../Shared/',  
             'user_dirs' => false,
