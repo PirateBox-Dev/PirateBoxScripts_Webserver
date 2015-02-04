@@ -7,3 +7,5 @@ piratebox_ws_*
 piratebox-ws_*
 tmp/*
 piratebox/piratebox/bin/miniircd.py
+piratebox/piratebox/www/Shared
+piratebox/piratebox/www/cgi-bin/data.pso
