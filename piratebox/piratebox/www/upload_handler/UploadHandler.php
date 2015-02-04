@@ -46,8 +46,8 @@ class UploadHandler
 	// This is a failsafe function, if the web-UI runs in an 
 	// non-piratebox script environment. That should help
 	// developing the website more easier.
-	$t_upload_dir = dirname($this->get_server_var('SCRIPT_FILENAME')).'/../Shared/',
-	if ( isset ( $this->get_server_var('UPLOAD_PATH') ) ) {
+	$t_upload_dir = dirname($this->get_server_var('SCRIPT_FILENAME')).'/../Shared/';
+	if ( $this->get_server_var('UPLOAD_PATH') <> "" ) {
 		$t_upload_dir = $this->get_server_var('UPLOAD_PATH') ;
 	}
 
