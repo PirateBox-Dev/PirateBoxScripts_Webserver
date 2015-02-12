@@ -21,14 +21,15 @@ _check_rc_(){
 	local RC="$2"
 	local is_crucial="$3"
 	
-	if [ "$RC" == "0" ] ; then
+	if [ "$RC" = "0" ] ; then
 		echo "OK"
 	else
 		echo "..failed"
-		if [ "$is_crucial" == "yes" ] ; then
+		if [ "$is_crucial" = "yes" ] ; then
 			echo "Module $module_name is flagged as crucial"
 			echo "   ->   further startup is stopped."
 			abort_start=1
+			clean_exit=0
 		fi
 	fi
 	return $RC
@@ -41,7 +42,7 @@ _work_on_module_(){
 	abort_start=0
 	echo -n "$op_mode $module .."
 	_load_configuration_ "$module"
-	[[ "$?" == 0 ]]  && "func_${module}_${op_mode}"
+	[ "$?" = 0 ]  && "func_${module}_${op_mode}"
       return "$?"
 
 }
@@ -56,7 +57,7 @@ auto_process_all() {
 	for module in  $MODULE_LIST
 	do
 		_work_on_module_  "${op_mode}" "${module}"
-		[[ "${abort_start}" == "1" ]] && return 99
+		[ "${abort_start}" = "1" ] && return 99
 	done
 
 	return 0
@@ -133,7 +134,7 @@ _run_() {
 	auto_process_all "$op_mode" 
 
 	
-	if [[ "$clean_exit" == "1" ]] ; then
+	if [ "$clean_exit" = "1" ] ; then
 		#If we changed something we deliver 0 as RC, because
 		#we did our work successfully
 		return  0

@@ -22,7 +22,7 @@
 # PATH for /opt piratebox folder
 PATH=$PATH:/opt/piratebox/bin
 
-PIDFILE_DROOPY=/var/run/piratebox_droopy.pid
+
 PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
 
@@ -149,12 +149,7 @@ case "$1" in
          #Delete 0 Byte Files
          delete_empty.sh  $UPLOADFOLDER
 
-         DROOPY_USER=""
-         if [ "$DROOPY_USE_USER" = "yes" ] ; then
-             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
-         fi
-         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
-         echo  $?
+
        fi
 
        #Do shoutbox stuff
@@ -197,13 +192,6 @@ case "$1" in
         echo  $?
     fi
 
-
-    if [ "$DROOPY_ENABLED" = "yes" ] ; then
-       #Kill Droopy
-       echo "Stopping droopy... "
-       start-stop-daemon  -s 9 -K  -q -p  $PIDFILE_DROOPY
-       echo  $?
-    fi
 
     #Start Global Chat daemon if needed.
     if [ "$GLOBAL_CHAT" = "yes" ] ; then

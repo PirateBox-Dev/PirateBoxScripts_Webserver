@@ -14,14 +14,16 @@ func_ircserver_start(){
 	if [ ! -z $IRC_STATEDIR ] ; then
 		IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR "
 	fi
-	start-stop-daemon -m -S -p $IRC_PIDFILE --exec python $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	start-stop-daemon -m -S -p $IRC_PIDFILE --exec $PBX_PYTHON $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
        local RC=$?
-       return  _check_rc_  "$ircserver_myself"  "$RC"  "$ircserver_crucial" 
+       _check_rc_  "$ircserver_myself"  "$RC"  "$ircserver_crucial" 
+       return   $RC
 }
 
 func_ircserver_stop(){
 	start-stop-daemon --stop --quiet --pidfile  $IRC_PIDFILE
-       return  _check_rc_ "$ircserver_myself"  "$RC"
+       _check_rc_ "$ircserver_myself"  "$RC"
+       return   $RC
 }
 
 func_ircserver_get_config(){

@@ -12,12 +12,14 @@ func_example_start(){
        #Start here the example i.e.
        echo "Hello World... ${HOST}"
        local RC=$?
-       return  _check_rc_  "$example_myself"  "$RC"  "$example_crucial" 
+       _check_rc_  "$example_myself"  "$RC"  "$example_crucial" 
+       return   $RC
 }
 
 func_example_stop(){
 	echo "Stopping Example..."
-       return  _check_rc_ "$example_myself"  "$RC"
+       _check_rc_ "$example_myself"  "$RC"
+       return   $RC
 }
 
 func_example_get_config(){

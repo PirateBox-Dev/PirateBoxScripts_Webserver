@@ -1,0 +1,37 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST droopy"
+
+droopy_myself="droopy"
+droopy_start_order=50
+droopy_stop_order=10
+droopy_needed_config="droopy.conf lighttpd.conf"
+droopy_crucial="no"
+
+func_droopy_start(){
+       #Start here the droopy i.e.
+	DROOPY_USER=""
+	if [ "$DROOPY_USE_USER" = "yes" ] ; then
+		DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
+	fi
+	start-stop-daemon $DROOPY_USER  -m -S -b  -p $DROOPY_PIDFILE -x $PIRATEBOX/bin/droopy -- -H $HOST -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" $DROOPY_USERDIR  $DROOPY_PORT
+       local RC=$?
+       _check_rc_  "$droopy_myself"  "$RC"  "$droopy_crucial" 
+       return   $RC
+}
+
+func_droopy_stop(){
+	start-stop-daemon  -s 9 -K  -q -p  $DROOPY_PIDFILE
+       _check_rc_ "$droopy_myself"  "$RC"
+       return   $RC
+}
+
+func_droopy_get_config(){
+	echo $droopy_needed_config
+}
+func_droopy_get_start_order(){
+	echo $droopy_start_order
+}
+func_droopy_get_stop_order(){
+	echo $droopy_stop_order
+}
