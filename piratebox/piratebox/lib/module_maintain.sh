@@ -67,15 +67,15 @@ _load_configuration_(){
 	local module_name="$1"
 
 	$DEBUG && echo "Loading configuration for ${module_name}"
-	local config_list=$( func_"${module_name}"_get_config ) 
+	local config_list=$( func_"${module_name}"_get_config )
 	$DEBUG && echo "  ... $config_list"
 	
-	for config_file in "$config_list" ; do
+	for config_file in $config_list ; do  # no quotes here!
 		if  echo "$config_file" | grep -q "/" ; then
-			$DEBUG && echo "  .. absolude config path."
+			$DEBUG && echo "  .. $config_file is absolude config path."
 			. $config_file
 		else
-			$DEBUG && echo  "  .. module config."
+			$DEBUG && echo  "  .. $config_file is module config."
 			. "${MODULE_CONFIG}/${config_file}"  || return 99
 		fi
 	done
@@ -86,14 +86,14 @@ _load_modules_() {
 	local module_path=$1 
 
 	local search_prefix=$( _get_prefix_for_$op_mode )
-	local available_module_files=$(cd "${cfg_modules}/" && ls -x "${search_prefix}"??_* )
+	local available_module_files="$(cd "${cfg_modules}/" && ls -x "${search_prefix}"??_* )"
 
 	 $DEBUG  && echo "modules_folder $cfg_modules "
 	 $DEBUG  && echo "ls result: $available_module_files"
 
 	
 
-	for this_module in $available_module_files
+	for this_module in $available_module_files  #no quotes here
 	do
 		echo -n  "Loading module $this_module .."
 		. $cfg_modules/$this_module

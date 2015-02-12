@@ -12,9 +12,9 @@ func_ircserver_start(){
        #Start here the ircserver i.e.
 	IRC_PARMS="--daemon --motd $IRC_MOTD "
 	if [ ! -z $IRC_STATEDIR ] ; then
-		IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR "
+		IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR --setuid $IRC_USER"
 	fi
-	start-stop-daemon -m -S -p $IRC_PIDFILE --exec $PBX_PYTHON $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	start-stop-daemon -m -S -p $IRC_PIDFILE --exec /usr/bin/python $PIRATEBOX_FOLDER/bin/miniircd.py -- $IRC_PARMS
        local RC=$?
        _check_rc_  "$ircserver_myself"  "$RC"  "$ircserver_crucial" 
        return   $RC
