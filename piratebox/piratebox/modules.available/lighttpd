@@ -10,19 +10,15 @@ lighttpd_crucial="no"
 
 func_lighttpd_start(){
        #Start here the lighttpd i.e.
-       echo "Starting lighttpd..."
-       start-stop-daemon -S -q  -p $PIDFILE_LIGHTTPD -x /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
+       start-stop-daemon -S -q  -p $LIGHTTPD_PIDFILE -x /usr/sbin/lighttpd -- -f $LIGHTTPD_CONF
        local RC=$?
-       echo $RC
-       return  $RC
+       return  _check_rc_ "$lighttpd_myself"  "$lighttpd_crucial" 
 }
 
 func_lighttpd_stop(){
-	echo "Stopping lighttpd..."
-    	start-stop-daemon -K -q -p $PIDFILE_LIGHTTPD
+    	start-stop-daemon -K -q -p $LIGHTTPD_PIDFILE
        local RC=$?
-       echo $RC
-       return  $RC
+       return    _check_rc_ "$lighttpd_myself"  "$RC"
 }
 
 func_lighttpd_get_config(){

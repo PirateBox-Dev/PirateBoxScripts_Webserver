@@ -6,6 +6,8 @@ MODULE_LIST=""
 PREFIX_START="S"
 PREFIX_STOP="K"
 
+abort_start=0
+
 _get_prefix_for_start(){
 	echo $PREFIX_START
 }
@@ -14,12 +16,30 @@ _get_prefix_for_stop(){
 }
 
 
+_check_rc_(){
+	local module_name="$1"
+	local RC="$2"
+	local is_crucial="$3"
+	
+	if [ "$RC" == "0" ] ; then
+		echo "OK"
+	else
+		echo "..failed"
+		if [ "$is_crucial" == "yes" ] ; then
+			echo "Module $module_name is flagged as crucial"
+			echo "   ->   further startup is stopped."
+			abort_start=1
+		fi
+	fi
+	return $RC
+}
+
 _work_on_module_(){
 	local op_mode="$1"
 	local module="$2"
 
 	abort_start=0
-	echo "Working on $module"
+	echo -n "$op_mode $module .."
 	_load_configuration_ "$module"
 	[[ "$?" == 0 ]]  && "func_${module}_${op_mode}"
       return "$?"
@@ -158,5 +178,8 @@ _disable_(){
 	local module_name="$1"
 	cd $cfg_modules
 	ls -1 ./???_$module_name  | xargs -I {} rm -v  {}
+	cd $OLDPWD
 
 }
+
+

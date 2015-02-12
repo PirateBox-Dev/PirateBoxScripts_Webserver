@@ -5,24 +5,19 @@ MODULE_LIST="$MODULE_LIST example"
 example_myself="example"
 example_start_order=99
 example_stop_order=01
-example_needed_config="00_hostname.conf"
+example_needed_config="hostname.conf"
 example_crucial="no"
 
 func_example_start(){
        #Start here the example i.e.
        echo "Hello World... ${HOST}"
-
        local RC=$?
-       echo $RC
-       return  $RC
+       return  _check_rc_  "$example_myself"  "$RC"  "$example_crucial" 
 }
 
 func_example_stop(){
 	echo "Stopping Example..."
-    	
-       local RC=$?
-       echo $RC
-       return  $RC
+       return  _check_rc_ "$example_myself"  "$RC"
 }
 
 func_example_get_config(){

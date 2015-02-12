@@ -1,0 +1,35 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST ircserver"
+
+ircserver_myself="ircserver"
+ircserver_start_order=50
+ircserver_stop_order=01
+ircserver_needed_config="irc.conf"
+ircserver_crucial="no"
+
+func_ircserver_start(){
+       #Start here the ircserver i.e.
+	IRC_PARMS="--daemon --motd $IRC_MOTD "
+	if [ ! -z $IRC_STATEDIR ] ; then
+		IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR "
+	fi
+	start-stop-daemon -m -S -p $IRC_PIDFILE --exec python $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+       local RC=$?
+       return  _check_rc_  "$ircserver_myself"  "$RC"  "$ircserver_crucial" 
+}
+
+func_ircserver_stop(){
+	start-stop-daemon --stop --quiet --pidfile  $IRC_PIDFILE
+       return  _check_rc_ "$ircserver_myself"  "$RC"
+}
+
+func_ircserver_get_config(){
+	echo $ircserver_needed_config
+}
+func_ircserver_get_start_order(){
+	echo $ircserver_start_order
+}
+func_ircserver_get_stop_order(){
+	echo $ircserver_stop_order
+}
