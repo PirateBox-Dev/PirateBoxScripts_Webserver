@@ -6,6 +6,8 @@ PIRATEBOX_CONF="${PIRATEBOX_FOLDER}/conf/piratebox.conf"
 . "${PIRATEBOX_CONF}"
 . "${PIRATEBOX_FOLDER}/lib/module_maintain.sh"
 
+## run to enable DEBUG mode:
+# export DEBUG=true
 DEBUG=${DEBUG:=false}
 
 export cfg_modules=${MODULE_ENABLED}

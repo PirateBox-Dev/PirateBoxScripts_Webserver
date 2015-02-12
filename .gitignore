@@ -7,3 +7,4 @@ piratebox_ws_*
 piratebox-ws_*
 tmp/*
 piratebox/piratebox/bin/miniircd.py
+piratebox/piratebox/modules.enabled/*

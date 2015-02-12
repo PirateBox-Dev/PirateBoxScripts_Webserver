@@ -10,7 +10,7 @@ example_crucial="no"
 
 func_example_start(){
        #Start here the example i.e.
-       echo "Hello World... ${HOSTNAME}"
+       echo "Hello World... ${HOST}"
 
        local RC=$?
        echo $RC
