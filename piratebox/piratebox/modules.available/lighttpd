@@ -1,0 +1,30 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST lighttpd"
+
+lighttpd_myself="lighttpd"
+lighttpd_start_order=30
+lighttpd_stop_order=10
+lighttpd_needed_config="lighttpd.conf"
+lighttpd_crucial="no"
+
+func_lighttpd_start(){
+       #Start here the lighttpd i.e.
+       echo "Starting lighttpd..."
+       start-stop-daemon -S -q  -p $PIDFILE_LIGHTTPD -x /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
+       local RC=$?
+       echo $RC
+       return  $RC
+}
+
+func_lighttpd_stop(){
+	echo "Stopping lighttpd..."
+    	start-stop-daemon -K -q -p $PIDFILE_LIGHTTPD
+       local RC=$?
+       echo $RC
+       return  $RC
+}
+
+func_lighttpd_get_config(){
+	echo $lighttpd_needed_config
+}
