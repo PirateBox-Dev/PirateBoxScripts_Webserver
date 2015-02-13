@@ -57,14 +57,11 @@ AVAHI_CONFIG=""
 
 set_pathnames() {
   CONFIG_PATH=$1/conf
-  DNSMASQ_CONFIG=$CONFIG_PATH/dnsmasq_generated.conf
-  HOSTS_CONFIG=$CONFIG_PATH/hosts_generated
-  HOSTS_MESH=$CONFIG_PATH/hosts_mesh
-  DEFAULT_HOSTS=$CONFIG_PATH/hosts
-  DEFAULT_DNSMASQ=$CONFIG_PATH/dnsmasq_default.conf
+
+
   RADVD_CONFIG=$CONFIG_PATH/radvd_generated.conf
   LEASE_FILE=$LEASE_FILE_LOCATION
-  LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/env
+  LIGHTTPD_ENV_CONFIG=$CONFIG_PATH/lighttpd/conf.d/env.conf
   AVAHI_CONFIG=$CONFIG_PATH/avahi/avahi-daemon.conf
   AVAHI_SRC=$CONFIG_PATH/avahi/avahi-daemon.conf.schema
 
@@ -78,41 +75,10 @@ generate_hosts() {
    cat  $DEFAULT_HOSTS                 >  $HOSTS_CONFIG
    echo "$set_ipv4     $set_hostname " >> $HOSTS_CONFIG
    echo "$set_ipv6     $set_hostname " >> $HOSTS_CONFIG
-
+   
+   touch "$HOSTS_MESH"
 }
 
-generate_dnsmasq() {
-   net=$1
-   lease_start=$3
-   lease_end=$4
-   lease_time=$5
-   ip_pb=$2
-   dnsmasq_interface=$6
-   echo "Generating dnsmasq.conf ....."
-   cat $DEFAULT_DNSMASQ                > $DNSMASQ_CONFIG
-
-   #Add interface line if filled
-   [ -n $dnsmasq_interface ] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONFIG
-
-   lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
-   echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONFIG
-   #redirect every dns
-   dns_redirect="/#/$net.$ip_pb"
-   echo "address=$dns_redirect"        >> $DNSMASQ_CONFIG
-   echo "dhcp-leasefile=$LEASE_FILE"   >> $DNSMASQ_CONFIG
-
-   echo "addn-hosts=$HOSTS_CONFIG"     >>$DNSMASQ_CONFIG
-
-   #Mesh hosts
-   echo "addn-hosts=$HOSTS_MESH" 	>> $DNSMASQ_CONFIG
-
-   if [ "$IPV6_ENABLE" = "yes" ] && [ "$IPV6_ADVERT" = "dnsmasq" ] ; then
-     echo "Do additional v6 stuff in dnsmasq.conf"
-     echo "#----- V6 Stuff"                     >> $DNSMASQ_CONFIG
-     echo "dchp-range=$ipv6_call::, ra-stateless" >> $DNSMASQ_CONFIG
-   fi
-
-}
 
 generate_radvd(){
   prefix=$1
@@ -200,7 +166,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
    [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
-generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
+
 generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER
 
 COMPLETE_HOST=$HOST

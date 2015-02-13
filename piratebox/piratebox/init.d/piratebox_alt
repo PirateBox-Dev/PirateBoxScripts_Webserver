@@ -24,7 +24,7 @@ PATH=$PATH:/opt/piratebox/bin
 
 
 PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
-PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
+
 
 PIDFILE_SHOUTBOX=/opt/piratebox/tmp/shoutbox_daemon.pid
 PIDFILE_RADVD=/opt/piratebox/tmp/radvd.pid
@@ -35,8 +35,6 @@ CONF=$PIRATEBOX/conf/piratebox.conf
 CONF_IRC=$PIRATEBOX/conf/irc.conf
 CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
-#Some extra config files for dnsmasq
-CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
 
 CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
@@ -60,10 +58,6 @@ else
    $PIRATEBOX/bin/hooks/hook_post_init.sh  "$CONF"
    touch   $PIRATEBOX/conf/init_done
 fi
-
-
-# Command Line for DNSMASQ,  use extra config file generated from command above
-CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
 
 # Carry out specific functions when asked to by the system
 case "$1" in
@@ -128,12 +122,6 @@ case "$1" in
          fi
       fi
 
-       if [ "$USE_DNSMASQ" = "yes" ] ;  then
-         echo  "Starting dnsmasq... "
-   # pidfile is written by dnsmasq
-         start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ
-         echo  $?
-       fi
 
         if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
           echo  "Starting radvd..."
@@ -180,11 +168,6 @@ case "$1" in
        start-stop-daemon -K  -q  -p $PIDFILE_HOSTAPN
        echo   $?
     fi
-    if [ "$USE_DNSMASQ" = "yes" ] ;  then
-       echo "Stopping dnsmasq..."
-       start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ
-       echo  $?
-   fi
 
      if [ -e $PIDFILE_RADVD ] ; then
         echo "Stopping radvd..."

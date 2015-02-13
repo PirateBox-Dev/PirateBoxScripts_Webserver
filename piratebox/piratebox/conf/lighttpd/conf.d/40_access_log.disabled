@@ -1,0 +1,4 @@
+## for better debugging
+#server.modules += ( "mod_accesslog" )
+#accesslog.filename = "/opt/piratebox/tmp/access.log"
+

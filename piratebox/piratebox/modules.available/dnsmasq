@@ -1,0 +1,69 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST dnsmasq"
+
+dnsmasq_myself="dnsmasq"
+dnsmasq_start_order=13
+dnsmasq_stop_order=70
+dnsmasq_needed_config="network.conf config_generation.conf dnsmasq.conf"
+dnsmasq_crucial="no"
+
+func_dnsmasq_start(){
+       #Start here the dnsmasq i.e.
+	# pidfile is written by dnsmasq
+	# Command Line for DNSMASQ,  use extra config file generated from command above
+	
+	[ "$DNSMASQ_GENERATE_CONF" = "yes" ]  &&  \
+		func_dnsmasq_generate_config 
+	
+	local CMD_DNSMASQ="-x $DNSMASQ_PIDFILE -C $DNSMASQ_CONF "
+         start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ
+	local RC=$?
+       _check_rc_  "$dnsmasq_myself"  "$RC"  "$dnsmasq_crucial" 
+       return   $RC
+}
+
+func_dnsmasq_stop(){
+	echo "Stopping dnsmasq..."
+	start-stop-daemon -K  -q  -p $DNSMASQ_PIDFILE 
+       _check_rc_ "$dnsmasq_myself"  "$RC"
+       return   $RC
+}
+
+func_dnsmasq_get_config(){
+	echo $dnsmasq_needed_config
+}
+func_dnsmasq_get_start_order(){
+	echo $dnsmasq_start_order
+}
+func_dnsmasq_get_stop_order(){
+	echo $dnsmasq_stop_order
+}
+
+func_dnsmasq_generate_config (){
+
+   local net=$1
+   local lease_start=$3
+   local lease_end=$4
+   local lease_time=$5
+   local ip_pb=$2
+   local dnsmasq_interface=$6
+   echo "Generating dnsmasq.conf ....."
+   cat $DNSMASQ_DEFAULT_CONF                > $DNSMASQ_CONF
+
+   #Add interface line if filled
+   [ -n $dnsmasq_interface ] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONF
+
+   local lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
+   echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONF
+   #redirect every dns
+   local dns_redirect="/#/$net.$ip_pb"
+   echo "address=$dns_redirect"        >> $DNSMASQ_CONF
+   echo "dhcp-leasefile=$LEASE_FILE"   >> $DNSMASQ_CONF
+
+   echo "addn-hosts=$HOSTS_CONFIG"     >>$DNSMASQ_CONF
+
+   #Mesh hosts
+   echo "addn-hosts=$HOSTS_MESH" 	>> $DNSMASQ_CONF
+
+}
