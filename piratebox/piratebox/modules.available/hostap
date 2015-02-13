@@ -1,0 +1,54 @@
+#!/bin/sh
+
+## Generates configuration for hostap
+##   and controles the daemon.
+
+MODULE_LIST="$MODULE_LIST hostap"
+
+hostap_myself="hostap"
+hostap_start_order=11
+hostap_stop_order=80
+hostap_needed_config="wifi.conf hostap.conf"
+hostap_crucial="yes"
+
+func_hostap_start(){
+       #Start here the hostap i.e.
+
+	func_hostap_generate_config
+	start-stop-daemon -m -S -b -p $HOSTAP_PID  -x /usr/sbin/hostapd --  $HOSTAP_CONF
+
+       local RC=$?
+       _check_rc_  "$hostap_myself"  "$RC"  "$hostap_crucial" 
+       return   $RC
+}
+
+func_hostap_stop(){
+	start-stop-daemon -K  -q  -p $HOSTAP_PID
+       _check_rc_ "$hostap_myself"  "$RC"
+       return   $RC
+}
+
+func_hostap_get_config(){
+	echo $hostap_needed_config
+}
+func_hostap_get_start_order(){
+	echo $hostap_start_order
+}
+func_hostap_get_stop_order(){
+	echo $hostap_stop_order
+}
+
+func_hostap_generate_config(){
+	# We generate the configuration on a different way
+	#   which allows to simply replace or extend the hostap.conf
+	#   if you want to add more options like WPA
+	cp  $HOSTAP_TEMPLATE  $HOSTAP_CONF
+	
+	sed -i -e "s|###wifi-ifname###|$HOSTAP_INTERFACE|" \
+		  -e "s|###wifi-driver###|$HOSTAP_DRIVER|"  \
+		  -e "s|###SSID###|$HOSTAP_SSID|" \
+		  -e "s|###hw-mode###|$HOSTAP_HW_MODE|" \
+		  -e "s|###wifi-channel###|$HOSTAP_CHANNEL|" \
+		  -e "s|###mode-n###|HOSTAP_ieee80211n|" \
+		  $HOSTAP_CONF
+}

@@ -6,7 +6,7 @@
 PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
 
 
-DEFAULT_MODULES="lighttpd dnsmasq cleanup_tmp_folder custom_dirlist"
+DEFAULT_MODULES="lighttpd dnsmasq cleanup_tmp_folder custom_dirlist hostap"
 
 # Load configfile
 

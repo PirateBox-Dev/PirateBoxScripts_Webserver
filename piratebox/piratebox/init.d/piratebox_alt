@@ -23,20 +23,13 @@
 PATH=$PATH:/opt/piratebox/bin
 
 
-PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 
 
 PIDFILE_SHOUTBOX=/opt/piratebox/tmp/shoutbox_daemon.pid
-PIDFILE_RADVD=/opt/piratebox/tmp/radvd.pid
 
 
 PIRATEBOX=/opt/piratebox
 CONF=$PIRATEBOX/conf/piratebox.conf
-CONF_IRC=$PIRATEBOX/conf/irc.conf
-CONF_APN=$PIRATEBOX/conf/hostapd.conf
-
-
-CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
 
 export PYTHONPATH=:$PYTHONPATH:$PIRATEBOX_PYTHONPATH
@@ -88,12 +81,6 @@ case "$1" in
        echo "failed probing Interface"
      else
 
-       # Only  activate
-       if  [ "$USE_APN" =  "yes" ] ;  then
-         echo  "Starting hostap... "
-         start-stop-daemon -m -S -b -p $PIDFILE_HOSTAPN  -x /usr/sbin/hostapd --  $CONF_APN
-         echo  $?
-       fi
 
        if [ "$DO_IFCONFIG" = "yes" ] ; then
          echo "  Setting up wlan"
@@ -115,23 +102,6 @@ case "$1" in
          fi
       fi
 
-
-        if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
-          echo  "Starting radvd..."
-          start-stop-daemon  -S -q -x radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD
-          echo $?
-        fi
-
-
-
-       if [ "$DROOPY_ENABLED" = "yes" ] ; then
-         #Start here the PirateBox-Parts droopy i.e.        echo "Starting droopy..."
-         find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
-         #Delete 0 Byte Files
-         delete_empty.sh  $UPLOADFOLDER
-
-
-       fi
 
        #Do shoutbox stuff
        $PIRATEBOX/bin/shoutbox_stuff.sh $WWW_FOLDER $CONF
@@ -156,17 +126,6 @@ case "$1" in
 
     $PIRATEBOX/bin/hooks/hook_piratebox_stop.sh  "$CONF"
 
-    if [  "$USE_APN"  = "yes" ] ;  then
-       echo  "Stopping hostap... "
-       start-stop-daemon -K  -q  -p $PIDFILE_HOSTAPN
-       echo   $?
-    fi
-
-     if [ -e $PIDFILE_RADVD ] ; then
-        echo "Stopping radvd..."
-        start-stop-daemon -K -q -p $PIDFILE_RADVD
-        echo  $?
-    fi
 
 
     #Start Global Chat daemon if needed.
