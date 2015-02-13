@@ -20,7 +20,11 @@ case "$1" in
   stop)
   	_run_ "stop"
    ;;
-  enable)
+  restart)
+  	_run_ "stop"
+	_run_  "start"
+   ;;      
+ enable)
   	_enable_ "$2"
    ;;   
   disable)
@@ -29,7 +33,7 @@ case "$1" in
 #  module)
 #  ;;
   *)
-    echo "Usage: piratebox_modules.sh {start|stop}"
+    echo "Usage: piratebox_modules.sh {start|stop|restart}"
     echo "       piratebox_modules.sh enable module"
     echo "       piratebox_modules.sh disable module"
     exit 1

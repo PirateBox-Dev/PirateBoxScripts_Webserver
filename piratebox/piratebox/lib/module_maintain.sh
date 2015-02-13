@@ -57,7 +57,7 @@ auto_process_all() {
 	for module in  $MODULE_LIST
 	do
 		_work_on_module_  "${op_mode}" "${module}"
-		[ "${abort_start}" = "1" ] && return 99
+		[ "${op_mode}" = "start" ] && [ "${abort_start}" = "1" ] && return 99
 	done
 
 	return 0
@@ -67,7 +67,7 @@ _load_configuration_(){
 	local module_name="$1"
 
 	$DEBUG && echo "Loading configuration for ${module_name}"
-	local config_list=$( func_"${module_name}"_get_config )
+	local config_list="$( func_"${module_name}"_get_config )"
 	$DEBUG && echo "  ... $config_list"
 	
 	for config_file in $config_list ; do  # no quotes here!

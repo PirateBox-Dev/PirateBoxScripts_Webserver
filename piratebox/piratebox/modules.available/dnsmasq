@@ -14,7 +14,9 @@ func_dnsmasq_start(){
 	# Command Line for DNSMASQ,  use extra config file generated from command above
 	
 	[ "$DNSMASQ_GENERATE_CONF" = "yes" ]  &&  \
-		func_dnsmasq_generate_config 
+		func_dnsmasq_generate_config  "$NET" "$IP_SHORT" \
+			"$START_LEASE" "$END_LEASE" \
+			"$LEASE_DURATION" "$DNSMASQ_INTERFACE"
 	
 	local CMD_DNSMASQ="-x $DNSMASQ_PIDFILE -C $DNSMASQ_CONF "
          start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ
@@ -43,10 +45,10 @@ func_dnsmasq_get_stop_order(){
 func_dnsmasq_generate_config (){
 
    local net=$1
+   local ip_pb=$2
    local lease_start=$3
    local lease_end=$4
    local lease_time=$5
-   local ip_pb=$2
    local dnsmasq_interface=$6
    echo "Generating dnsmasq.conf ....."
    cat $DNSMASQ_DEFAULT_CONF                > $DNSMASQ_CONF
@@ -59,7 +61,7 @@ func_dnsmasq_generate_config (){
    #redirect every dns
    local dns_redirect="/#/$net.$ip_pb"
    echo "address=$dns_redirect"        >> $DNSMASQ_CONF
-   echo "dhcp-leasefile=$LEASE_FILE"   >> $DNSMASQ_CONF
+   echo "dhcp-leasefile=$LEASE_FILE_LOCATION"   >> $DNSMASQ_CONF
 
    echo "addn-hosts=$HOSTS_CONFIG"     >>$DNSMASQ_CONF
 

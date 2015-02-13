@@ -3,11 +3,17 @@
 ##  created by Matthias Strubel   (c)2011-2014 GPL-3
 ##
 
+PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
+
+
+DEFAULT_MODULES="lighttpd dnsmasq cleanup_tmp_folder custom_dirlist"
+
 # Load configfile
 
-if [ -z  $1 ] || [ -z $2 ]; then 
-  echo "Usage install_piratebox my_config <part>"
+if [ -z $1 ]; then 
+  echo "Usage install_piratebox <part>"
   echo "   Parts: "
+  echo "       modules        : enables default piratebox-modules"
   echo "       part2          : sets Permissions and links correctly"
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
   echo "                        should be installed in <Piratebox-Folder>/share/board"
@@ -24,11 +30,8 @@ if [ !  -f $1 ] ; then
   exit 1 
 fi
 
-#Load config
-PIRATEBOX_CONFIG=$1
-. $1 
 
-if [ $2 = 'pyForum' ] ; then
+if [ $1 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
     cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/
     cp -v $PIRATEBOX_FOLDER/src/forum_forest.html  $WWW_FOLDER/forum.html
@@ -42,7 +45,7 @@ fi
 
 
 
-if [ $2 = 'part2' ] ; then
+if [ $1 = 'part2' ] ; then
    echo "Starting initialize PirateBox Part2.."
 #Create directories 
 #   mkdir -p $PIRATEBOX_FOLDER/share/Shared
@@ -75,7 +78,7 @@ if [ $2 = 'part2' ] ; then
 fi 
 
 #Install the image-board
-if [ $2 = 'imageboard' ] ; then
+if [ $1 = 'imageboard' ] ; then
    
     #Activate on mainpage
     cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
@@ -130,7 +133,7 @@ if [ $2 = 'imageboard' ] ; then
     touch  $PIRATEBOX_FOLDER/share/board/init_done
 fi
 
-if [ $2 = "station_cnt" ] ; then
+if [ $1 = "station_cnt" ] ; then
     #we want to append the crontab, not overwrite
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
     echo "#--- Crontab for PirateBox-Station-Cnt" >>  $PIRATEBOX_FOLDER/tmp/crontab
@@ -141,7 +144,7 @@ if [ $2 = "station_cnt" ] ; then
     echo "installed, now every 2 minutes your station count is refreshed"
 fi
 
-if [ $2 = "flush_dns_reg" ] ; then
+if [ $1 = "flush_dns_reg" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
     echo "#--- Crontab for dnsmasq flush" >>  $PIRATEBOX_FOLDER/tmp/crontab
     echo " */2 * * * *    $PIRATEBOX_FOLDER/bin/flush_dnsmasq.sh >  $PIRATEBOX_FOLDER/tmp/dnsmasq_flush.log "  >> $PIRATEBOX_FOLDER/tmp/crontab
@@ -157,9 +160,16 @@ set_hostname() {
         sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
 }
 
-if [ $2 = "hostname" ] ; then
-	echo "Switching hostname to $3"
-	set_hostname "$3"
+if [ $1 = "hostname" ] ; then
+	echo "Switching hostname to $2"
+	set_hostname "$2"
 	echo "..done"
 fi
 
+if [ $1 = "modules" ] ; then
+	echo "enabling default modules"
+	for  module_name in "$DEFAULT_MODULES" ; do
+		piratebox_modules.sh enable $module_name
+	done
+	echo "done"
+fi

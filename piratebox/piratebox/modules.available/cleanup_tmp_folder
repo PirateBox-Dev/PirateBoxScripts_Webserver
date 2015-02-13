@@ -1,0 +1,35 @@
+#!/bin/sh
+
+## This module is responsible for  empty out the tmp folder in opt/piratebox
+
+MODULE_LIST="$MODULE_LIST cleanup_tmp_folder"
+
+
+cleanup_tmp_folder_myself="cleanup_tmp_folder"
+cleanup_tmp_folder_start_order=05
+cleanup_tmp_folder_stop_order=99
+cleanup_tmp_folder_needed_config=" "
+cleanup_tmp_folder_crucial="no"
+
+func_cleanup_tmp_folder_start(){
+       #Start here the cleanup_tmp_folder i.e.
+        find   "${PIRATEBOX_FOLDER}"/tmp/  -exec rm {} \;
+       local RC=$?
+       _check_rc_  "$cleanup_tmp_folder_myself"  "$RC"  "$cleanup_tmp_folder_crucial" 
+       return   $RC
+}
+
+func_cleanup_tmp_folder_stop(){
+       _check_rc_ "$cleanup_tmp_folder_myself"  "0"
+       return   $RC
+}
+
+func_cleanup_tmp_folder_get_config(){
+	echo $cleanup_tmp_folder_needed_config
+}
+func_cleanup_tmp_folder_get_start_order(){
+	echo $cleanup_tmp_folder_start_order
+}
+func_cleanup_tmp_folder_get_stop_order(){
+	echo $cleanup_tmp_folder_stop_order
+}

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+## This module is responsible for  tidy up leftovers from droopy.
+##    this handles 0 Byte files and 
+##    files starting with tmp*
+
+MODULE_LIST="$MODULE_LIST cleanup_tmp_files"
+
+
+cleanup_tmp_files_myself="cleanup_tmp_files"
+cleanup_tmp_files_start_order=05
+cleanup_tmp_files_stop_order=99
+cleanup_tmp_files_needed_config=" "
+cleanup_tmp_files_crucial="no"
+
+func_cleanup_tmp_files_start(){
+       #Start here the cleanup_tmp_files i.e.
+	find  "$UPLOADFOLDER"/ -iname tmp\* -exec rm {} \;
+	$PIRATEBOX_FOLDER/bin/delete_empty.sh  "$UPLOADFOLDER"
+       local RC=0
+       _check_rc_  "$cleanup_tmp_files_myself"  "$RC"  "$cleanup_tmp_files_crucial" 
+       return   $RC
+}
+
+func_cleanup_tmp_files_stop(){
+       _check_rc_ "$cleanup_tmp_files_myself"  "0"
+       return   $RC
+}
+
+func_cleanup_tmp_files_get_config(){
+	echo $cleanup_tmp_files_needed_config
+}
+func_cleanup_tmp_files_get_start_order(){
+	echo $cleanup_tmp_files_start_order
+}
+func_cleanup_tmp_files_get_stop_order(){
+	echo $cleanup_tmp_files_stop_order
+}

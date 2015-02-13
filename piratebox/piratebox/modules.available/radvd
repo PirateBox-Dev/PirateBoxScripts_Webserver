@@ -1,0 +1,63 @@
+#!/bin/sh
+
+## Module needed for distribution of IPv6 addresses to the clients
+
+MODULE_LIST="$MODULE_LIST radvd"
+
+radvd_myself="radvd"
+radvd_start_order=20
+radvd_stop_order=20
+# dnsmasq.conf is needed, because radvd.conf reads the configured interface
+#     so, there is need to load that config file
+radvd_needed_config="network_ipv6.conf dnsmasq.conf radvd.conf"
+radvd_crucial="no"
+
+func_radvd_start(){
+       #Start here the radvd i.e.
+       
+       func_radvd_generate_configuration "$IPV6_PREFIX"  "$IPV6_MASK"  "$RADVD_INTERFACE"
+       
+       start-stop-daemon  -S -q -x radvd  --  -p $RADVD_PID -C $RADVD_CONFIG_FILE
+       
+       local RC=$?
+       _check_rc_  "$radvd_myself"  "$RC"  "$radvd_crucial" 
+       return   $RC
+}
+
+func_radvd_stop(){
+	  start-stop-daemon -K -q -p  $RADVD_PID 
+       _check_rc_ "$radvd_myself"  "$RC"
+       return   $RC
+}
+
+func_radvd_get_config(){
+	echo $radvd_needed_config
+}
+func_radvd_get_start_order(){
+	echo $radvd_start_order
+}
+func_radvd_get_stop_order(){
+	echo $radvd_stop_order
+}
+
+
+func_radvd_generate_configuration(){
+  local prefix=$1
+  local mask=$2
+  local interface=$3
+
+  echo "#---- generated file ---"               > $RADVD_CONFIG_FILE  
+  echo "
+    interface $interface {
+       AdvSendAdvert on;
+       MinRtrAdvInterval 3;
+       MaxRtrAdvInterval 10;
+       prefix $prefix::/$mask {
+           AdvOnLink on; 
+	   AdvAutonomous on; 
+	   AdvRouterAddr on; 
+       };
+    };
+       "                                        >>  $RADVD_CONFIG_FILE	
+
+}

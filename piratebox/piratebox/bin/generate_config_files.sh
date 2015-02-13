@@ -80,28 +80,6 @@ generate_hosts() {
 }
 
 
-generate_radvd(){
-  prefix=$1
-  mask=$2
-  interface=$3
-
-  echo "Generating config for radvd.." 
-  echo "#---- generated file ---"               > $RADVD_CONFIG  
-  echo "
-    interface $interface {
-       AdvSendAdvert on;
-       MinRtrAdvInterval 3;
-       MaxRtrAdvInterval 10;
-       prefix $prefix::/$mask {
-           AdvOnLink on; 
-	   AdvAutonomous on; 
-	   AdvRouterAddr on; 
-       };
-    };
-       "                                        >>  $RADVD_CONFIG
-
-}
-
 #------------ lighttpd env config - Start ---------------------
 
 generate_lighttpd_env() {
@@ -163,7 +141,6 @@ ipv6_call=''
 if [ "$IPV6_ENABLE" = "yes" ] ; then
    ipv6_call=$IPV6_PREFIX
    IPV6=$IPV6_IP
-   [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
 
