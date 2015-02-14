@@ -1,0 +1,49 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST generate_config_lighttpd_env"
+
+generate_config_lighttpd_env_myself="generate_config_lighttpd_env"
+generate_config_lighttpd_env_start_order=12
+generate_config_lighttpd_env_stop_order=99
+generate_config_lighttpd_env_needed_config="shoutbox.conf lighttpd.conf"
+generate_config_lighttpd_env_crucial="no"
+
+func_generate_config_lighttpd_env_start(){
+       #Start here the generate_config_lighttpd_env i.e.
+
+        local LIGHTTPD_ENV_BR_LINE=""
+        if  _enabled_  "global_shoutbox" ; then
+	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , "
+	fi
+
+	local  LIGHTTPD_ENV="setenv.add-environment = ( 
+	   \"PYTHONPATH\"             => \"$PYTHONPATH:${PIRATEBOX_FOLDER}/python_lib\", 
+	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_CHATFILE\" , 
+	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , 
+	   \"SHOUTBOX_CLIENT_TIMESTAMP\" => \"$SHOUTBOX_CLIENT_TIMESTAMP\" , 
+	   \"UPLOAD_PATH\" => \"$UPLOAD_PATH\" , 
+	   $LIGHTTPD_ENV_BR_LINE 
+
+        )"
+
+       echo $LIGHTTPD_ENV > $LIGHTTPD_ENV_CONFIG
+       local RC=$?       
+       
+       _check_rc_  "$generate_config_lighttpd_env_myself"  "$RC"  "$generate_config_lighttpd_env_crucial" 
+       return   $RC
+}
+
+func_generate_config_lighttpd_env_stop(){
+       _check_rc_ "$generate_config_lighttpd_env_myself"  "$RC"
+       return   $RC
+}
+
+func_generate_config_lighttpd_env_get_config(){
+	echo $generate_config_lighttpd_env_needed_config
+}
+func_generate_config_lighttpd_env_get_start_order(){
+	echo $generate_config_lighttpd_env_start_order
+}
+func_generate_config_lighttpd_env_get_stop_order(){
+	echo $generate_config_lighttpd_env_stop_order
+}

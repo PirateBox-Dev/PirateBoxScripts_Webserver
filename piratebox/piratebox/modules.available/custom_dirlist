@@ -3,7 +3,7 @@
 MODULE_LIST="$MODULE_LIST custom_dirlist"
 
 custom_dirlist_myself="custom_dirlist"
-custom_dirlist_start_order=05
+custom_dirlist_start_order=13
 custom_dirlist_stop_order=99
 custom_dirlist_needed_config=" "
 custom_dirlist_crucial="no"

@@ -1,0 +1,59 @@
+#!/bin/sh
+
+### This module replaces the old generate_config_hosts_files script
+## It generates:
+##   - an environment file for lighttpd
+##   - a static hosts file including 
+##           the short hostname
+##        
+
+MODULE_LIST="$MODULE_LIST generate_config_hosts"
+
+generate_config_hosts_myself="generate_config_hosts"
+generate_config_hosts_start_order=12
+generate_config_hosts_stop_order=99
+generate_config_hosts_needed_config="network.conf network_ipv6.conf hostname.conf config_generation.conf"
+generate_config_hosts_crucial="no"
+
+func_generate_config_hosts_start(){
+       #Start here the generate_config_hosts i.e.
+
+	
+       . "${PIRATEBOX_FOLDER}"/lib/node_name_generation.sh
+       
+       cat "${HOSTS_DEFAULT}"  >  "${HOSTS_CONFIG}"
+       touch  "${HOSTS_MESH}"
+       
+	echo "${IP}         ${HOST} " >> $HOSTS_CONFIG
+	echo "${IPV6_IP}    ${HOST} " >> $HOSTS_CONFIG
+       
+       
+	#We want a long hostname and not only the hostname itself...
+	### PirateBox Scripts generates its own config in  /opt/piratebox/conf/avahi
+	###   but, the daemon works per default only on /etc/avahi
+	### If you want to enable avahi, then you have to link /etc/avahi to /opt/piratebox/conf/avahi
+	### On OpenWRT this should happen, if avahi is available before installing the piratebox
+	###  automtically. 
+	AVAHI_HOST=$( echo  "${HOST}"  | sed 's|\.|_|g' )
+	sed "s|#####MASKED_HOSTNAME#####|$AVAHI_HOST|" $AVAHI_SRC > $AVAHI_CONFIG       
+       
+       
+       local RC=0
+       _check_rc_  "$generate_config_hosts_myself"  "$RC"  "$generate_config_hosts_crucial" 
+       return   $RC
+}
+
+func_generate_config_hosts_stop(){
+       _check_rc_ "$generate_config_hosts_myself"  "0"
+       return   $RC
+}
+
+func_generate_config_hosts_get_config(){
+	echo $generate_config_hosts_needed_config
+}
+func_generate_config_hosts_get_start_order(){
+	echo $generate_config_hosts_start_order
+}
+func_generate_config_hosts_get_stop_order(){
+	echo $generate_config_hosts_stop_order
+}

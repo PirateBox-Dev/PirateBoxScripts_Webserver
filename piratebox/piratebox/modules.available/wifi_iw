@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST wifi_iw"
+
+wifi_iw_myself="wifi_iw"
+wifi_iw_start_order=21
+wifi_iw_stop_order=74
+wifi_iw_needed_config="wifi.conf"
+wifi_iw_crucial="no"
+
+func_wifi_iw_start(){
+       #Start here the wifi_iw i.e.
+	iw $PHY_IF interface add $AP_INTERFACE type managed
+       local RC=$?
+       _check_rc_  "$wifi_iw_myself"  "$RC"  "$wifi_iw_crucial" 
+       return   $RC
+}
+
+func_wifi_iw_stop(){
+       iw dev $INTERFACE del
+       return   $RC
+}
+
+func_wifi_iw_get_config(){
+	echo $wifi_iw_needed_config
+}
+func_wifi_iw_get_start_order(){
+	echo $wifi_iw_start_order
+}
+func_wifi_iw_get_stop_order(){
+	echo $wifi_iw_stop_order
+}

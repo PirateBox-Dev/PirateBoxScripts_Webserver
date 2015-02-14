@@ -3,8 +3,8 @@
 MODULE_LIST="$MODULE_LIST lighttpd"
 
 lighttpd_myself="lighttpd"
-lighttpd_start_order=30
-lighttpd_stop_order=10
+lighttpd_start_order=52
+lighttpd_stop_order=22
 lighttpd_needed_config="lighttpd.conf"
 lighttpd_crucial="no"
 

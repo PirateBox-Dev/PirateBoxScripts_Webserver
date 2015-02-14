@@ -1,0 +1,33 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST global_shoutbox"
+
+global_shoutbox_myself="global_shoutbox"
+global_shoutbox_start_order=53
+global_shoutbox_stop_order=21
+global_shoutbox_needed_config="shoutbox.conf"
+global_shoutbox_crucial="no"
+
+func_global_shoutbox_start(){
+       #Start here the global_shoutbox i.e.
+       start-stop-daemon -S -m -b -p $GLOBAL_SHOUTBOX_PIDFILE  -x $PIRATEBOX_FOLDER/bin/shoutbox_daemon.sh -- "${MODULE_CONFIG}/${shoutbox.conf}"
+       local RC=$?
+       _check_rc_  "$global_shoutbox_myself"  "$RC"  "$global_shoutbox_crucial" 
+       return   $RC
+}
+
+func_global_shoutbox_stop(){
+	start-stop-daemon -K  -q -p $GLOBAL_SHOUTBOX_PIDFILE 
+       _check_rc_ "$global_shoutbox_myself"  "$RC"
+       return   $RC
+}
+
+func_global_shoutbox_get_config(){
+	echo $global_shoutbox_needed_config
+}
+func_global_shoutbox_get_start_order(){
+	echo $global_shoutbox_start_order
+}
+func_global_shoutbox_get_stop_order(){
+	echo $global_shoutbox_stop_order
+}

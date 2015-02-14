@@ -175,6 +175,36 @@ _enable_(){
 	ln -s "../modules.available/${module_name}"  "${linkname_stop}"
 }
 
+_enabled_(){
+	MODULE_LIST=""
+	local module_name="$1"
+	
+	# check if $cfg_modules is available
+	if [ ! -d $cfg_modules ] ; then
+		echo "config module folder $cfg_modules does not exists"
+		return 1
+	fi
+	
+	if [ ! -e $cfg_modules_lib/$module_name ] ; then
+		echo "unknown module ${module_name}"
+		return 1
+	fi
+	
+	 $DEBUG  && echo "Loading Module $module_name"
+	.  $cfg_modules_lib/$module_name
+ 
+	 local start_num=$( "func_${module_name}_get_start_order" )
+	 local stop_num=$( "func_${module_name}_get_stop_order" )
+	 
+	 local linkname_start="${PREFIX_START}${start_num}_${module_name}"
+	 local linkname_stop="${PREFIX_STOP}${stop_num}_${module_name}"
+
+	cd $cfg_modules
+
+	return test -e $linkname_start
+
+}
+
 _disable_(){
 	local module_name="$1"
 	cd $cfg_modules

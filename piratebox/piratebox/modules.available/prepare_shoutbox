@@ -1,0 +1,63 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST prepare_shoutbox"
+
+prepare_shoutbox_myself="prepare_shoutbox"
+prepare_shoutbox_start_order=12
+prepare_shoutbox_stop_order=99
+prepare_shoutbox_needed_config="shoutbox.conf"
+prepare_shoutbox_crucial="no"
+
+func_prepare_shoutbox_start(){
+       #Start here the prepare_shoutbox i.e.
+
+	cd $PIRATEBOX_FOLDER
+	cd python_lib
+	
+	export SHOUTBOX_CHATFILE=$SHOUTBOX_CHATFILE
+	export SHOUTBOX_GEN_HTMLFILE=$SHOUTBOX_GEN_CHATFILE
+	export SHOUTBOX_CLIENT_TIMESTAMP=$SHOUTBOX_CLIENT_TIMESTAMP
+	
+	
+	#Writing init-message and reset chat..
+	if [ "$SHOUTBOX_RESET_CHAT"  = "yes" ] ; then
+		cat $SHOUTBOX_TEXT_TEMPLATE_FILE > $CHATFILE
+	fi
+	
+	#Generate content file
+	python psogen.py generate
+	
+	if [ "$SHOUTBOX_ENABLED" = "no" ] ; then
+		# If the shoutbox is disabled, we remove the writable flag
+		echo -n "Making shoutbox readonly..."
+		chmod a-w $SHOUTBOX_CHATFILE
+		echo "done"
+	fi
+	
+	#Set correct permissions
+	chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_CHATFILE
+	chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
+	chmod ug+rw  $SHOUTBOX_CHATFILE
+	chmod ug+rw  $SHOUTBOX_GEN_HTMLFILE
+	
+
+
+	local RC=0
+       _check_rc_  "$prepare_shoutbox_myself"  "$RC"  "$prepare_shoutbox_crucial" 
+       return   $RC
+}
+
+func_prepare_shoutbox_stop(){
+	_check_rc_ "$prepare_shoutbox_myself"  "0"
+       return   $RC
+}
+
+func_prepare_shoutbox_get_config(){
+	echo $prepare_shoutbox_needed_config
+}
+func_prepare_shoutbox_get_start_order(){
+	echo $prepare_shoutbox_start_order
+}
+func_prepare_shoutbox_get_stop_order(){
+	echo $prepare_shoutbox_stop_order
+}

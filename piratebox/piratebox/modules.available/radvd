@@ -5,8 +5,8 @@
 MODULE_LIST="$MODULE_LIST radvd"
 
 radvd_myself="radvd"
-radvd_start_order=20
-radvd_stop_order=20
+radvd_start_order=32
+radvd_stop_order=13
 # dnsmasq.conf is needed, because radvd.conf reads the configured interface
 #     so, there is need to load that config file
 radvd_needed_config="network_ipv6.conf dnsmasq.conf radvd.conf"

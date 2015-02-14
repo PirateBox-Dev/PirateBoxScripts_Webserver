@@ -5,8 +5,17 @@
 
 PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
 
+##Modules for Creating Wifi and IP setting
+DEFAULT_MODULES="hostap"
+##Modules for housekeeping and so on
+DEFAULT_MODULES="${DEFAULT_MODULES} cleanup_tmp_folder  generate_config_hosts generate_json_config"
+##Modules for serving IPs"
+DEFAULT_MODULES="${DEFAULT_MODULES} radvd dnsmasq"
+##Modules for serving the webpage
+DEFAULT_MODULES="${DEFAULT_MODULES} lighttpd custom_dirlist generate_config_lighttpd_env prepare_shoutbox"
 
-DEFAULT_MODULES="lighttpd dnsmasq cleanup_tmp_folder custom_dirlist hostap"
+#We mostly need lighttpd configuration
+. "${MODULE_CONFIG}"/lighttpd.conf
 
 # Load configfile
 
@@ -25,13 +34,8 @@ if [ -z $1 ]; then
 fi
 
 
-if [ !  -f $1 ] ; then 
-  echo "Config-File $1 not found..." 
-  exit 1 
-fi
-
-
 if [ $1 = 'pyForum' ] ; then
+
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
     cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/
     cp -v $PIRATEBOX_FOLDER/src/forum_forest.html  $WWW_FOLDER/forum.html
@@ -60,6 +64,7 @@ if [ $1 = 'part2' ] ; then
    #Distribute the Directory Listing files
    $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
    #Set permissions
+ 
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/www -R
@@ -114,6 +119,7 @@ if [ $1 = 'imageboard' ] ; then
     cd  $PIRATEBOX_FOLDER/share/board  
     cp -R  mode_image/* ./   
     cp  $PIRATEBOX_FOLDER/src/kareha_img_config.pl $PIRATEBOX_FOLDER/share/board/config.pl 
+    
     chown -R $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share/board   
     #Install filetype thumbnails
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
@@ -156,8 +162,10 @@ fi
 set_hostname() {
 	local name=$1 ; shift;
 
+	. "${MODULE_CONFIG}"/hostname.conf
+
 	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/redirect.html
-        sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
+        sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i   "${MODULE_CONFIG}"/hostname.conf
 }
 
 if [ $1 = "hostname" ] ; then

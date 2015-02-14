@@ -6,7 +6,7 @@ MODULE_LIST="$MODULE_LIST cleanup_tmp_folder"
 
 
 cleanup_tmp_folder_myself="cleanup_tmp_folder"
-cleanup_tmp_folder_start_order=05
+cleanup_tmp_folder_start_order=11
 cleanup_tmp_folder_stop_order=99
 cleanup_tmp_folder_needed_config=" "
 cleanup_tmp_folder_crucial="no"

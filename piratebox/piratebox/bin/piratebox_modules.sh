@@ -10,6 +10,8 @@ PIRATEBOX_CONF="${PIRATEBOX_FOLDER}/conf/piratebox.conf"
 # export DEBUG=true
 DEBUG=${DEBUG:=false}
 
+export PYTHONPATH=:$PYTHONPATH:$PIRATEBOX_PYTHONPATH
+
 export cfg_modules=${MODULE_ENABLED}
 export cfg_modules_lib=${MODULE_AVAILABLE}
 
@@ -26,6 +28,9 @@ case "$1" in
    ;;      
  enable)
   	_enable_ "$2"
+   ;;
+  enabled)
+  	exit _enabled_ "$2"
    ;;   
   disable)
   	_disable_ "$2"
@@ -34,8 +39,9 @@ case "$1" in
 #  ;;
   *)
     echo "Usage: piratebox_modules.sh {start|stop|restart}"
-    echo "       piratebox_modules.sh enable module"
-    echo "       piratebox_modules.sh disable module"
+    echo "       piratebox_modules.sh enable module    -enable for start"
+    echo "       piratebox_modules.sh enabled module   -Test if it is enabled" 
+    echo "       piratebox_modules.sh disable module  "
     exit 1
     ;;
 esac

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST generate_json_config"
+
+generate_json_config_myself="generate_json_config"
+generate_json_config_start_order=12
+generate_json_config_stop_order=99
+generate_json_config_needed_config=" "
+generate_json_config_crucial="no"
+
+func_generate_json_config_start(){
+       #Start here the generate_json_config i.e.
+       $PIRATEBOX_FOLDER/bin/json_generation.sh  "${PIRATEBOX_FOLDER}/conf/piratebox.conf"
+       local RC=$?
+       _check_rc_  "$generate_json_config_myself"  "$RC"  "$generate_json_config_crucial" 
+       return   $RC
+}
+
+func_generate_json_config_stop(){
+       _check_rc_ "$generate_json_config_myself"  "0"
+       return   $RC
+}
+
+func_generate_json_config_get_config(){
+	echo $generate_json_config_needed_config
+}
+func_generate_json_config_get_start_order(){
+	echo $generate_json_config_start_order
+}
+func_generate_json_config_get_stop_order(){
+	echo $generate_json_config_stop_order
+}

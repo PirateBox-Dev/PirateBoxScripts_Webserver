@@ -6,8 +6,8 @@
 MODULE_LIST="$MODULE_LIST hostap"
 
 hostap_myself="hostap"
-hostap_start_order=11
-hostap_stop_order=80
+hostap_start_order=23
+hostap_stop_order=11
 hostap_needed_config="wifi.conf hostap.conf"
 hostap_crucial="yes"
 

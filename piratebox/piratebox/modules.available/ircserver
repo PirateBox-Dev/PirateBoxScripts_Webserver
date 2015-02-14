@@ -3,8 +3,8 @@
 MODULE_LIST="$MODULE_LIST ircserver"
 
 ircserver_myself="ircserver"
-ircserver_start_order=50
-ircserver_stop_order=01
+ircserver_start_order=71
+ircserver_stop_order=41
 ircserver_needed_config="irc.conf"
 ircserver_crucial="no"
 

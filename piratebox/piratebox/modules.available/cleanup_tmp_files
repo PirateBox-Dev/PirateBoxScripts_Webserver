@@ -8,15 +8,15 @@ MODULE_LIST="$MODULE_LIST cleanup_tmp_files"
 
 
 cleanup_tmp_files_myself="cleanup_tmp_files"
-cleanup_tmp_files_start_order=05
+cleanup_tmp_files_start_order=11
 cleanup_tmp_files_stop_order=99
-cleanup_tmp_files_needed_config=" "
+cleanup_tmp_files_needed_config="cleanUP_Upload.conf"
 cleanup_tmp_files_crucial="no"
 
 func_cleanup_tmp_files_start(){
        #Start here the cleanup_tmp_files i.e.
-	find  "$UPLOADFOLDER"/ -iname tmp\* -exec rm {} \;
-	$PIRATEBOX_FOLDER/bin/delete_empty.sh  "$UPLOADFOLDER"
+	find  "$CLEANUP_FOLDER"/ -iname tmp\* -exec rm {} \;
+	$PIRATEBOX_FOLDER/bin/delete_empty.sh  "$CLEANUP_FOLDER"
        local RC=0
        _check_rc_  "$cleanup_tmp_files_myself"  "$RC"  "$cleanup_tmp_files_crucial" 
        return   $RC

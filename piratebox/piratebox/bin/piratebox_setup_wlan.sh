@@ -8,43 +8,23 @@
 #   Netmask
 #   Interface
 
-probe() {
-  if [ "$PROBE_INTERFACE" = "yes" ] ; then
-     echo -n "Probing interface $INTERFACE"
-     ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-     TEST_OK=$?
-     CNT=$PROBE_TIME
-     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
-     do
-        echo -n "."
-        sleep 1
-        CNT=$(( $CNT - 1 ))
-        if [ "$CNT" = 0 ] ; then
-          exit 99
-        fi
-        ifconfig  "$INTERFACE"  >> /dev/null 2>&1
-        TEST_OK=$?
-     done
-  fi
-}
+
+PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
+
 
 
 
 # Load configfile
 
-if [ -z  $1 ] || [ -z $2 ]; then
-  echo "Usage piratebox_setup_wlan.sh my_config <start|stop|probe>"
+if [ -z  $1 ] then
+  echo "Usage piratebox_setup_wlan.sh <start|stop>"
   exit 1
 fi
 
 
-if [ !  -f $1 ] ; then
-  echo "Config-File $1 not found..."
-  exit 1
-fi
-
-#Load config
-. $1
+. $PIRATEBOX_CONFIG
+. "${MODULE_CONFIG}"/wifi.conf
+. "${MODULE_CONFIG}"/
 
 
 ### Check config
@@ -81,7 +61,7 @@ if [ $2 =  "start" ] ; then
   fi
 
   echo "Setting up $INTERFACE"
-  ifconfig $INTERFACE  $IP netmask $NETMASK
+  ifconfig $INTERFACE  $IP netmask $NETMASK 
 
   if  [ $?  -ne 0 ] ; then
      echo  "..failed ";
@@ -112,9 +92,6 @@ elif [ $2 = "stop" ] ; then
 	echo "Removing the Node-Address again..."
         ifconfig $NODE_INTERFACE del $NODE_IPV6_IP"$NODE_IPV6_MASK"
   fi
-elif [ $2 = "probe" ] ; then
-   # simply check if the interface is available
-   probe
 fi
 
 

@@ -3,7 +3,7 @@
 MODULE_LIST="$MODULE_LIST dnsmasq"
 
 dnsmasq_myself="dnsmasq"
-dnsmasq_start_order=13
+dnsmasq_start_order=31
 dnsmasq_stop_order=70
 dnsmasq_needed_config="network.conf config_generation.conf dnsmasq.conf"
 dnsmasq_crucial="no"

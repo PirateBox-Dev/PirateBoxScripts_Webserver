@@ -3,8 +3,8 @@
 MODULE_LIST="$MODULE_LIST droopy"
 
 droopy_myself="droopy"
-droopy_start_order=50
-droopy_stop_order=10
+droopy_start_order=51
+droopy_stop_order=23
 droopy_needed_config="droopy.conf lighttpd.conf"
 droopy_crucial="no"
 

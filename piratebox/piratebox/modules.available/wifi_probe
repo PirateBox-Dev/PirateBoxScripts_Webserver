@@ -1,0 +1,51 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST wifi_probe"
+
+wifi_probe_myself="wifi_probe"
+wifi_probe_start_order=22
+wifi_probe_stop_order=99
+wifi_probe_needed_config="wifi.conf"
+wifi_probe_crucial="yes"
+
+func_wifi_probe_start(){
+       #Start here the wifi_probe i.e.
+	func_wifi_probe_do
+       local RC=$?
+       _check_rc_  "$wifi_probe_myself"  "$RC"  "$wifi_probe_crucial" 
+       return   $RC
+}
+
+func_wifi_probe_stop(){
+       _check_rc_ "$wifi_probe_myself"  "$0"
+       return   $RC
+}
+
+func_wifi_probe_get_config(){
+	echo $wifi_probe_needed_config
+}
+func_wifi_probe_get_start_order(){
+	echo $wifi_probe_start_order
+}
+func_wifi_probe_get_stop_order(){
+	echo $wifi_probe_stop_order
+}
+
+
+func_wifi_probe_do() {
+      ifconfig  "$AP_INTERFACE"  >> /dev/null 2>&1
+     local TEST_OK=$?
+     local CNT=$PROBE_TIME
+     while [[ "$TEST_OK" != "0" &&  "$CNT" != "0"  ]]
+     do
+        echo -n "."
+        sleep 1
+        CNT=$(( $CNT - 1 ))
+        if [ "$CNT" = 0 ] ; then
+          return 99
+        fi
+        ifconfig  "$AP_INTERFACE"  >> /dev/null 2>&1
+        TEST_OK=$?
+     done
+     return 0
+}

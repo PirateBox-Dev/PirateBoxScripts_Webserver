@@ -9,7 +9,9 @@
 . $1
 
 # json.conf contains some information about modules on the frontend
-. $PIRATEBOX_FOLDER/conf/json.conf
+. "${MODULE_CONFIG}"/config_generation.conf
+
+###. $PIRATEBOX_FOLDER/conf/json.conf
 
 ### JSON convert functions
 . $PIRATEBOX_FOLDER/lib/json_func.sh
@@ -20,6 +22,13 @@ JSON_FILE=$PBX_JSON_FILE
 # DROOPY_ENABLED  => upload_droopy
 # DROOPY_PORT     => droopy_port
 # HOST		  => droopy_host 
+
+DROPPY_ENABLED="no"
+[ $PIRATEBOX_FOLDER/bin/piratebox_modules.sh droopy ] && DROOPY_ENABLED="yes"
+
+
+. "${MODULE_CONFIG}"/shoutbox.conf
+. "${MODULE_CONFIG}"/droopy.conf
 
 json_droopy_enabled=`convert_yn_to_tf $DROOPY_ENABLED`
 json_shoutbox_enabled=`convert_yn_to_tf  $SHOUTBOX_ENABLED` 

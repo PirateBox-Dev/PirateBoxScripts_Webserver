@@ -32,6 +32,7 @@ fi
 
 . $1
 
+. $PIRATEBOX_FOLDER/conf/modules_conf/timesave.conf
 
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
