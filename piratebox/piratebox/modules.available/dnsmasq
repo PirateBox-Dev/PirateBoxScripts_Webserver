@@ -5,18 +5,28 @@ MODULE_LIST="$MODULE_LIST dnsmasq"
 dnsmasq_myself="dnsmasq"
 dnsmasq_start_order=31
 dnsmasq_stop_order=70
-dnsmasq_needed_config="network.conf config_generation.conf dnsmasq.conf"
+dnsmasq_needed_config="bridge.conf network.conf config_generation.conf dnsmasq.conf"
 dnsmasq_crucial="no"
 
 func_dnsmasq_start(){
        #Start here the dnsmasq i.e.
+       
+       local interface=$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$DNSMASQ_INTERFACE" )
+       if [ "$?" != "0" ] ; then
+		echo ""
+		echo "... $interface"
+		echo ""		
+		_check_rc_ "$dnsmasq_myself" 255		
+		return 255
+       fi
+       
 	# pidfile is written by dnsmasq
 	# Command Line for DNSMASQ,  use extra config file generated from command above
 	
 	[ "$DNSMASQ_GENERATE_CONF" = "yes" ]  &&  \
 		func_dnsmasq_generate_config  "$NET" "$IP_SHORT" \
 			"$START_LEASE" "$END_LEASE" \
-			"$LEASE_DURATION" "$DNSMASQ_INTERFACE"
+			"$LEASE_DURATION" "$interface"
 	
 	local CMD_DNSMASQ="-x $DNSMASQ_PIDFILE -C $DNSMASQ_CONF "
          start-stop-daemon -S -q -x /usr/sbin/dnsmasq  --  $CMD_DNSMASQ
@@ -54,7 +64,7 @@ func_dnsmasq_generate_config (){
    cat $DNSMASQ_DEFAULT_CONF                > $DNSMASQ_CONF
 
    #Add interface line if filled
-   [ -n $dnsmasq_interface ] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONF
+   [ "$dnsmasq_interface" != "IGNORE" ]  &&  echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONF
 
    local lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
    echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONF

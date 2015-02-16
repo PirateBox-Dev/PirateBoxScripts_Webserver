@@ -1,0 +1,35 @@
+#!/bin/sh
+
+MODULE_LIST="$MODULE_LIST bridge_create"
+
+bridge_create_myself="bridge_create"
+bridge_create_start_order=24
+bridge_create_stop_order=73
+bridge_create_needed_config="bridge.conf"
+bridge_create_crucial="yes"
+
+func_bridge_create_start(){
+       #Start here the bridge_create i.e.
+       
+       brctl addbr $BRIDGE_NAME
+       local RC=$?
+       _check_rc_  "$bridge_create_myself"  "$RC"  "$bridge_create_crucial" 
+       return   $RC
+}
+
+func_bridge_create_stop(){
+	brctl delbr $BRIDGE_NAME
+	local RC=$?
+       _check_rc_ "$bridge_create_myself"  "$RC"
+       return   $RC
+}
+
+func_bridge_create_get_config(){
+	echo $bridge_create_needed_config
+}
+func_bridge_create_get_start_order(){
+	echo $bridge_create_start_order
+}
+func_bridge_create_get_stop_order(){
+	echo $bridge_create_stop_order
+}

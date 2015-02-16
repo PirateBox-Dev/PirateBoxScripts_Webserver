@@ -6,7 +6,7 @@
 PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
 
 ##Modules for Creating Wifi and IP setting
-DEFAULT_MODULES="hostap"
+DEFAULT_MODULES="hostap network "
 ##Modules for housekeeping and so on
 DEFAULT_MODULES="${DEFAULT_MODULES} cleanup_tmp_folder  generate_config_hosts generate_json_config"
 ##Modules for serving IPs"

@@ -14,8 +14,23 @@ radvd_crucial="no"
 
 func_radvd_start(){
        #Start here the radvd i.e.
+       local iface="$RADVD_INTERFACE"
+       # We additional try to use the dnsmasq interface, if set.
+       if [ -z "$iface" ] ; then
+		iface="$DNSMASQ_INTERFACE"
+	fi
+		
+       local interface=$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$iface" )
+       if [ "$?" != "0" ] ; then
+		echo ""
+		echo "... $interface"
+		echo ""
+		_check_rc_ "$radvd_myself" 255
+		return 255
+       fi
        
-       func_radvd_generate_configuration "$IPV6_PREFIX"  "$IPV6_MASK"  "$RADVD_INTERFACE"
+       
+       func_radvd_generate_configuration "$IPV6_PREFIX"  "$IPV6_MASK"  "$interface"
        
        start-stop-daemon  -S -q -x radvd  --  -p $RADVD_PID -C $RADVD_CONFIG_FILE
        

@@ -1,0 +1,67 @@
+#!/bin/sh
+
+## Addes one or more interfaces to an existing bridge.
+##   uses bridge config
+## To create a new bridge enable "bridge_create" module
+## IF BRIDGE_PHY_INTERFACES is empty, hostap interface is used.
+
+MODULE_LIST="$MODULE_LIST bridge_add_wifi"
+
+bridge_add_wifi_myself="bridge_add_wifi"
+bridge_add_wifi_start_order=99
+bridge_add_wifi_stop_order=01
+bridge_add_wifi_needed_config="bridge.conf hostap.conf"
+bridge_add_wifi_crucial="no"
+
+func_bridge_add_wifi_start(){
+       #Start here the bridge_add_wifi i.e.
+       if [ -z "$BRIDGE_PHY_INTERFACES" ] ; then
+		BRIDGE_PHY_INTERFACES="$HOSTAP_INTERFACE"
+	fi
+	local high_rc=0
+	local RC=0
+	echo ""
+	for  iface  in $BRIDGE_PHY_INTERFACES ; do
+		echo ".. adding $iface  to $BRIDGE_NAME"
+		local BR_CMD="brctl addif  $BRIDGE_NAME  $iface"
+		( $BR_CMD ; )
+		local RC=$?
+		if [ "$RC" != "0"  ] ; then
+			high_rc=$RC
+		fi
+	done
+	RC=$high_rc
+       _check_rc_  "$bridge_add_wifi_myself"  "$RC"  "$bridge_add_wifi_crucial" 
+       return   $RC
+}
+
+func_bridge_add_wifi_stop(){
+       if [ -z "$BRIDGE_PHY_INTERFACES" ] ; then
+		BRIDGE_PHY_INTERFACES="$HOSTAP_INTERFACE"
+	fi
+	local high_rc=0
+	local RC=0
+	echo ""
+	for  iface  in $BRIDGE_PHY_INTERFACES ; do
+		echo ".. removing $iface  from  $BRIDGE_NAME"
+		local BR_CMD="brctl delif  $BRIDGE_NAME  $iface"
+		( $BR_CMD ; )
+		local RC=$?
+		if [ "$RC" != "0"  ] ; then
+			high_rc=$RC
+		fi
+	done
+	RC=$high_rc
+       _check_rc_ "$bridge_add_wifi_myself"  "$RC"
+       return   $RC
+}
+
+func_bridge_add_wifi_get_config(){
+	echo $bridge_add_wifi_needed_config
+}
+func_bridge_add_wifi_get_start_order(){
+	echo $bridge_add_wifi_start_order
+}
+func_bridge_add_wifi_get_stop_order(){
+	echo $bridge_add_wifi_stop_order
+}
