@@ -55,7 +55,7 @@ test_for_interface(){
 		fi
 		if [ "$i_type" = "network" ] ; then
 			. "${MODULE_CONFIG}/hostap.conf"
-			if  $module_enabled "hostapd" && [ -n "$HOSTAP_INTERFACE" ]  ; then
+			if  $module_enabled "hostap" && [ -n "$HOSTAP_INTERFACE" ]  ; then
 				RESULT_VALUE="$HOSTAP_INTERFACE"
 				RC=0
 			fi

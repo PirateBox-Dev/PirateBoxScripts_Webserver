@@ -11,8 +11,8 @@ dnsmasq_crucial="no"
 func_dnsmasq_start(){
        #Start here the dnsmasq i.e.
        
-       local interface=$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$DNSMASQ_INTERFACE" )
-       if [ "$?" != "0" ] ; then
+       local interface="$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$DNSMASQ_INTERFACE" )"
+      if   echo "$interface" | grep -q "ERROR"   ; then
 		echo ""
 		echo "... $interface"
 		echo ""		

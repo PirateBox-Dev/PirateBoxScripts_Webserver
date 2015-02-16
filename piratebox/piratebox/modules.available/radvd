@@ -20,8 +20,8 @@ func_radvd_start(){
 		iface="$DNSMASQ_INTERFACE"
 	fi
 		
-       local interface=$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$iface" )
-       if [ "$?" != "0" ] ; then
+       local interface="$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$iface" )"
+       if   echo "$interface" | grep -q "ERROR"   ; then
 		echo ""
 		echo "... $interface"
 		echo ""

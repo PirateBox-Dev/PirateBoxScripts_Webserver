@@ -10,8 +10,8 @@ network_crucial="yes"
 
 func_network_start(){
       local RC=0
-      local interface=$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$IFCONFIG_INTERFACE" )
-       if [ "$?" != "0" ] ; then
+      local interface="$( $PIRATEBOX_FOLDER/bin/find_interface_name.sh service "$IFCONFIG_INTERFACE" )"
+       if   echo "$interface" | grep -q "ERROR"   ; then
 		echo ""
 		echo "... $interface"
 		echo ""		

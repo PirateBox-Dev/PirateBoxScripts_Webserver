@@ -8,8 +8,8 @@
 MODULE_LIST="$MODULE_LIST bridge_add_wifi"
 
 bridge_add_wifi_myself="bridge_add_wifi"
-bridge_add_wifi_start_order=99
-bridge_add_wifi_stop_order=01
+bridge_add_wifi_start_order=29
+bridge_add_wifi_stop_order=72
 bridge_add_wifi_needed_config="bridge.conf hostap.conf"
 bridge_add_wifi_crucial="no"
 
