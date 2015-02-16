@@ -100,10 +100,11 @@ fi
 #install piratebox with the given option
 case "$1" in
 	default)
-		/opt/piratebox/bin/install_piratebox.sh /opt/piratebox/conf/piratebox.conf part2
+		/opt/piratebox/bin/install_piratebox.sh  modules
+		/opt/piratebox/bin/install_piratebox.sh  part2
 		;;
 	board)
-		/opt/piratebox/bin/install_piratebox.sh /opt/piratebox/conf/piratebox.conf imageboard
+		/opt/piratebox/bin/install_piratebox.sh imageboard
 		echo "############################################################################"
 		echo "#Edit /opt/piratebox/share/board/config.pl and change ADMIN_PASS and SECRET#"
 		echo "############################################################################"
