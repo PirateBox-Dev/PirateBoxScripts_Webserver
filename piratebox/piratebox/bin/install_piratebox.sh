@@ -5,23 +5,17 @@
 
 PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
 
-##Modules for Creating Wifi and IP setting
-DEFAULT_MODULES="hostap network "
-##Modules for housekeeping and so on
-DEFAULT_MODULES="${DEFAULT_MODULES} cleanup_tmp_folder  generate_config_hosts generate_json_config"
-##Modules for serving IPs"
-DEFAULT_MODULES="${DEFAULT_MODULES} radvd dnsmasq"
-##Modules for serving the webpage
-DEFAULT_MODULES="${DEFAULT_MODULES} lighttpd custom_dirlist generate_config_lighttpd_env prepare_shoutbox"
-
 #We mostly need lighttpd configuration
+. $PIRATEBOX_CONFIG
 . "${MODULE_CONFIG}"/lighttpd.conf
+.   $PIRATEBOX_FOLDER/conf/default_modules.conf
 
 # Load configfile
 
 if [ -z $1 ]; then 
   echo "Usage install_piratebox <part>"
   echo "   Parts: "
+  echo "       init           : First init, executes all other needed parts and sets 'init_done' flag"
   echo "       modules        : enables default piratebox-modules"
   echo "       part2          : sets Permissions and links correctly"
   echo "       imageboard     : configures kareha imageboard with Basic configuration"
@@ -48,6 +42,14 @@ if [ $1 = 'pyForum' ] ; then
 fi
 
 
+
+if [ $1 = 'init' ] ; then
+   $PIRATEBOX_FOLDER/bin/hooks/hook_pre_init.sh  "$CONF"
+   $PIRATEBOX_FOLDER/bin/install_piratebox.sh modules   
+   $PIRATEBOX_FOLDER/bin/install_piratebox.sh part2
+   $PIRATEBOX_FOLDER/bin/hooks/hook_post_init.sh  "$CONF"
+   touch   $PIRATEBOX_FOLDER/conf/init_done
+fi
 
 if [ $1 = 'part2' ] ; then
    echo "Starting initialize PirateBox Part2.."
@@ -176,8 +178,9 @@ fi
 
 if [ $1 = "modules" ] ; then
 	echo "enabling default modules"
-	for  module_name in "$DEFAULT_MODULES" ; do
-		piratebox_modules.sh enable $module_name
+	for  module_name in $DEFAULT_MODULES ; do
+		echo "Enabling default module $module_name"
+		$PIRATEBOX_FOLDER/bin/piratebox_modules.sh enable $module_name
 	done
 	echo "done"
 fi

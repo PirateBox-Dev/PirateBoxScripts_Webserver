@@ -24,7 +24,7 @@ JSON_FILE=$PBX_JSON_FILE
 # HOST		  => droopy_host 
 
 DROPPY_ENABLED="no"
-[ $PIRATEBOX_FOLDER/bin/piratebox_modules.sh droopy ] && DROOPY_ENABLED="yes"
+ $PIRATEBOX_FOLDER/bin/piratebox_modules.sh enabled droopy  && DROOPY_ENABLED="yes"
 
 
 . "${MODULE_CONFIG}"/shoutbox.conf
