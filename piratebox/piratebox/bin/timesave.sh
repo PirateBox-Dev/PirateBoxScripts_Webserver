@@ -19,9 +19,9 @@ get_datetime() {
 
 # Load configfile
 
-if [ -z  $1 ] || [ -z $2 ] ; then
+if [ -z $1 ] ; then
   echo "Set up a crontab entry for regulary saving the time"
-  echo "Usage $0 <path to piratebox.conf> <step>"
+  echo "Usage $0  <step>"
   echo "    Valid steps are:"
   echo "       install    - installs the needed parts into crontab"
   echo "       save       - saves time into file"
@@ -30,14 +30,15 @@ if [ -z  $1 ] || [ -z $2 ] ; then
   exit 1
 fi
 
-. $1
+
+. /opt/piratebox/conf/piratebox.conf
 
 . $PIRATEBOX_FOLDER/conf/modules_conf/timesave.conf
 
 if [ "$2" = "install" ] ; then
     crontab -l   >  $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
     echo "#--- Crontab for PirateBox-Timesave" >>  $PIRATEBOX_FOLDER/tmp/crontab
-    echo " */5 * * * *   $PIRATEBOX_FOLDER/bin/timesave.sh $PIRATEBOX_FOLDER/conf/piratebox.conf save "  >> $PIRATEBOX_FOLDER/tmp/crontab
+    echo " */5 * * * *   $PIRATEBOX_FOLDER/bin/timesave.sh save "  >> $PIRATEBOX_FOLDER/tmp/crontab
     crontab $PIRATEBOX_FOLDER/tmp/crontab
 
     echo  "initialize timesave file"

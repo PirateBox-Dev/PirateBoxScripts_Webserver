@@ -1,5 +1,11 @@
-PIRATEBOX_HOSTS_MESH=/opt/piratebox/conf/hosts_mesh
-DNSMASQ_PID=/var/run/piratebox_dnsmasq.pid
+
+. /opt/piratebox/conf/piratebox.conf
+
+. "${MODULE_CONFIG}/config_generation.conf"
+. "${MODULE_CONFIG}/dnsmasq.conf"
+
+PIRATEBOX_HOSTS_MESH="${HOSTS_MESH}"
+DNSMASQ_PID="${DNSMASQ_PIDFILE}"
 
 SLEEPTIME=$((60 * 5 ))  # Sleep for 5 Minutes before doing a refresh
 

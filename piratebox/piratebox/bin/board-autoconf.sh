@@ -3,7 +3,7 @@
 if [[ ! -d /opt/piratebox/share/board ]]; then
     echo "You have to install the imageboard first!"
     echo "Run (as root):"
-    echo "\t/opt/piratebox/bin/install_piratebox.sh /opt/piratebox/conf/piratebox.conf imageboard"
+    echo "\t/opt/piratebox/bin/install_piratebox.sh imageboard"
 else
     echo -n "Imageboard admin password: "
     read -s BOARDPASSWORD
