@@ -32,7 +32,7 @@ func_radvd_start(){
        
        func_radvd_generate_configuration "$IPV6_PREFIX"  "$IPV6_MASK"  "$interface"
        
-       start-stop-daemon  -S -q -x radvd  --  -p $RADVD_PID -C $RADVD_CONFIG_FILE
+       start-stop-daemon  -S -q -x /usr/sbin/radvd  --  -p $RADVD_PID -C $RADVD_CONFIG_FILE
        
        local RC=$?
        _check_rc_  "$radvd_myself"  "$RC"  "$radvd_crucial" 
@@ -41,6 +41,7 @@ func_radvd_start(){
 
 func_radvd_stop(){
 	  start-stop-daemon -K -q -p  $RADVD_PID 
+	  local RC=$?
        _check_rc_ "$radvd_myself"  "$RC"
        return   $RC
 }

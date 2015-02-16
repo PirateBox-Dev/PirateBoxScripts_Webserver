@@ -24,7 +24,7 @@ JSON_FILE=$PBX_JSON_FILE
 # HOST		  => droopy_host 
 
 DROPPY_ENABLED="no"
-[ $PIRATEBOX_FOLDER/bin/piratebox_modules.sh droopy ] && DROOPY_ENABLED="yes"
+ $PIRATEBOX_FOLDER/bin/piratebox_modules.sh enabled droopy  && DROOPY_ENABLED="yes"
 
 
 . "${MODULE_CONFIG}"/shoutbox.conf
@@ -40,7 +40,7 @@ echo "{ \"piratebox\" : { \"module\" : { " >> $JSON_FILE
 #------------ upload configuration
 echo -n "   \"upload\" : { \"status\" : $json_droopy_enabled , \"file\" : \"$UPLOAD_MODULE_FILE\" " >> $JSON_FILE
 #-----------  droopy specialities
-if [ "$DROOPY_ENABLED" == "yes" ] ; then
+if [ "$DROOPY_ENABLED" = "yes" ] ; then
 	echo -n ", " >> $JSON_FILE
 	echo -n "  \"upload_style\" : \"droopy\" , " >> $JSON_FILE
 	echo -n "  \"droopy_port\" : \"$DROOPY_PORT\", \"droopy_host\" : \"$HOST\" "  >> $JSON_FILE

@@ -30,18 +30,21 @@ case "$1" in
   	_enable_ "$2"
    ;;
   enabled)
-  	exit _enabled_ "$2"
+  	 _enabled_ "$2"
+	 exit $?
    ;;   
   disable)
   	_disable_ "$2"
    ;;      
-#  module)
-#  ;;
+  module)
+	_run_single_ "$2" "$3"
+  ;;
   *)
     echo "Usage: piratebox_modules.sh {start|stop|restart}"
     echo "       piratebox_modules.sh enable module    -enable for start"
     echo "       piratebox_modules.sh enabled module   -Test if it is enabled" 
     echo "       piratebox_modules.sh disable module  "
+    echo "       piratebox_modules.sh module <name> {start|stop}  - start/stop a single module  "
     exit 1
     ;;
 esac

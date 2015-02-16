@@ -38,6 +38,7 @@ func_dnsmasq_start(){
 func_dnsmasq_stop(){
 	echo "Stopping dnsmasq..."
 	start-stop-daemon -K  -q  -p $DNSMASQ_PIDFILE 
+	local RC=$?
        _check_rc_ "$dnsmasq_myself"  "$RC"
        return   $RC
 }

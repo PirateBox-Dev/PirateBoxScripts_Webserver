@@ -2,7 +2,7 @@
 
 . /opt/piratebox/conf/piratebox.conf
 
-module_enabled="${PIRATEBOX_FOLDER}/bin/piratebox_moduless.sh enabled"
+module_enabled="${PIRATEBOX_FOLDER}/bin/piratebox_modules.sh enabled"
 
 ## Reads the following module configuration and 
 ##   tries to find out, which interface name is relevant for
@@ -21,13 +21,14 @@ RESULT_VALUE=""
 
 
 check_bridge(){
-	return  $module_enabled "bridge_add"  ||   $module_enabled "bridge_create" 
+	 $module_enabled "bridge_add_wifi"  ||   $module_enabled "bridge_create" 
+	 return $?
 }
 
 do_bridge_check(){
 	# Only detect correct interface, when own variable not set (default)	
 	if   check_bridge  ; then
-		. "${MODULE_CONFIG}\bridge.conf"
+		. "${MODULE_CONFIG}/bridge.conf"
 		RESULT_VALUE="$BRIDGE_NAME"
 		RC=0
 	fi
@@ -46,16 +47,17 @@ test_for_interface(){
 	fi
 
 	if  ! do_bridge_check  ; then
-		if [ "i_type" = "service" ] ; then
-			. "${MODULE_CONFIG}\network.conf"
+		if [ "$i_type" = "service" ] ; then
+			. "${MODULE_CONFIG}/network.conf"
 			test_for_interface "network" "$IFCONFIG_INTERFACE"
 		fi
-		if [ "i_type" = "network" ] ; then
-			. "${MODULE_CONFIG}\hostap.conf"
+		if [ "$i_type" = "network" ] ; then
+			. "${MODULE_CONFIG}/hostap.conf"
 			if  $module_enabled "hostapd" && [ -n "$HOSTAP_INTERFACE" ]  ; then
 				RESULT_VALUE="$HOSTAP_INTERFACE"
 				RC=0
 			fi
+		fi
 	fi
 		
 }

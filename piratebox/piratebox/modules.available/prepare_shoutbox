@@ -21,7 +21,7 @@ func_prepare_shoutbox_start(){
 	
 	#Writing init-message and reset chat..
 	if [ "$SHOUTBOX_RESET_CHAT"  = "yes" ] ; then
-		cat $SHOUTBOX_TEXT_TEMPLATE_FILE > $CHATFILE
+		cat $SHOUTBOX_TEXT_TEMPLATE_FILE > $SHOUTBOX_CHATFILE
 	fi
 	
 	#Generate content file

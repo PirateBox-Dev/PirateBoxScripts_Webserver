@@ -110,9 +110,10 @@ _run_single_(){
 	local op_mode="$2"
 	
 	 $DEBUG  && echo "Loading Module $module_name"
-	. $cfg_modules/$module_name
+	. $cfg_modules_lib/$module_name
 	 $DEBUG  && echo ".. Processing $module_name $op_mode"
-	exit _work_on_module_ "$op_mode" "$module_name"
+	_work_on_module_ "$op_mode" "$module_name"
+	exit $?
 }
 
 _run_() {
@@ -169,8 +170,11 @@ _enable_(){
 	 local linkname_start="${PREFIX_START}${start_num}_${module_name}"
 	 local linkname_stop="${PREFIX_STOP}${stop_num}_${module_name}"
 
+	# Disable per default first
+	_disable_  $module_name 
+	
 	cd $cfg_modules
-		#TODO better way to make this relative linking working...
+	#TODO better way to make this relative linking working...
 	ln -s "../modules.available/${module_name}"  "${linkname_start}"
 	ln -s "../modules.available/${module_name}"  "${linkname_stop}"
 }
@@ -201,16 +205,17 @@ _enabled_(){
 
 	cd $cfg_modules
 
-	return test -e $linkname_start
+	test -e $linkname_start
+	return $?
 
 }
 
 _disable_(){
 	local module_name="$1"
 	cd $cfg_modules
-	ls -1 ./???_$module_name  | xargs -I {} rm -v  {}
+	ls -1 ./???_$module_name  2> /dev/null | xargs -I {} rm -v  {} 
 	cd $OLDPWD
-
+	return 0 
 }
 
 
