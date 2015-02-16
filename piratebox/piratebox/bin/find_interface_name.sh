@@ -21,8 +21,10 @@ RESULT_VALUE=""
 
 
 check_bridge(){
-	 $module_enabled "bridge_add_wifi"  ||   $module_enabled "bridge_create" 
-	 return $?
+	local ok=1
+	 $module_enabled "bridge_add_wifi"  && ok=0
+	 $module_enabled "bridge_create"      && ok=0
+	 return $ok
 }
 
 do_bridge_check(){

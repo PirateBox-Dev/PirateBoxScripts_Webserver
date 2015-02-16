@@ -5,12 +5,12 @@ MODULE_LIST="$MODULE_LIST droopy"
 droopy_myself="droopy"
 droopy_start_order=51
 droopy_stop_order=23
-droopy_needed_config="droopy.conf lighttpd.conf"
+droopy_needed_config="hostname.conf droopy.conf lighttpd.conf"
 droopy_crucial="no"
 
 func_droopy_start(){
        #Start here the droopy i.e.
-	DROOPY_USER=""
+	local DROOPY_USER=""
 	if [ "$DROOPY_USE_USER" = "yes" ] ; then
 		DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
 	fi
