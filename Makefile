@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 1.1.0
+VERSION = 2.0.0-alpha1
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -8,8 +8,8 @@ PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
 
-IMAGE_FILE=piratebox_ws_1.1_img.gz
-TGZ_IMAGE_FILE=piratebox_ws_1.1_img.tar.gz
+IMAGE_FILE=piratebox_ws_2.0_img.gz
+TGZ_IMAGE_FILE=piratebox_ws_2.0_img.tar.gz
 SRC_IMAGE=image_stuff/OpenWRT_ext4_50MB.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/piratebox_img
 MOUNT_POINT=image_stuff/image
@@ -56,15 +56,15 @@ $(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_C
 
 $(OPENWRT_CONFIG_FOLDER):
 	mkdir -p $@
+	mkdir -p $@/modules_conf
 	cp -rv $(PB_SRC_FOLDER)/conf/* $@
-	sed 's:OPENWRT="no":OPENWRT="yes":'  -i $@/piratebox.conf 
-	sed 's:DO_IFCONFIG="yes":DO_IFCONFIG="no":'  -i $@/piratebox.conf 
-	sed 's:IPV6_ENABLE="no":IPV6_ENABLE="yes":'  -i $@/ipv6.conf 
-	sed 's:USE_APN="yes":USE_APN="no":'  -i $@/piratebox.conf 
-	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
-	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
-	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
-	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
+	sed 's:DNSMASQ_INTERFACE="":DNSMASQ_INTERFACE="br-lan":' -i $@/modules_conf/dnsmasq.conf
+	sed 's:192.168.77:192.168.1:g' -i $@/modules_conf/network.conf
+	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/modules_conf/droopy.conf
+	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/modules_conf/dnsmasq.conf
+	sed 's:hostap::' -i $@/default_modules.conf
+	sed 's:network::' -i $@/default_modules.conf
+
 
 $(OPENWRT_BIN_FOLDER):
 	mkdir -p $@
