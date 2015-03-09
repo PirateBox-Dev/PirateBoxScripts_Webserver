@@ -1,4 +1,4 @@
-#!/bin/bh
+#!/bin/sh
 
 if [[ ! -d /opt/piratebox/share/board ]]; then
     echo "You have to install the imageboard first!"
