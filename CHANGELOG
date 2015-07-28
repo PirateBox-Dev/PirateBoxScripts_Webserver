@@ -5,6 +5,7 @@ CHANGELOG
 * [Fix] Some script cleanups
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
 * [Fix] Improved Cachehandling
+* [Fix] Modified index HTML structure for increased stylability
 
 === 1.0.2 ===
 * [Fix] Settings for correct permission of shoutbox files
