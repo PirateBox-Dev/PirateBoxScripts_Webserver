@@ -2,10 +2,27 @@ CHANGELOG
 
 
 === 1.0.4 === 
-* [Fix] Some script cleanups
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
+* [New] Droopy update: Multiple upload
+* [New] Droopy update: In general user/password setting (non configurable via
+                       PirateBox)
+
+* [Fix] Some script cleanups
 * [Fix] Improved Cachehandling
 * [Fix] Modified index HTML structure for increased stylability
+* [Fix] Droopy update: Language encoding
+* [Fix] Droopy update: Uploaded filepermission can be configured.
+                       PirateBox default: 755
+
+* [Removed] Droopy update: Include hostname to templates (not needed anymore)
+* [Removed] Droopy update: Field including iframe for shoutbox (not needed anymore)
+* [Removed] Droopy update: iOS fake answer code, which was included in lighttpd since
+                           Piratebox 0.5.x
+
+
+=== 1.0.3 ===
+
+ (skipped)
 
 === 1.0.2 ===
 * [Fix] Settings for correct permission of shoutbox files
