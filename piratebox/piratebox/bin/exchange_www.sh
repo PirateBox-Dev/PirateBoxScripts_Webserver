@@ -1,6 +1,17 @@
 #!/bin/sh
-# Matthias Strubel , 2013 (c) GPL-3
+# Matthias Strubel , 2013-2015 (c) GPL-3
 #   matthias.strubel@aod-rpg.de
+
+
+## This is an obsolete feature. 
+##  we exit that stuff only and skip processing it.
+##  In 99% this breaks stuff, over helping you.
+##  Will be removed with the next full release.
+
+echo "exchange_www.sh - was deactivated and does nothing now."
+echo "                  Will be removed with the next full release."
+exit 0
+
 
 # Move www folder to given destination
 

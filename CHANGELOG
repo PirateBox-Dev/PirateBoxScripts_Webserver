@@ -18,7 +18,8 @@ CHANGELOG
 * [Removed] Droopy update: Field including iframe for shoutbox (not needed anymore)
 * [Removed] Droopy update: iOS fake answer code, which was included in lighttpd since
                            Piratebox 0.5.x
-
+* [Removed] exchange_www.sh : This feature is not available anymore, because it breaks
+                              more then it helps.
 
 === 1.0.3 ===
 
