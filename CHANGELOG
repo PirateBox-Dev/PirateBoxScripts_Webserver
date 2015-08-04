@@ -6,6 +6,7 @@ CHANGELOG
 * [New] Droopy update: Multiple upload
 * [New] Droopy update: In general user/password setting (non configurable via
                        PirateBox)
+* [New] imageboard: inital dummy page for a not installed board. 
 
 * [Fix] Some script cleanups
 * [Fix] Improved Cachehandling
