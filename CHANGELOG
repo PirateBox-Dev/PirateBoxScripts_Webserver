@@ -7,6 +7,7 @@ CHANGELOG
 * [New] Droopy update: In general user/password setting (non configurable via
                        PirateBox)
 * [New] imageboard: inital dummy page for a not installed board. 
+* [New] Send HTTP-Code 204 for Android devices, avoids captive Portal and leaving devices.
 
 * [Fix] Some script cleanups
 * [Fix] Improved Cachehandling
