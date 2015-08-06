@@ -15,6 +15,7 @@ CHANGELOG
 * [Fix] Droopy update: Language encoding
 * [Fix] Droopy update: Uploaded filepermission can be configured.
                        PirateBox default: 755
+* [Fix] Fix not refreshing shoutbox after bootup
 
 * [Removed] Droopy update: Include hostname to templates (not needed anymore)
 * [Removed] Droopy update: Field including iframe for shoutbox (not needed anymore)
