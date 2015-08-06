@@ -117,7 +117,7 @@ if [ $2 = 'imageboard' ] ; then
     cd  $PIRATEBOX_FOLDER/share/board  
     cp -R  mode_image/* ./   
     cp  $PIRATEBOX_FOLDER/src/kareha_img_config.pl $PIRATEBOX_FOLDER/share/board/config.pl 
-    cp  $PIRATEBOX_FOLDER/src/no_forum.html  $PIRATEBOX_FOLDER/share/board/index.html
+    cp  $PIRATEBOX_FOLDER/src/no_forum.html  $PIRATEBOX_FOLDER/share/board/index.htm
     chown -R $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share/board   
     #Install filetype thumbnails
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
