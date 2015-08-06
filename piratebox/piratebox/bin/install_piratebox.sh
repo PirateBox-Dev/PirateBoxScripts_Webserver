@@ -37,12 +37,10 @@ PIRATEBOX_CONFIG=$1
 if [ $2 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
     cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/
-    cp -v $PIRATEBOX_FOLDER/src/forum_forest.html  $WWW_FOLDER/forum.html
     mkdir -p $PIRATEBOX_FOLDER/forumspace
     chmod a+rw -R  $PIRATEBOX_FOLDER/forumspace
     chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/cgi-bin/forest.py
     chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/forest.css
-    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/forum.html
     echo "Copied the files. Recheck your PirateBox now. "
 fi
 
@@ -58,8 +56,6 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
 #Copy Forban-Link spacer
-   cp $PIRATEBOX_FOLDER/src/no_link.html $PIRATEBOX_FOLDER/www/forban_link.html
-
    #Distribute the Directory Listing files
    $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
    #Set permissions
@@ -83,10 +79,6 @@ fi
 #Install the image-board
 if [ $2 = 'imageboard' ] ; then
    
-    #Activate on mainpage
-    cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
-
-
     if [ -e  $PIRATEBOX_FOLDER/share/board/init_done ] ; then
        echo "$PIRATEBOX_FOLDER/share/board/init_done file Found in Kareha folder. Won't reinstall board."
        exit 0;
@@ -121,9 +113,6 @@ if [ $2 = 'imageboard' ] ; then
     chown -R $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share/board   
     #Install filetype thumbnails
     mv $PIRATEBOX_FOLDER/share/board/extras/icons  $PIRATEBOX_FOLDER/share/board/ 
-
-    #Activate on mainpage
-    cp $PIRATEBOX_FOLDER/src/forum_kareha.html  $WWW_FOLDER/forum.html
 
     echo "Errors in chown occurs if you are using vfat on the USB stick"
     echo "   . don't Panic!"

@@ -24,6 +24,7 @@ CHANGELOG
                            Piratebox 0.5.x
 * [Removed] exchange_www.sh : This feature is not available anymore, because it breaks
                               more then it helps.
+* [Removed] Unnessecary AJAX calls & files from pre 1.0
 
 === 1.0.3 ===
 
