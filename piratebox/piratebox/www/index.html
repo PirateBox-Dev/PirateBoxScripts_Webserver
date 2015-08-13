@@ -7,7 +7,7 @@
 	<script src="scripts.js"></script>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 </head>
-<body>
+<body id="main-index">
 
 <header id="header">
 	<div class="container">
@@ -32,10 +32,12 @@
 
 <section id="content">
 	<div class="container">
-		<div id="welcome" class="card">
-			<h2>Welcome</h2>
-			<p>Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong>anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
-			<input id="thanks" class="button" type="submit" value="Thanks">
+		<div id="welcome">
+			<div id="greeting" class="card">
+				<h2>Welcome</h2>
+				<p>Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong>anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
+				<input id="thanks" class="button" type="submit" value="Thanks">
+			</div>
 		</div>
 		<div id="sidebar">
 			<div id="upload" class="card">
@@ -44,6 +46,7 @@
 					Your browser does not support iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>.
 				</iframe>
 				<h3><a href="/Shared">Browse Files -></a></h3>
+				<div id="station"></div>
 			</div>
 		</div>
 
@@ -73,11 +76,13 @@
 
 <footer id="about">
 	<div class="container">
-		<p class="to-top"><a href="#header">Back to top</a></p>
-		<h2>About PirateBox</h2>
-		<p>Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
-		<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
-		<small>PirateBox is licensed under GPLv3.</small>
+		<div id="details">
+			<p class="to-top"><a href="#header">Back to top</a></p>
+			<h2>About PirateBox</h2>
+			<p>Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
+			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
+			<small>PirateBox is licensed under GPLv3.</small>
+		</div>
 	</div>
 </footer>
 

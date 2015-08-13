@@ -1,13 +1,13 @@
 #
 # Example config file.
-# 
+#
 # Uncomment and edit the options you want to specifically change from the
 # default values. You must specify ADMIN_PASS and SECRET.
 #
 
 # System config
-# use constant ADMIN_PASS => 'CHANGEME';			# Admin password. For fucks's sake, change this.
-# use constant SECRET => 'CHANGEME';				# Cryptographic secret. CHANGE THIS to something totally random, and long.
+#use constant ADMIN_PASS => 'xyzPASSWORDzyx';	# Admin password. For fucks's sake, change this.
+#use constant SECRET => 'xyzSECRETCODEzyx';		# Cryptographic secret. CHANGE THIS to something totally random, and long.
 #use constant CAPPED_TRIPS => ('!!example1'=>' capcode','!!example2'=>' <em>cap</em>');	# Admin tripcode hash, for startng threads when locked down, and similar. Format is '!trip'=>'capcode', where 'capcode' is what is shown instead of the trip. This can contain HTML, but keep it valid XHTML!
 
 # Page look

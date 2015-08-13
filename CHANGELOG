@@ -1,5 +1,35 @@
 CHANGELOG
 
+
+=== 1.0.4 === 
+* [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
+* [New] Droopy update: Multiple upload
+* [New] Droopy update: In general user/password setting (non configurable via
+                       PirateBox)
+* [New] imageboard: inital dummy page for a not installed board. 
+* [New] Send HTTP-Code 204 for Android devices, avoids captive Portal and leaving devices.
+
+* [Fix] Some script cleanups
+* [Fix] Improved Cachehandling
+* [Fix] Modified index HTML structure for increased stylability
+* [Fix] Droopy update: Language encoding
+* [Fix] Droopy update: Uploaded filepermission can be configured.
+                       PirateBox default: 755
+* [Fix] Fix not refreshing shoutbox after bootup
+* [Fix] Show station count again, after it is enabled
+
+* [Removed] Droopy update: Include hostname to templates (not needed anymore)
+* [Removed] Droopy update: Field including iframe for shoutbox (not needed anymore)
+* [Removed] Droopy update: iOS fake answer code, which was included in lighttpd since
+                           Piratebox 0.5.x
+* [Removed] exchange_www.sh : This feature is not available anymore, because it breaks
+                              more then it helps.
+* [Removed] Unnessecary AJAX calls & files from pre 1.0
+
+=== 1.0.3 ===
+
+ (skipped)
+
 === 1.0.2 ===
 * [Fix] Settings for correct permission of shoutbox files
 * [Fix] Broken probe function in some shells
