@@ -1,5 +1,6 @@
 CHANGELOG
 
+
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
@@ -9,14 +10,41 @@ CHANGELOG
 * [New] JSON config file to direct client side applications, like "share apps"
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [New] Shoutbox-Time via Client-Date possible
-* [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
 * [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
 * [New] IRC Server Option
+* [Changed] Send HTTP-Code 204 via PHP, much cleaner.
 * [Changed] Droopy is now disabled per default
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
-* [Fix] Shoutbox, Unified HTML-character-escaping
+
+=== 1.0.4 === 
+* [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
+* [New] Droopy update: Multiple upload
+* [New] Droopy update: In general user/password setting (non configurable via
+                       PirateBox)
+* [New] imageboard: inital dummy page for a not installed board. 
+* [New] Send HTTP-Code 204 for Android devices, avoids captive Portal and leaving devices.
+
 * [Fix] Some script cleanups
+* [Fix] Improved Cachehandling
+* [Fix] Modified index HTML structure for increased stylability
+* [Fix] Droopy update: Language encoding
+* [Fix] Droopy update: Uploaded filepermission can be configured.
+                       PirateBox default: 755
+* [Fix] Fix not refreshing shoutbox after bootup
+* [Fix] Show station count again, after it is enabled
+
+* [Removed] Droopy update: Include hostname to templates (not needed anymore)
+* [Removed] Droopy update: Field including iframe for shoutbox (not needed anymore)
+* [Removed] Droopy update: iOS fake answer code, which was included in lighttpd since
+                           Piratebox 0.5.x
+* [Removed] exchange_www.sh : This feature is not available anymore, because it breaks
+                              more then it helps.
+* [Removed] Unnessecary AJAX calls & files from pre 1.0
+
+=== 1.0.3 ===
+
+ (skipped)
 
 === 1.0.2 ===
 * [Fix] Settings for correct permission of shoutbox files

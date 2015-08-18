@@ -1,13 +1,4 @@
 $(document).ready(function() {
-   	// do stuff when DOM is ready
-   	$.get('forum.html', function(data) {
-        $('div#forum_link').html(data);
-    });
-   	
-   	$.get('forban_link.html', function(data) {
-        $('div#forban_link').html(data);
-    });
-	
 	$.get('station_cnt.txt', function(data) {
         $('div#station').html(data);
     });

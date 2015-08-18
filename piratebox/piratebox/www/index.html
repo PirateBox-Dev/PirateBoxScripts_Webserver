@@ -11,7 +11,7 @@
     <script type="text/javascript" src="/js/l10n.js"></script>
 
 </head>
-<body>
+<body id="main-index">
 
 <header id="header">
 	<div class="container">
@@ -36,15 +36,18 @@
 
 <section id="content">
 	<div class="container">
-		<div id="welcome" class="card">
-			<h2 data-l10n-id="welcomeWelcome">Welcome</h2>
-			<p data-l10n-id="welcomeDescription">Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong data-l10n-id="anonymously">anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
-			<input id="thanks" class="button" type="submit" value="Thanks" data-l10n-id="welcomeThanksButton">
+		<div id="welcome">
+			<div  id="greeting" class="card">
+				<h2 data-l10n-id="welcomeWelcome">Welcome</h2>
+				<p data-l10n-id="welcomeDescription">Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong data-l10n-id="anonymously">anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
+				<input id="thanks" class="button" type="submit" value="Thanks" data-l10n-id="welcomeThanksButton">
+				</div>
 		</div>
 		<div id="sidebar">
 			<div id="upload" class="card">
 			<h3><a href="/upload-advanced.html" data-l10n-id="sidebarUpload">Go To Upload -></a></h3>
 			<h3><a href="/Shared" data-l10n-id="sidebarBrowseFiles">Browse Files -></a></h3>
+			<div id="station"></div>
 			</div>
 		</div>
 
@@ -82,11 +85,13 @@
 
 <footer id="about">
 	<div class="container">
-		<p class="to-top"><a href="#header" data-l10n-id="footerBackToTop">Back to top</a></p>
-		<h2 data-l10n-id="footerAbout">About PirateBox</h2>
-		<p data-l10n-id="footerInspired">Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
-		<p data-l10n-id="footerFilesTopSafety">PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
-		<small data-l10n-id="footerLicenceMain">PirateBox is licensed under GPLv3.</small>
+		<div id="details">
+			<p class="to-top"><a href="#header" data-l10n-id="footerBackToTop">Back to top</a></p>
+			<h2 data-l10n-id="footerAbout">About PirateBox</h2>
+			<p data-l10n-id="footerInspired">Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
+			<p data-l10n-id="footerFilesTopSafety">PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
+			<small data-l10n-id="footerLicenceMain">PirateBox is licensed under GPLv3.</small>
+		</div>
 	</div>
 </footer>
 

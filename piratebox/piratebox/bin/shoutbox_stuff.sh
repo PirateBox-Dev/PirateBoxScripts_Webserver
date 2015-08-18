@@ -36,6 +36,8 @@ if [ "$SHOUTBOX_ENABLED" = "no" ] ; then
         echo "done"
 fi
 
+$( sleep 20 && touch $GEN_CHATFILE ) &
+
 #Set correct permissions
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_CHATFILE
 chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
