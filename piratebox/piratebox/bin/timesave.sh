@@ -8,12 +8,13 @@
 #  gives a sort of stability to complete standalone 
 #  systems.
 #
-#  Licenced under GPL-2  @ 2012
+#  Licenced under GPL-2  @ 2012,2015
 #    Matthias Strubel    matthias.strubel@aod-rgp.de
 
 ##function for similar saving & getting time
 get_datetime() {
-	date +%C%g%m%d%H%M  
+	# Get format from piratebox.conf
+	date $TIMESAVE_FORMAT
 }
 
 
@@ -66,7 +67,7 @@ fi
 
 if [ "$2" = "recover" ] ; then
     if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
-	    date  `cat $TIMESAVE `
+	    date -s `cat $TIMESAVE `
 	    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
 	    echo "Time recovered"
 	    exit 0

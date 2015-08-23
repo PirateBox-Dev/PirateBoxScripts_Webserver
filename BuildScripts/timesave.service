@@ -1,0 +1,10 @@
+[Unit]
+Description=PirateBox timesave service
+
+[Service]
+Type=oneshot
+ExecStart=/opt/piratebox/bin/timesave.sh /opt/piratebox/conf/piratebox.conf recover
+TimeoutSec=20
+
+[Install]
+WantedBy=multi-user.target
