@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.0.5 ===
+* [New] Improved styling for droopy iframe
+* [Fix] Droopy call in init.d/piratebox failed to use the correct port
 
 === 1.0.4 === 
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
