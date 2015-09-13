@@ -1,5 +1,11 @@
 CHANGELOG
 
+=== 1.0.5 ===
+* [New] Improved styling for droopy iframe.
+* [New] Timesave script service file to run set the time during startup.
+* [Fix] Droopy call in init.d/piratebox failed to use the correct port.
+* [Fix] Timesave script behaviour fixed on full Linux systems. 
+*       OpenWrt's date format is now customized during build & piratebox.conf .
 
 === 1.0.4 === 
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
