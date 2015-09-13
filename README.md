@@ -1,4 +1,6 @@
 # PirateBoxScripts with Modifications for running in a Webserver     
+
+[![Join the chat at https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 &copy; 2012-2014 [Matthias Strubel](mailto:matthias.strubel@aod-rpg.de) licenced under GPL-3
 
 ## Maintainers
