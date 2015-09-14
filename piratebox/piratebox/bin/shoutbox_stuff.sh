@@ -25,8 +25,11 @@ if [ "$RESET_CHAT"  = "yes" ] ; then
    echo $CHATMSG > $CHATFILE
 fi
 
-#Generate content file
+#Generate content file for Shoutbox
 python psogen.py generate
+
+#Generate content file for DiskUsage
+python diskusage.py generate
 
 $( sleep 20 && touch $GEN_CHATFILE ) &
 
