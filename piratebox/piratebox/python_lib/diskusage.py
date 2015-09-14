@@ -69,3 +69,10 @@ def prepare_line (drive):
     #</div>
     content = "<div class='progress'><div class='progress-bar' role='progressbar' aria-valuenow='" + data + "' aria-valuemin='0' aria-valuemax='100' style='width: " + data + "%'><span class='sr-only'>" + data + "% Full</span></div></div>"
     return content
+
+#--------------
+#  Generating static HTML File
+#--------------
+if __name__ == "__main__":
+  get_usage("/opt/piratebox/share/Shared/")
+  print "Generated HTML-DiskUsage File."
