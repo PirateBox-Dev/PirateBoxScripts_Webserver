@@ -13,6 +13,13 @@ $(document).ready(function() {
 	    post_shoutbox();
     });
 
+        $("#du_form").submit(function(event) {
+            /* stop form from submitting normally */
+        event.preventDefault();
+        post_diskusage();
+    });
+
+    display_diskusage();
     display_shoutbox();
 
     // Spin menu icon and toggle nav
@@ -115,6 +122,30 @@ function post_shoutbox () {
 function display_shoutbox() {
 	refresh_shoutbox();
 	refresh_time_sb();
+}
+
+function refresh_diskusage() {
+    $.get('diskusage.html', function(data) {
+                $('div#diskusage').html(data);
+        });
+}
+
+function refresh_time_du () {
+    // Refresh rate in milli seconds
+    mytimedu=setTimeout('display_diskusage()', 10000);
+}
+
+function post_diskusage() {
+        $.post("/cgi-bin/diskwrite.py" , "test")
+        .success(function() {
+                refresh_diskusage();
+        });
+        $('#diskusage-input .message').val('');
+}
+
+function display_diskusage() {
+        refresh_diskusage();
+        refresh_time_du();
 }
 
 function fnGetDomain(url) {
