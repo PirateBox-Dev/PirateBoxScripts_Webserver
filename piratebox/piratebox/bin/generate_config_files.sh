@@ -122,6 +122,7 @@ generate_lighttpd_env() {
 	local SHOUTBOX_GEN_HTMLFILE=$4
 	local PIRATEBOX=$5
 	local SHOUTBOX_CHATFILE=$6
+  local DISK_GEN_HTMLFILE=$7
 
         echo "Generating Environment-config for lighttpd ....."
 
