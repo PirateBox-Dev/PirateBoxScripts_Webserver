@@ -136,7 +136,7 @@ function refresh_time_du () {
 }
 
 function post_diskusage() {
-        $.post("/cgi-bin/diskwrite.py" , "test")
+        $.post("/cgi-bin/diskwrite.py")
         .success(function() {
                 refresh_diskusage();
         });
