@@ -19,6 +19,7 @@ cd python_lib
 export SHOUTBOX_CHATFILE=$CHATFILE
 export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
 
+export DISK_GEN_HTMLFILE=$GEN_DISKFILE
 
 #Writing init-message and reset chat..
 if [ "$RESET_CHAT"  = "yes" ] ; then
