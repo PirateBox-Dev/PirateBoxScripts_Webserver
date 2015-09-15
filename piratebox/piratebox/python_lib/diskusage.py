@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-# Modificated ShoutBox Library
-#   enables further modifications for the ShoutBox
-#   Run without to generate htmlfile
-#   Run the following to enter a new line from command line
-#     psogen.py input Anonymous default "Text"
+#!/usr/bin/python
+
+# Library to write the current disk usage
+
+# Heavily Modified version the ShoutBox Library (psogen.py)
 
 import os, re
 from psutil import disk_usage

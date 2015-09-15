@@ -353,6 +353,13 @@ input[type=radio] {
   }
 }
 
+/*
+Progress bar used from the Bootstrap Library:
+https://github.com/twbs/bootstrap
+
+Licensed under the MIT license.
+*/
+
 .progress {
     height: 20px;
     margin-bottom: 20px;
