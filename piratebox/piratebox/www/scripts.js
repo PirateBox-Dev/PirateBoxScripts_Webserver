@@ -21,6 +21,7 @@ $(document).ready(function() {
 
     display_diskusage();
     display_shoutbox();
+    $('#du_form_button').tooltip();
 
     // Spin menu icon and toggle nav
     $('#menu-icon').click(function() {
