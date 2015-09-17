@@ -43,7 +43,13 @@ def generate_html_into_file(content):
 #--------------
 def get_usage(drive):
 
-	file_mod_time = modification_date(htmlfilename)
+	try:
+		file_mod_time = modification_date(htmlfilename)
+	except OSError:
+		content = prepare_line(drive)
+		generate_html_into_file(content)
+		file_mod_time = modification_date(htmlfilename)
+
 	now = datetime.datetime.today()
 	max_delay = datetime.timedelta(0,delay)
 	age = now - file_mod_time
