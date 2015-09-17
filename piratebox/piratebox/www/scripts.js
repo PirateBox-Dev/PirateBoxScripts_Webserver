@@ -111,11 +111,10 @@ function post_shoutbox () {
         $.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
         .success(function() {
                 refresh_shoutbox();
+                $("#send-button").prop('value', 'Send')
+                $("#send-button").prop('disabled', false);
         });
         $('#shoutbox-input .message').val('');
-
-        $("#send-button").prop('value', 'Send')
-        $("#send-button").prop('disabled', false);
 }
 
 function display_shoutbox() {
