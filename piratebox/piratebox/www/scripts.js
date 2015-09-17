@@ -13,7 +13,17 @@ $(document).ready(function() {
 	    post_shoutbox();
     });
 
+        $("#du_form").submit(function(event) {
+            /* stop form from submitting normally */
+        event.preventDefault();
+        post_diskusage();
+    });
+
+    display_diskusage();
     display_shoutbox();
+
+   // Add Tooltips
+    $('#du_form_button').tooltip();
 
     // Spin menu icon and toggle nav
     $('#menu-icon').click(function() {
@@ -115,6 +125,37 @@ function post_shoutbox () {
 function display_shoutbox() {
 	refresh_shoutbox();
 	refresh_time_sb();
+}
+
+function refresh_diskusage() {
+    $.get('diskusage.html', function(data) {
+                $('div#diskusage').html(data);
+        });
+}
+
+function refresh_time_du () {
+    // Refresh rate in milli seconds
+    mytimedu=setTimeout('display_diskusage()', 10000);
+}
+
+function post_diskusage() {
+	$("#du_form_button").prop('value', 'Refreshing...');
+	$("#du_form_button").prop('disabled', true);
+
+        $.post("/cgi-bin/diskwrite.py")
+        .success(function() {
+                refresh_diskusage();
+            $("#du_form_button").prop('value', 'Refresh');
+            $("#du_form_button").prop('disabled', false);
+        });
+        $('#diskusage-input .message').val('');
+
+
+}
+
+function display_diskusage() {
+        refresh_diskusage();
+        refresh_time_du();
 }
 
 function fnGetDomain(url) {
