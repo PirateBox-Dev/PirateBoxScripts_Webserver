@@ -1,15 +1,14 @@
 #!/usr/bin/python
 
-#!/usr/bin/python
-
 # Library to write the current disk usage
 
 # Heavily Modified version the ShoutBox Library (psogen.py)
 
-import os, re
+import os, re, datetime
 from psutil import disk_usage
 
 htmlfilename = os.environ["DISK_GEN_HTMLFILE"]
+delay = 60*5 #In seconds
 
 #--------------
 #  Generates Shoutbox-HTML-Frame  ...
@@ -21,6 +20,10 @@ def generate_html(content):
     htmlstring +=  content
     htmlstring +=  "</body></html>"
     return htmlstring
+
+def modification_date(filename):
+    moddate = os.path.getmtime(filename)
+    return datetime.datetime.fromtimestamp(moddate)
 
 #--------------
 #   Generates HTML Data based on given content  and write it to static html file
@@ -39,8 +42,19 @@ def generate_html_into_file(content):
 # Function for saving the disk usage to a file. Called by HTML-Form
 #--------------
 def get_usage(drive):
-    content = prepare_line( drive )
-    generate_html_into_file ( content )
+
+	file_mod_time = modification_date(htmlfilename)
+	now = datetime.datetime.today()
+	max_delay = datetime.timedelta(0,delay)
+    age = now - file_mod_time
+	
+    #Add delay.
+    if age < max_delay:
+		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(drive, age.seconds/60, max_delay.seconds/60)
+	else:
+		print "OK. File last modified {} minutes ago. Updating now...".format(age.seconds/60)
+		content = prepare_line(drive)
+		generate_html_into_file(content)
 
 #--------------
 # Function for returning the amount of free space as an Integer
