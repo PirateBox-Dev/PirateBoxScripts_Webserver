@@ -21,6 +21,8 @@ $(document).ready(function() {
 
     display_diskusage();
     display_shoutbox();
+
+   // Add Tooltips
     $('#du_form_button').tooltip();
 
     // Spin menu icon and toggle nav
@@ -137,11 +139,18 @@ function refresh_time_du () {
 }
 
 function post_diskusage() {
+	$("#du_form_button").prop('value', 'Refreshing...');
+	$("#du_form_button").prop('disabled', true);
+
         $.post("/cgi-bin/diskwrite.py")
         .success(function() {
                 refresh_diskusage();
+            $("#du_form_button").prop('value', 'Refresh');
+            $("#du_form_button").prop('disabled', false);
         });
         $('#diskusage-input .message').val('');
+
+
 }
 
 function display_diskusage() {
