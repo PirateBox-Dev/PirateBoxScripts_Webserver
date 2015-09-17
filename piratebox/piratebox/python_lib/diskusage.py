@@ -46,10 +46,10 @@ def get_usage(drive):
 	file_mod_time = modification_date(htmlfilename)
 	now = datetime.datetime.today()
 	max_delay = datetime.timedelta(0,delay)
-    age = now - file_mod_time
+	age = now - file_mod_time
 	
-    #Add delay.
-    if age < max_delay:
+	#Add delay.
+	if age < max_delay:
 		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(drive, age.seconds/60, max_delay.seconds/60)
 	else:
 		print "OK. File last modified {} minutes ago. Updating now...".format(age.seconds/60)
@@ -88,5 +88,13 @@ def prepare_line (drive):
 #  Generating static HTML File
 #--------------
 if __name__ == "__main__":
-  get_usage("/opt/piratebox/share/Shared/")
+
+  disk = "/opt/piratebox/share/Shared"
+
+  if os.path.exists(htmlfilename) != True:
+    content = prepare_line(disk)
+    generate_html_into_file(content)
+  else:
+    get_usage(disk)
+
   print "Generated HTML-DiskUsage File."
