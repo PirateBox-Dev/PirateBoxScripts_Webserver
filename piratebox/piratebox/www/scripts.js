@@ -105,11 +105,16 @@ function refresh_time_sb () {
 }
 
 function post_shoutbox () {
-	$.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
-	.success(function() { 
-		refresh_shoutbox(); 
-	});
-	$('#shoutbox-input .message').val('');
+        $("#send-button").prop('value', 'Sending...');
+        $("#send-button").prop('disabled', true);
+
+        $.post("/cgi-bin/psowrte.py" , $("#sb_form").serialize())
+        .success(function() {
+                refresh_shoutbox();
+                $("#send-button").prop('value', 'Send')
+                $("#send-button").prop('disabled', false);
+        });
+        $('#shoutbox-input .message').val('');
 }
 
 function display_shoutbox() {
