@@ -144,7 +144,7 @@ style = '''
 <style type="text/css">
 <!--
 * {margin: 0; padding: 0;}
-body {text-align: center; background-color: #eee; font-family: sans-serif;
+body {text-align: center; font-family: sans-serif;
       color:#777;}
 div {word-wrap: break-word;}
 img {max-width: 100%%;}
