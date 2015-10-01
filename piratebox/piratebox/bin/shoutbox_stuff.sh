@@ -19,14 +19,18 @@ cd python_lib
 export SHOUTBOX_CHATFILE=$CHATFILE
 export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
 
+export DISK_GEN_HTMLFILE=$GEN_DISKFILE
 
 #Writing init-message and reset chat..
 if [ "$RESET_CHAT"  = "yes" ] ; then
    echo $CHATMSG > $CHATFILE
 fi
 
-#Generate content file
+#Generate content file for Shoutbox
 python psogen.py generate
+
+#Generate content file for DiskUsage
+python diskusage.py generate
 
 $( sleep 20 && touch $GEN_CHATFILE ) &
 
@@ -36,4 +40,6 @@ chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
 chmod ug+rw  $SHOUTBOX_CHATFILE
 chmod ug+rw  $SHOUTBOX_GEN_HTMLFILE
 
-
+#DiskUsage correct permissions
+chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $DISK_GEN_HTMLFILE
+chmod ug+rw  $DISK_GEN_HTMLFILE
