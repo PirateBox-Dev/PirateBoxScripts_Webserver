@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.0.6 ===
+* [Fix] Styling of the upload box iframe was quite ugly.
+
 === 1.0.5 ===
 * [New] Improved styling for droopy iframe.
 * [New] Timesave script service file to run set the time during startup.
