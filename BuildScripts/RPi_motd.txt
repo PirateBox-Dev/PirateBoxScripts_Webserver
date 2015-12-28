@@ -1,5 +1,5 @@
-PirateBox RPi-Image 1.0.1
-PirateBox Version 1.0.1
+PirateBox RPi-Image 1.0.7
+PirateBox Version 1.0.7
       Website: http://piratebox.cc
         Forum: http://forum.piratebox.cc
           IRC: #piratebox   on irc.Freenode.net
