@@ -1,9 +1,12 @@
 CHANGELOG
 
 === 1.0.7 ===
+* [New] Lock shoutbox when you send a message.
+* [New] Display disk space usage on front page.
 * [Fix] Send a proper HTTP Reason code back
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
+* [Fix] Improve Shoutbox update speed after sending a message.
 
 === 1.0.6 ===
 * [Fix] Styling of the upload box iframe was quite ugly.

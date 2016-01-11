@@ -5,6 +5,8 @@
 	<title>PirateBox - Share Freely!</title>
 	<script src="jquery.min.js"></script>
 	<script src="scripts.js"></script>
+        <link rel="stylesheet" href="jquery-ui.min.css">
+        <script src="jquery-ui.min.js"></script>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
 </head>
 <body id="main-index">
@@ -48,6 +50,16 @@
 				<h3><a href="/Shared">Browse Files -></a></h3>
 				<div id="station"></div>
 			</div>
+			<div id="diskusagecard" class="card">
+				<h2>Disk Usage</h2>
+				<div id="diskusage"></div>
+				<div id="refresh-diskusage">
+					<form method="POST" name="diskusage" id="du_form" >
+						<input class="button" type="submit" name="refresh" value="Refresh" id="du_form_button" title="Disk usage can only be refreshed every 5 minutes">
+					</form>
+				</div>
+			</div>
+
 		</div>
 
 		<div id="main">
@@ -58,7 +70,7 @@
 					<div id="shoutbox-input">
 						<input class="nickname" type="text" 	name="name" 	value="Anonymous" placeholder="Nickname">
 						<input class="message" 	type="text" 	name="data" 	placeholder="Message...">
-						<input class="button" 	type="submit" 	name="submit" 	value="Send">
+						<input class="button" 	type="submit" 	name="submit" 	value="Send"  id="send-button">
 					</div>
 					<div id="shoutbox-options">
 						<h3>Text Color:</h3>
