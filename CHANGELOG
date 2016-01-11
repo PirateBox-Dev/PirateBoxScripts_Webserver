@@ -1,5 +1,10 @@
 CHANGELOG
 
+=== 1.0.7 ===
+* [Fix] Send a proper HTTP Reason code back
+* [Fix] Fix version number in RPi MOTD.
+* [Fix] Insert mime-type for .svg
+
 === 1.0.6 ===
 * [Fix] Styling of the upload box iframe was quite ugly.
 
