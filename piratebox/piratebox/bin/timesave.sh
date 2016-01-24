@@ -14,7 +14,7 @@
 ##function for similar saving & getting time
 get_datetime() {
 	# Get format from piratebox.conf
-	date $TIMESAVE_FORMAT
+	date "${TIMESAVE_FORMAT}"
 }
 
 
