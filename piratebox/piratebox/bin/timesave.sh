@@ -54,31 +54,31 @@ if [ "$2" = "install" ] ; then
   exit 0
 fi
 
+# Save current date time in a recoverable format
 if [ "$2" = "save" ] ; then
   if [ -e $TIMESAVE ] ; then
     if [ $(sanitize_datetime "$(get_datetime)") -lt  $(sanitize_datetime "$(cat $TIMESAVE)") ] ; then
-      logger -s "$0 : sorry, current date-time is lower then saved one, don't save it this time"
+      logger -s "$0: Current date-time is lower then saved one. Not saving!"
       exit 1
     fi
   fi
 
-  #Save Datetime in a recoverable format...
   get_datetime > $TIMESAVE
   exit 0
 fi
 
 if [ "$2" = "recover" ] ; then
   if [ $(sanitize_datetime "$(get_datetime)") -lt  $(sanitize_datetime "$(cat $TIMESAVE)") ] ; then
-    date -s "$(cat $TIMESAVE)"
+    date -s "$(cat $TIMESAVE)" > /dev/null
     if [ "$?" != "0" ] ; then
-      echo "error in recovering time"
+      logger -s "$0: Could not recover date-time."
       exit 1
     else
-      echo "Time recovered"
+      logger -s "$0: Sucessfully recovered date-time."
       exit 0
     fi
   else
-    echo "Sorry, changing timebackward via timesave is not possible"
+    logger -s "$0: Time can not be changed to the past."
     exit 1
   fi
 fi
