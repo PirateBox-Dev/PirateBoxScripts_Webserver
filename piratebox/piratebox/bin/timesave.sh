@@ -4,8 +4,8 @@
 #  for Systems without a Realtime Clock
 #  like TP-Link MR3020 , RaspberryPI
 #
-#  It does not reflect the real time, but 
-#  gives a sort of stability to complete standalone 
+#  It does not reflect the real time, but
+#  gives a sort of stability to complete standalone
 #  systems.
 #
 #  Licenced under GPL-2  @ 2012,2015
@@ -48,7 +48,7 @@ if [ "$2" = "install" ] ; then
 
     echo "Remember MAY have to cron active..."
     echo "  on OpenWrt run:  /etc/init.d/piratebox enable"
- 
+
     exit 0
 fi
 
@@ -76,4 +76,3 @@ if [ "$2" = "recover" ] ; then
 	   exit 1
     fi
 fi
-
