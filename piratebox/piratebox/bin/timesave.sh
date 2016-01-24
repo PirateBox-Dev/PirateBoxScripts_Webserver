@@ -19,7 +19,7 @@ get_datetime() {
 
 # Strip spaces from datetime
 sanitize_datetime() {
-  echo $(echo $1 | sed s/" "/""/g)
+  echo $1 | sed s/" "/""/g
 }
 
 # Load configfile
@@ -56,23 +56,27 @@ fi
 
 if [ "$2" = "save" ] ; then
   if [ -e $TIMESAVE ] ; then
-    if [ $(sanitize_datetime $(get_datetime)) -lt  $(sanitize_datetime $(cat $TIMESAVE)) ] ; then
+    if [ $(sanitize_datetime "$(get_datetime)") -lt  $(sanitize_datetime "$(cat $TIMESAVE)") ] ; then
       logger -s "$0 : sorry, current date-time is lower then saved one, don't save it this time"
       exit 1
     fi
   fi
 
   #Save Datetime in a recoverable format...
-  get_datetime  > $TIMESAVE
+  get_datetime > $TIMESAVE
   exit 0
 fi
 
 if [ "$2" = "recover" ] ; then
-  if [ $(sanitize_datetime $(get_datetime)) -lt  $(sanitize_datetime $(cat $TIMESAVE)) ] ; then
-    date -s `cat $TIMESAVE `
-    [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
+  if [ $(sanitize_datetime "$(get_datetime)") -lt  $(sanitize_datetime "$(cat $TIMESAVE)") ] ; then
+    date -s "$(cat $TIMESAVE)"
+    if [ "$?" != "0" ] ; then
+      echo "error in recovering time"
+      exit 1
+    else
       echo "Time recovered"
       exit 0
+    fi
   else
     echo "Sorry, changing timebackward via timesave is not possible"
     exit 1
