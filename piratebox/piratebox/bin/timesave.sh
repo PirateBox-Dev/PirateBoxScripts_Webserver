@@ -56,7 +56,7 @@ fi
 
 if [ "$2" = "save" ] ; then
   if [ -e $TIMESAVE ] ; then
-    if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
+    if [ $(sanitize_datetime $(get_datetime)) -lt  $(sanitize_datetime $(cat $TIMESAVE)) ] ; then
       logger -s "$0 : sorry, current date-time is lower then saved one, don't save it this time"
       exit 1
     fi
@@ -68,7 +68,7 @@ if [ "$2" = "save" ] ; then
 fi
 
 if [ "$2" = "recover" ] ; then
-  if [ `get_datetime` -lt  `cat $TIMESAVE` ] ; then
+  if [ $(sanitize_datetime $(get_datetime)) -lt  $(sanitize_datetime $(cat $TIMESAVE)) ] ; then
     date -s `cat $TIMESAVE `
     [ "$?" != "0" ] &&  echo "error in recovering time" && exit 255
       echo "Time recovered"
