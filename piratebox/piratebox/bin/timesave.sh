@@ -17,6 +17,11 @@ get_datetime() {
   date "${TIMESAVE_FORMAT}"
 }
 
+# Strip spaces from datetime
+sanitize_datetime() {
+  echo $(echo $1 | sed s/" "/""/g)
+}
+
 # Load configfile
 
 if [ -z  $1 ] || [ -z $2 ] ; then
