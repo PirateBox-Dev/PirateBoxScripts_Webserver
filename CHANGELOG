@@ -7,6 +7,9 @@ CHANGELOG
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
 * [Fix] Improve Shoutbox update speed after sending a message.
+* [Fix] Improved comparison of timestamps on RPi.
+* [Fix] Improved MOTD for RPi.
+* [Fix] Improved initialization of the board.
 
 === 1.0.6 ===
 * [Fix] Styling of the upload box iframe was quite ugly.
