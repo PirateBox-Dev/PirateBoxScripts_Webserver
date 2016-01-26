@@ -7,6 +7,7 @@ CHANGELOG
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
 * [Fix] Improve Shoutbox update speed after sending a message.
+* [Fix] Do not cleanup the rootfs if Shared folder does not exist.
 
 === 1.0.6 ===
 * [Fix] Styling of the upload box iframe was quite ugly.
