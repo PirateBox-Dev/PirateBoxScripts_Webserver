@@ -7,6 +7,7 @@ CHANGELOG
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
 * [Fix] Improve Shoutbox update speed after sending a message.
+* [Fix] Do not cleanup the rootfs if Shared folder does not exist.
 * [Fix] Improved comparison of timestamps on RPi.
 * [Fix] Improved MOTD for RPi.
 * [Fix] Improved initialization of the board.
