@@ -4,6 +4,7 @@ CHANGELOG
 * [New] Lock shoutbox when you send a message.
 * [New] Display disk space usage on front page.
 * [New] Add webm mime-type to lighttpd
+* [New] Added RPi related scripts
 * [Fix] Send a proper HTTP Reason code back
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
