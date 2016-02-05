@@ -25,5 +25,6 @@ curdate = datetime.datetime.now()
 
 process_form(rawname, rawdata, color)
 
+print "Status:200\r\n\r\n" 
 print """<html><body>ok</body></html>"""
 

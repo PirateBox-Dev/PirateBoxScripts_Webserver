@@ -1,0 +1,32 @@
+____________________.__               __        __________
+\______   \______   \__|___________ _/  |_  ____\______   \ _______  ___
+ |       _/|     ___/  \_  __ \__  \\   __\/ __ \|    |  _//  _ \  \/  /
+ |    |   \|    |   |  ||  | \// __ \|  | \  ___/|    |   (  <_> >    <
+ |____|_  /|____|   |__||__|  (____  /__|  \___  >______  /\____/__/\_ \
+        \/                         \/          \/       \/            \/
+
+Website: http://piratebox.cc                  PirateBox Version:   1.0.7
+Forum:   http://forum.piratebox.cc            RPi Image Version: 1.0.7-1
+IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
+
+First Steps After Flashing
+1. Change password of alarm user
+ > passwd
+2. Enable Fake-Timeservice
+ 2.1 Set date and time
+  # Disable network time sync
+  > sudo timedatectl set-ntp false
+  # Set time to "Mon May 23 17:42:00" (Format: CCYYMMDD hhmm)
+  > sudo date -s "20170523 1742"
+  > cd /opt/piratebox && sudo ./bin/timesave.sh ./conf/piratebox.conf install
+ 2.2 Enable on startup
+  > sudo systemctl enable timesave
+3. Enable the Kareha Image and Discussion Board
+ > sudo /opt/piratebox/bin/board-autoconf.sh
+4. Enable USB thumb drive share
+ > sudo /opt/piratebox/rpi/bin/usb_share.sh
+5. Enable UPnP Media Server
+ > sudo cp /etc/minidlna.conf /etc/minidlna.conf.bkp
+ > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
+ > sudo systemctl start minidlna
+ > sudo systemctl enable minidlna
