@@ -5,9 +5,9 @@ ____________________.__               __        __________
  |____|_  /|____|   |__||__|  (____  /__|  \___  >______  /\____/__/\_ \
         \/                         \/          \/       \/            \/
 
-Website: http://piratebox.cc                   PirateBox Version:  1.0.7
-Forum:   http://forum.piratebox.cc             RPi Image Version:  1.0.7
-IRC:     #piratebox irc.freenode.net           Be open  -  Share freely!
+Website: http://piratebox.cc                  PirateBox Version:   1.0.7
+Forum:   http://forum.piratebox.cc            RPi Image Version: 1.0.7-1
+IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
 
 First Steps After Flashing
 1. Change password of alarm user
