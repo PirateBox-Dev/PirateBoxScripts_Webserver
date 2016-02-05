@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Find a vfat partition and configure it as an external share
 MOUNTPOINT="/mnt/usbshare"
 FS="vfat"
