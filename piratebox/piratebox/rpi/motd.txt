@@ -24,7 +24,7 @@ First Steps After Flashing
 3. Enable the Kareha Image and Discussion Board
  > sudo /opt/piratebox/bin/board-autoconf.sh
 4. Enable USB thumb drive share
- > sudo /opt/piratebox/bin/usb_share.sh
+ > sudo /opt/piratebox/rpi/bin/usb_share.sh
 5. Enable UPnP Media Server
  > sudo cp /etc/minidlna.conf /etc/minidlna.conf.bkp
  > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
