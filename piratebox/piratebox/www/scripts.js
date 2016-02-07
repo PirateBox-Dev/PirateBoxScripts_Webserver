@@ -23,7 +23,9 @@ $(document).ready(function() {
     display_shoutbox();
 
    // Add Tooltips
-    $('#du_form_button').tooltip();
+    if ( $('#du_form_button').lenght ) {
+	    $('#du_form_button').tooltip();
+    }
 
     // Spin menu icon and toggle nav
     $('#menu-icon').click(function() {
