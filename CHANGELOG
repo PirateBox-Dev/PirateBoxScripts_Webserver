@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.0.8 ===
+* [Fix] Fix problem when running in small display mode at direcotry listing.
+
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
 * [New] Display disk space usage on front page.
