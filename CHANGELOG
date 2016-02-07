@@ -1,5 +1,22 @@
 CHANGELOG
 
+=== 1.0.7 ===
+* [New] Lock shoutbox when you send a message.
+* [New] Display disk space usage on front page.
+* [New] Add webm mime-type to lighttpd
+* [New] Added RPi related scripts
+* [Fix] Send a proper HTTP Reason code back
+* [Fix] Fix version number in RPi MOTD.
+* [Fix] Insert mime-type for .svg
+* [Fix] Improve Shoutbox update speed after sending a message.
+* [Fix] Do not cleanup the rootfs if Shared folder does not exist.
+* [Fix] Improved comparison of timestamps on RPi.
+* [Fix] Improved MOTD for RPi.
+* [Fix] Improved initialization of the board.
+
+=== 1.0.6 ===
+* [Fix] Styling of the upload box iframe was quite ugly.
+
 === 1.0.5 ===
 * [New] Improved styling for droopy iframe.
 * [New] Timesave script service file to run set the time during startup.

@@ -20,13 +20,14 @@ export SHOUTBOX_CHATFILE=$CHATFILE
 export SHOUTBOX_GEN_HTMLFILE=$GEN_CHATFILE
 export SHOUTBOX_CLIENT_TIMESTAMP=$SHOUTBOX_CLIENT_TIMESTAMP
 
+export DISK_GEN_HTMLFILE=$GEN_DISKFILE
 
 #Writing init-message and reset chat..
 if [ "$RESET_CHAT"  = "yes" ] ; then
    cat $PIRATEBOX_FOLDER/conf/chat_init.txt > $CHATFILE
 fi
 
-#Generate content file
+#Generate content file for Shoutbox
 python psogen.py generate
 
 if [ "$SHOUTBOX_ENABLED" = "no" ] ; then
@@ -36,6 +37,9 @@ if [ "$SHOUTBOX_ENABLED" = "no" ] ; then
         echo "done"
 fi
 
+#Generate content file for DiskUsage
+python diskusage.py generate
+
 $( sleep 20 && touch $GEN_CHATFILE ) &
 
 #Set correct permissions
@@ -44,4 +48,6 @@ chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $SHOUTBOX_GEN_HTMLFILE
 chmod ug+rw  $SHOUTBOX_CHATFILE
 chmod ug+rw  $SHOUTBOX_GEN_HTMLFILE
 
-
+#DiskUsage correct permissions
+chown $LIGHTTPD_USER:$LIGHTTPD_GROUP $DISK_GEN_HTMLFILE
+chmod ug+rw  $DISK_GEN_HTMLFILE

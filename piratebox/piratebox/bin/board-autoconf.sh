@@ -18,5 +18,6 @@ else
 
     # Remove temporary index page and then try to initialize the board
     test -e /opt/piratebox/share/board/index.htm && rm /opt/piratebox/share/board/index.htm
-    wget -q -s -O -  http://127.0.0.1/board/kareha.pl 2>/dev/null
+    #wget -q -s -O -  http://127.0.0.1/board/kareha.pl 2>/dev/null
+    wget -qO- http://127.0.0.1/board/kareha.pl &> /dev/null
 fi

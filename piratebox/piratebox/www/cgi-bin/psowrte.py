@@ -23,4 +23,5 @@ timestamp = float(values["timestamp"].value)
 
 process_form(rawname, rawdata, color, timestamp)
 
+print "Status:200\r\n\r\n" 
 print """<html><body>ok</body></html>"""

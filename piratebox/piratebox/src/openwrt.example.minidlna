@@ -3,7 +3,7 @@ config minidlna config
         option port '8200'
         option interface 'br-lan'
         option friendly_name 'PirateBox DLNA'
-        option db_dir '/var/run/minidlna'
+        option db_dir '/opt/piratebox/share/minidlna'
         option log_dir '/var/log'
         option inotify '1'
         option enable_tivo '0'
