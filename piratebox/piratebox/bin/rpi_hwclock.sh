@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 # This small shell script initializes the I2C bus on a Raspberry Pi
 # and activates an installed real time clock module. 
 # Afterwards the system time is synced to the hardware clock.
