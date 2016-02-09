@@ -4,7 +4,11 @@ CHANGELOG
 * [New] Lock shoutbox when you send a message.
 * [New] Display disk space usage on front page.
 * [New] Add webm mime-type to lighttpd
-* [New] Added RPi related scripts
+* [RPi] [New] RPi2 and Zero support
+* [RPi] [New] USB activation scripts.
+* [RPi] [New] udev rules for piratebox activation
+* [RPi] [New] Script for activating the correct hostap for Realtek chipsets
+* [RPI] [New] wpa_supplicant fallback if no AP enabled WiFi device was found
 * [Fix] Send a proper HTTP Reason code back
 * [Fix] Fix version number in RPi MOTD.
 * [Fix] Insert mime-type for .svg
@@ -35,6 +39,7 @@ CHANGELOG
 * [New] Shoutbox-Time via Client-Date possible
 * [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
 * [New] IRC Server Option
+* [New] [RPi] Service files for using a RTC at PiratBox
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner.
 * [Changed] Droopy is now disabled per default
 * [Fix] License Adjustments

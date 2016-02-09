@@ -30,3 +30,5 @@ First Steps After Flashing
  > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
  > sudo systemctl start minidlna
  > sudo systemctl enable minidlna
+6. Enable RealTimeClock timekeeping (needs DS3231 or 1307 RTC module!)
+ > sudo systemctl enable rpi_hwclock
