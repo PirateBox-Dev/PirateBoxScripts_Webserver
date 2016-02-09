@@ -1,3 +1,5 @@
-print("Status: 204 No response") 
-print("Content-Type: text/html; charset=ISO-8859-1")
-print("")
+<?php
+// Return an empty page to fake a working internet connection for
+// android
+http_response_code(204);
+?>

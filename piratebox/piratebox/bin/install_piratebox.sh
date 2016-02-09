@@ -1,13 +1,7 @@
 #!/bin/sh
-## PirateBox installer script  v.01
-##  created by Matthias Strubel   2011-08-04
+## PirateBox installer script  
+##  created by Matthias Strubel   (c)2011-2014 GPL-3
 ##
-
-## ASH does not support arrays, so no nice foreach 
-# All Perl packages for kareha
-##OPENWRT_PACKAGES_IMAGEBOARD=(  perl perlbase-base perlbase-cgi perlbase-essential perlbase-file perlbase-bytes perlbase-config perlbase-data perlbase-db-file perlbase-digest perlbase-encode perlbase-encoding perlbase-fcntl perlbase-gdbm-file perlbase-integer perlbase-socket perlbase-unicode perlbase-utf8 perlbase-xsloader  )
-
-
 
 # Load configfile
 

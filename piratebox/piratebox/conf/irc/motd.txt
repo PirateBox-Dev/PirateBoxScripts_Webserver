@@ -1,0 +1,7 @@
+Welcome to PirateBox IRC!
+
+Inspired by pirate radio and the free culture movement, PirateBox is a DIY anonymous offline file-sharing and communications system. PirateBox creates offline wireless networks designed for anonymous file sharing, chatting, message boarding, and media streaming. You can think of it as your very own portable offline Internet in a box! 
+
+PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy. 
+
+PirateBox was created by David Darts and the Lead Developer is Matthias Strubel. The project is licensed under the GPLv3. To learn more about the project or to find out how to build your own PirateBox, please visit http://piratebox.cc 

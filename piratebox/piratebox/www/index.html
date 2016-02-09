@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="/css/page_style.css">
 	<title>PirateBox - Share Freely!</title>
-	<script src="jquery.min.js"></script>
-	<script src="scripts.js"></script>
-        <link rel="stylesheet" href="jquery-ui.min.css">
-        <script src="jquery-ui.min.js"></script>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/scripts.js"></script>
+        <link rel="stylesheet" href="/css/jquery-ui.min.css">
+        <script src="/js/jquery-ui.min.js"></script>
 	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">
+
+	<link rel="prefetch" type="application/l10n" href="locales/locales.ini" />
+    <script type="text/javascript" src="/js/l10n.js"></script>
+
 </head>
 <body id="main-index">
 
@@ -16,17 +20,17 @@
 		<div id="logo">
 			<h1>
 				<a href="/">
-					<img src="piratebox-logo-horizontal-white.png" alt="PirateBox" title="PirateBox - Share Freely">
+					<img src="/img/piratebox-logo-horizontal-white.png" data-l10n-id="logoIMG" alt="PirateBox" title="PirateBox - Share Freely">
 				</a>
 			</h1>
 		</div>
-		<div id="menu-icon"><img src="menu.png" alt="Menu"></div>
+		<div id="menu-icon"><img src="/img/menu.png" alt="Menu"></div>
 		<nav id="top-nav">
 			<ul>
-				<li><a href="/" class="current">Home</a></li>
-				<li><a href="/board/">Forum</a></li>
-				<li><a href="/Shared/">Files</a></li>
-				<li><a href="#about">About</a></li>
+				<li><a href="/" class="current" data-l10n-id="navbarHome">Home</a></li>
+				<li><a href="/board/" data-l10n-id="navbarForum">Forum</a></li>
+				<li><a href="/Shared/" data-l10n-id="navbarFiles">Files</a></li>
+				<li><a href="#about" data-l10n-id="navbarAbout">About</a></li>
 			</ul>
 		</nav>
 	</div>
@@ -35,23 +39,20 @@
 <section id="content">
 	<div class="container">
 		<div id="welcome">
-			<div id="greeting" class="card">
-				<h2>Welcome</h2>
-				<p>Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong>anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
-				<input id="thanks" class="button" type="submit" value="Thanks">
-			</div>
+			<div  id="greeting" class="card">
+				<h2 data-l10n-id="welcomeWelcome">Welcome</h2>
+				<p data-l10n-id="welcomeDescription">Now, first of all, there is nothing illegal or scary going on here. This is a social place where you can chat and share files with people around you, <strong data-l10n-id="anonymously">anonymously</strong>! This is an off-line network, specially designed and developed for file-sharing and chat services. Staying off the grid is a precaution to maintain your full anonymity. Please have fun, chat with people, and feel free to share any files you may like.</p>
+				<input id="thanks" class="button" type="submit" value="Thanks" data-l10n-id="welcomeThanksButton">
+				</div>
 		</div>
 		<div id="sidebar">
 			<div id="upload" class="card">
-				<h2>Upload</h2>
-				<iframe width="100%" height="80" src='http://piratebox.lan:8080' style='border:0px'>
-					Your browser does not support iframes.. If you want to upload something, follow this <a href='http://piratebox.lan:8080'>Link</a>.
-				</iframe>
-				<h3><a href="/Shared">Browse Files -></a></h3>
-				<div id="station"></div>
+			<h3><a href="/upload-advanced.html" data-l10n-id="sidebarUpload">Go To Upload -></a></h3>
+			<h3><a href="/Shared" data-l10n-id="sidebarBrowseFiles">Browse Files -></a></h3>
+			<div id="station"></div>
 			</div>
 			<div id="diskusagecard" class="card">
-				<h2>Disk Usage</h2>
+				<h2 data-l10n-id="diskUsage" >Disk Usage</h2>
 				<div id="diskusage"></div>
 				<div id="refresh-diskusage">
 					<form method="POST" name="diskusage" id="du_form" >
@@ -64,22 +65,30 @@
 
 		<div id="main">
 			<div id="chat" class="card">
-				<h2>Chat</h2>
+				<h2 data-l10n-id="mainChatChat">Chat</h2>
 				<div id="shoutbox" class="shoutbox_content"></div>
-				<form method="POST" name="psowrte" id="sb_form" >
+				<form method="POST" name="psowrte" id="sb_form" onsubmit='getTime();'>
 					<div id="shoutbox-input">
-						<input class="nickname" type="text" 	name="name" 	value="Anonymous" placeholder="Nickname">
-						<input class="message" 	type="text" 	name="data" 	placeholder="Message...">
-						<input class="button" 	type="submit" 	name="submit" 	value="Send"  id="send-button">
+						<input class="nickname" type="text" 	name="name" 	value="Anonymous" placeholder="Nickname" data-l10n-id="mainChatName" >
+						<input class="message" 	type="text" 	name="data" 	placeholder="Message..." data-l10n-id="mainChatMessage.placeholder" >
+						<input class="button" 	type="submit" 	name="submit" 	value="Send"  id="send-button" data-l10n-id="mainChatSend" >
 					</div>
 					<div id="shoutbox-options">
-						<h3>Text Color:</h3>
-						<label for="def" 	class="bg-black">	<input name="color" type="radio" value="def" 	id="def" checked>Default</label>
-						<label for="blue" 	class="bg-blue">	<input name="color" type="radio" value="blue" 	id="blue"		>Blue</label>
-						<label for="green" 	class="bg-green">	<input name="color" type="radio" value="green" 	id="green"		>Green</label>
-						<label for="orange" class="bg-orange">	<input name="color" type="radio" value="orange" id="orange"		>Orange</label>
-						<label for="red" 	class="bg-red">		<input name="color" type="radio" value="red" 	id="red"		>Red</label>
+						<h3 data-l10n-id="mainChatTextColor">Text Color:</h3>
+						<label for="def" 	class="bg-black"  data-l10n-id="mainShoutboxDefault">	<input name="color" type="radio" value="def" 	id="def"  checked>Default</label>
+						<label for="blue" 	class="bg-blue"   data-l10n-id="mainShoutboxBlue">	<input name="color" type="radio" value="blue" 	id="blue">Blue</label>
+						<label for="green" 	class="bg-green"  data-l10n-id="mainShoutboxGreen">	<input name="color" type="radio" value="green" 	id="green">Green</label>
+						<label for="orange" class="bg-orange" data-l10n-id="mainShoutboxOrange">	<input name="color" type="radio" value="orange" id="orange">Orange</label>
+						<label for="red" 	class="bg-red"    data-l10n-id="mainShoutboxRed">		<input name="color" type="radio" value="red" 	id="red">Red</label>
 					</div>
+					<input type="hidden" name="timestamp" id="timestamp">
+					<script language='JavaScript'>
+						function getTime(){
+						var date = new Date();
+						var timestamp = Math.round(date.getTime() / 1000);
+						document.getElementById('timestamp').value = timestamp;
+						}
+					</script>
 				</form>
 			</div>
 		</div>
@@ -89,11 +98,11 @@
 <footer id="about">
 	<div class="container">
 		<div id="details">
-			<p class="to-top"><a href="#header">Back to top</a></p>
-			<h2>About PirateBox</h2>
-			<p>Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
-			<p>PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
-			<small>PirateBox is licensed under GPLv3.</small>
+			<p class="to-top"><a href="#header" data-l10n-id="footerBackToTop">Back to top</a></p>
+			<h2 data-l10n-id="footerAbout">About PirateBox</h2>
+			<p data-l10n-id="footerInspired">Inspired by pirate radio and the free culture movement, PirateBox is a self-contained mobile collaboration and file sharing device. PirateBox utilizes Free, Libre and Open Source software (FLOSS) to create mobile wireless file sharing networks where users can anonymously share images, video, audio, documents, and other digital content.</p>
+			<p data-l10n-id="footerFilesTopSafety">PirateBox is designed to be safe and secure. No logins are required and no user data is logged. The system is purposely not connected to the Internet in order to prevent tracking and preserve user privacy.</p>
+			<small data-l10n-id="footerLicenceMain">PirateBox is licensed under GPLv3.</small>
 		</div>
 	</div>
 </footer>

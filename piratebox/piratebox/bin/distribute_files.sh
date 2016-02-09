@@ -1,5 +1,8 @@
 #!/bin/sh
 
+#  Matthias Strubel (c) 2014  - GPL3
+#   matthias.strubel@aod-rpg.de
+#
 # This script distributes a set of files into $1 folder
 
 #Script for single stuff

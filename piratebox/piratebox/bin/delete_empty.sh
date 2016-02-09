@@ -1,6 +1,10 @@
 #!/bin/sh
 
-# This script is needed for Piratebox on OpenWrt.
+#  Matthias Strubel (c) 2014,2016  - GPL3
+#  matthias.strubel@aod-rpg.de
+#
+#  This script deletes 0 Byte files
+#  This script is needed for Piratebox on OpenWrt.
 #   The find utility there has only a limited feature set.
 
 IFS='

@@ -28,6 +28,22 @@ CHANGELOG
 * [Fix] Timesave script behaviour fixed on full Linux systems. 
 *       OpenWrt's date format is now customized during build & piratebox.conf .
 
+=== 1.1.0 ===
+* [New] Enable / Disable file provisioning for custom lighttpd directory listing
+* [New] ChatBox message is now in conf/chat_init.txt 
+* [New] Disable the Shoutbox to prevent writing into it
+* [New] Enable PHP using as default parsing language to enable easier modification
+* [New] Mesh implementation
+* [New] JSON config file to direct client side applications, like "share apps"
+* [New] Simply python IRC Server installed and prepareable for automatic start
+* [New] Shoutbox-Time via Client-Date possible
+* [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
+* [New] IRC Server Option
+* [Changed] Send HTTP-Code 204 via PHP, much cleaner.
+* [Changed] Droopy is now disabled per default
+* [Fix] License Adjustments
+* [Fix] Prevent JS Injection in Shoutbox
+
 === 1.0.4 === 
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
 * [New] Droopy update: Multiple upload
@@ -101,6 +117,8 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [New] install method
 	* [New] install dependencies
 	* [Fixed] General cleaning
+	* [Removed] [Testing] Executable, we will stick to service based
+* [Fixed] Overwritten saved timestamp with 1970 one
 * [New] possibility in install_piratebox.sh to exchange the hostname easily
 * [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
 * [Fix] Timesave script does not contain parts for OpenWRT anymore
@@ -111,8 +129,8 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 * [Fix] Enable unescaped blanks in Upload-Folder
 * [Fix] iOS 7 captive Portal fix
 * [New] Sample configuration for UPnP Server
-* [New] Image file is ext4 and 50MB
 
 === v0.6G ===
-* [Fix] Hide dot files in directory-listing which are usually hidden files
+* [Fixed] Hide dot files in directory-listing which are usually hidden files
+* [New] Image file is ext4 and 50MB
 * [Fix] Fixed captive Portal detection for iOS7
