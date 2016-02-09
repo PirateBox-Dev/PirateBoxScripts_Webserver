@@ -39,6 +39,7 @@ CHANGELOG
 * [New] Shoutbox-Time via Client-Date possible
 * [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
 * [New] IRC Server Option
+* [New] [RPi] Service files for using a RTC at PiratBox
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner.
 * [Changed] Droopy is now disabled per default
 * [Fix] License Adjustments
