@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-ExecStart=/usr/bin/rpi_hwclock.sh
+ExecStart=/opt/piratebox/bin/rpi_hwclock.sh
 
 [Install]
 WantedBy=multi-user.target
