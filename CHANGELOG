@@ -1,5 +1,25 @@
 CHANGELOG
 
+=== 1.1.0 ===
+* [New] Enable / Disable file provisioning for custom lighttpd directory listing
+* [New] ChatBox message is now in conf/chat_init.txt 
+* [New] Disable the Shoutbox to prevent writing into it
+* [New] Enable PHP using as default parsing language to enable easier modification
+* [New] Mesh implementation
+* [New] JSON config file to direct client side applications, like "share apps"
+* [New] Simply python IRC Server installed and prepareable for automatic start
+* [New] Shoutbox-Time via Client-Date possible
+* [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
+* [New] IRC Server Option
+* [New] [RPi] Service files for using a RTC at PiratBox
+* [Changed] Send HTTP-Code 204 via PHP, much cleaner.
+* [Changed] Droopy is now disabled per default
+* [Fix] License Adjustments
+* [Fix] Prevent JS Injection in Shoutbox
+* [New] [OpenWrt] Redirect all DNS requests to local box
+* [New] [OpenWrt] Redirect all web request option (disabled)
+* [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
+
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
 * [New] Display disk space usage on front page.
@@ -27,23 +47,6 @@ CHANGELOG
 * [Fix] Droopy call in init.d/piratebox failed to use the correct port.
 * [Fix] Timesave script behaviour fixed on full Linux systems. 
 *       OpenWrt's date format is now customized during build & piratebox.conf .
-
-=== 1.1.0 ===
-* [New] Enable / Disable file provisioning for custom lighttpd directory listing
-* [New] ChatBox message is now in conf/chat_init.txt 
-* [New] Disable the Shoutbox to prevent writing into it
-* [New] Enable PHP using as default parsing language to enable easier modification
-* [New] Mesh implementation
-* [New] JSON config file to direct client side applications, like "share apps"
-* [New] Simply python IRC Server installed and prepareable for automatic start
-* [New] Shoutbox-Time via Client-Date possible
-* [New] jQuery Upload form with multi-chunk upload  (Still TODO for better integration)
-* [New] IRC Server Option
-* [New] [RPi] Service files for using a RTC at PiratBox
-* [Changed] Send HTTP-Code 204 via PHP, much cleaner.
-* [Changed] Droopy is now disabled per default
-* [Fix] License Adjustments
-* [Fix] Prevent JS Injection in Shoutbox
 
 === 1.0.4 === 
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
