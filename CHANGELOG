@@ -19,6 +19,7 @@ CHANGELOG
 * [New] [OpenWrt] Redirect all DNS requests to local box
 * [New] [OpenWrt] Redirect all web request option (disabled)
 * [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
+* [New] [OpenWrt] AP Client isolation activated per default
 
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
