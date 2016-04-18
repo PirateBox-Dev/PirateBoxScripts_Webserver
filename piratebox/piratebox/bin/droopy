@@ -6,6 +6,7 @@
 # Licensed under the New BSD License.
 
 # Changelog
+#   20160417 * Block index.php uploads
 #   20131121 * Update HTML/CSS for mobile devices
 #            * Add HTTPS support
 #            * Add HTTP basic authentication
@@ -836,7 +837,7 @@ class HTTPUploadHandler(BaseHTTPServer.BaseHTTPRequestHandler):
                     continue
 
 
-                if filename.lower() == "index.html" or filename.lower() == "index.htm":
+                if filename.lower() == "index.html" or filename.lower() == "index.htm" or filename.lower() == "index.php":
                     self.send_response(303)
                     self.send_header('Location', '/')
                     self.end_headers()
