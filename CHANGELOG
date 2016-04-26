@@ -15,6 +15,7 @@ CHANGELOG
 * [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
 * [New] [OpenWrt] AP Client isolation activated per default
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner.
+* [Changed] Update jQuery to 2.2.3, removes IE <=8 support 
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
 
