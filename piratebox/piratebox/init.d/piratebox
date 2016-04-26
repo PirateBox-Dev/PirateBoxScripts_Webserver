@@ -153,6 +153,7 @@ case "$1" in
 
         if [ "$DROOPY_ENABLED" = "yes" ] ; then
           #Start here the PirateBox-Parts droopy i.e.
+          log_daemon_msg "Starting droopy..."
           #Delete 0 Byte Files
           delete_empty.sh  $UPLOADFOLDER
           find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
@@ -161,7 +162,6 @@ case "$1" in
           if [ "$DROOPY_USE_USER" = "yes" ] ; then
             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
           fi
-          log_daemon_msg "Starting droopy..."
           start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -d "$UPLOADFOLDER" -m "$DROOPY_TXT" --chmod $DROOPY_CHMOD $DROOPY_USERDIR $DROOPY_PORT
           log_end_msg $?
        fi

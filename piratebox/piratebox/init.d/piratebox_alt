@@ -144,7 +144,8 @@ case "$1" in
 
 
        if [ "$DROOPY_ENABLED" = "yes" ] ; then
-         #Start here the PirateBox-Parts droopy i.e.        echo "Starting droopy..."
+         #Start here the PirateBox-Parts droopy i.e.        
+	 echo "Starting droopy..."
          find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
          #Delete 0 Byte Files
          delete_empty.sh  $UPLOADFOLDER
