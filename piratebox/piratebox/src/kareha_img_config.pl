@@ -14,7 +14,7 @@
 use constant TITLE => 'PirateBox board';	# Name of this image board
 use constant SHOWTITLETXT => 1;				# Show TITLE at top (1: yes  0: no)
 use constant SHOWTITLEIMG => 1;				# Show image at top (0: no, 1: single, 2: rotating)
-use constant TITLEIMG => '/img/piratebox-logo-small.png';			# Title image (point to a script file if rotating)
+use constant TITLEIMG => '/content/img/piratebox-logo-small.png';			# Title image (point to a script file if rotating)
 #use constant THREADS_DISPLAYED => 10;			# Number of threads on the front page
 #use constant THREADS_LISTED => 40;				# Number of threads in the thread list
 #use constant REPLIES_PER_THREAD => 10;			# Replies shown

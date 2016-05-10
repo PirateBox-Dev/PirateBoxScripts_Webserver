@@ -49,7 +49,13 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/share/tmp
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
-#Copy Forban-Link spacer
+   #Create a content folder copy to the USB Stick
+   cp -rv $PIRATEBOX_FOLDER/www_content $PIRATEBOX_FOLDER/share
+   [ ! -L $PIRATEBOX_FOLDER/www/content  ] && \
+		ln -s $PIRATEBOX_FOLDER/share/www_content $WWW_FOLDER/content
+   [ ! -e $WWW_FOLDER/favicon.ico ] && \
+		ln -s $PIRATEBOX_FOLDER/share/www_content/favicon.ico $WWW_FOLDER
+
    #Distribute the Directory Listing files
    $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
    #Set permissions
