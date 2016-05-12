@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$.get('station_cnt.txt', function(data) {
+	$.get('/station_cnt.txt', function(data) {
         $('div#station').html(data);
     });
    	
