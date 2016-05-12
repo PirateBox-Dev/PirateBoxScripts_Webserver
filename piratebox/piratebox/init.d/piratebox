@@ -149,6 +149,12 @@ case "$1" in
          log_end_msg $?
        fi
 
+       #Setting up firewall rules
+       log_daemon_msg    "Setting up firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -s
+       log_end_msg $?
+
+
 	if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
 	  log_daemon_msg "Starting radvd..."
 	  start-stop-daemon --start --quiet --exec radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
@@ -218,6 +224,10 @@ case "$1" in
 	start-stop-daemon --stop --quiet --pidfile  $PIDFILE_IRC 
 	log_end_msg $?
     fi 
+
+       log_daemon_msg    "Removing firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -k
+       log_end_msg $?
 
     if [  "$USE_APN"  = "yes" ] ;  then
        log_daemon_msg  "Stopping hostap... "

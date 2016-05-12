@@ -11,8 +11,10 @@ CHANGELOG
 * [New] Shoutbox-Time via Client-Date possible
 * [New] Website is now available under /content and /opt/piratebox/share
 * [New] [RPi] Service files for using a RTC at PiratBox
-* [New] [OpenWrt] Redirect all DNS requests to local box
-* [New] [OpenWrt] Redirect all web request option (disabled)
+* [New] Redirect all DNS requests to local box via firewall (custom script)
+* [New] Redirect all web request option via firewall (disabled) (custom script)
+* [New] [OpenWrt] Redirect all DNS requests to local box via firewall
+* [New] [OpenWrt] Redirect all web request option via firewall (disabled)
 * [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
 * [New] [OpenWrt] AP Client isolation activated per default
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner

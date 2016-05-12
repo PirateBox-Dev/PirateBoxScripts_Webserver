@@ -143,6 +143,11 @@ case "$1" in
          echo  $?
        fi
 
+
+       echo  "Setting up firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -s
+       echo $?
+
         if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
           echo  "Starting radvd..."
           start-stop-daemon  -S -q -x radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD
@@ -214,6 +219,11 @@ case "$1" in
        start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ
        echo  $?
    fi
+
+
+       echo  "Removing firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -k
+       echo $?
 
      if [ -e $PIDFILE_RADVD ] ; then
         echo "Stopping radvd..."
