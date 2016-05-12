@@ -5,19 +5,22 @@ CHANGELOG
 * [New] ChatBox message is now in conf/chat_init.txt 
 * [New] Disable the Shoutbox to prevent writing into it
 * [New] PHP configuration shipped, to enable easily for modifications
-* [New] Mesh implementation, technical preview.
+* [New] Mesh implementation, technical preview
 * [New] JSON config file to direct client side applications, like "share apps"
 * [New] Simply python IRC Server installed and prepareable for automatic start
 * [New] Shoutbox-Time via Client-Date possible
+* [New] Website is now available under /content and /opt/piratebox/share
 * [New] [RPi] Service files for using a RTC at PiratBox
 * [New] [OpenWrt] Redirect all DNS requests to local box
 * [New] [OpenWrt] Redirect all web request option (disabled)
 * [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
 * [New] [OpenWrt] AP Client isolation activated per default
-* [Changed] Send HTTP-Code 204 via PHP, much cleaner.
+* [Changed] Send HTTP-Code 204 via PHP, much cleaner
 * [Changed] Update jQuery to 2.2.3, removes IE <=8 support 
+* [Changed] Redirect happens now always to wished domain name
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
+* [Fix] Shoutbox: Missing blank between author and content
 
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
