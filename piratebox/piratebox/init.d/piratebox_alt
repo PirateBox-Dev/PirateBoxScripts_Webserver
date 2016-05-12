@@ -62,6 +62,14 @@ else
 fi
 
 
+# Recreate the content folder, if it was deleted
+#  only if it is not already existing.
+#  This can be any time.
+if [ ! -d  $WWW_CONTENT ] ; then
+        $PIRATEBOX/bin/install_piratebox.sh "$CONF" content
+fi
+
+
 # Command Line for DNSMASQ,  use extra config file generated from command above
 CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
 

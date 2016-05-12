@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	$.get('station_cnt.txt', function(data) {
+	$.get('/station_cnt.txt', function(data) {
         $('div#station').html(data);
     });
    	
@@ -104,7 +104,7 @@ $(document).ready(function() {
 });
 
 function refresh_shoutbox () {
-    $.get('chat_content.html', function(data) {
+    $.get('/chat_content.html', function(data) {
    		$('div#shoutbox').html(data);
    	});
 }
@@ -133,7 +133,7 @@ function display_shoutbox() {
 }
 
 function refresh_diskusage() {
-    $.get('diskusage.html', function(data) {
+    $.get('/diskusage.html', function(data) {
                 $('div#diskusage').html(data);
         });
 }
