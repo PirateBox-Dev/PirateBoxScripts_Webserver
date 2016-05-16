@@ -205,7 +205,7 @@ case "$1" in
 	  fi
 
           log_daemon_msg "Starting Miniircd..."
-	  start-stop-daemon -m --start --pidfile $PIDFILE_IRC --exec python $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	  start-stop-daemon $DROOPY_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
 	  log_end_msg $?
        fi
      fi
@@ -221,7 +221,7 @@ case "$1" in
 
     if [ "$ENABLE_IRC_SERVER" = "yes" ] ; then
 	log_daemon_msg "Stopping IRC..."
-	start-stop-daemon --stop --quiet --pidfile  $PIDFILE_IRC 
+	start-stop-daemon -K -q -p $PIDFILE_IRC 
 	log_end_msg $?
     fi 
 
