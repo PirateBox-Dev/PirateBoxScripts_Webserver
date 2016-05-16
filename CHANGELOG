@@ -1,5 +1,6 @@
 CHANGELOG
 
+<<<<<<< HEAD
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
@@ -23,6 +24,7 @@ CHANGELOG
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
 * [Fix] Shoutbox: Missing blank between author and content
+* [Fix] Fix problem when running in small display mode at direcotry listing.
 
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
