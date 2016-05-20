@@ -25,6 +25,7 @@ CHANGELOG
 * [Fix] Prevent JS Injection in Shoutbox
 * [Fix] Shoutbox: Missing blank between author and content
 * [Fix] Fix problem when running in small display mode at direcotry listing.
+* [Fix] Add xhtml mime type in lighttpd configuration
 
 === 1.0.7 ===
 * [New] Lock shoutbox when you send a message.
