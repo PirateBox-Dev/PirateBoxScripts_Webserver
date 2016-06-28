@@ -1,6 +1,5 @@
 CHANGELOG
 
-<<<<<<< HEAD
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
@@ -21,6 +20,7 @@ CHANGELOG
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner
 * [Changed] Update jQuery to 2.2.3, removes IE <=8 support 
 * [Changed] Redirect happens now always to wished domain name
+* [Changed] Droopy, make chmod operation optional (prevent errors on OpenWRT)
 * [Fix] License Adjustments
 * [Fix] Prevent JS Injection in Shoutbox
 * [Fix] Shoutbox: Missing blank between author and content
