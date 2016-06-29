@@ -167,7 +167,9 @@ case "$1" in
          if [ "$DROOPY_USE_USER" = "yes" ] ; then
              DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
          fi
-         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" --chmod $DROOPY_CHMOD $DROOPY_USERDIR  $DROOPY_PORT 
+         DROOPY_DO_CHMOD=""
+         test -n "$DROOPY_CHMOD" && DROOPY_DO_CHMOD="--chmod $DROOPY_CHMOD"
+         start-stop-daemon $DROOPY_USER  -m -S -b  -p $PIDFILE_DROOPY -x $PIRATEBOX/bin/droopy -- -d "$UPLOADFOLDER"  -m "$DROOPY_TXT" $DROOPY_DO_CHMOD $DROOPY_USERDIR  $DROOPY_PORT 
          echo  $?
        fi
 
