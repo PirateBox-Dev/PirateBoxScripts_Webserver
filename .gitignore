@@ -3,6 +3,9 @@
 piratebox/piratebox/version
 piratebox/piratebox/www/chat_content.html
 image_stuff/*
-piratebox/piratebox/bin/miniircd.py
 piratebox_ws_*
 piratebox-ws_*
+tmp/*
+piratebox/piratebox/bin/miniircd.py
+piratebox/piratebox/www/Shared
+piratebox/piratebox/www/cgi-bin/data.pso

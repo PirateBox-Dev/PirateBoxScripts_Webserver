@@ -5,8 +5,8 @@ ____________________.__               __        __________
  |____|_  /|____|   |__||__|  (____  /__|  \___  >______  /\____/__/\_ \
         \/                         \/          \/       \/            \/
 
-Website: http://piratebox.cc                  PirateBox Version:   1.0.7
-Forum:   http://forum.piratebox.cc            RPi Image Version: 1.0.7-1
+Website: http://piratebox.cc                  PirateBox Version:   1.1.0
+Forum:   http://forum.piratebox.cc            RPi Image Version: 1.1.0-1
 IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
 
 First Steps After Flashing
@@ -30,3 +30,5 @@ First Steps After Flashing
  > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
  > sudo systemctl start minidlna
  > sudo systemctl enable minidlna
+6. Enable RealTimeClock timekeeping (needs DS3231 or 1307 RTC module!)
+ > sudo systemctl enable rpi_hwclock

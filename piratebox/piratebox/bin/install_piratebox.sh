@@ -1,13 +1,23 @@
 #!/bin/sh
-## PirateBox installer script  v.01
-##  created by Matthias Strubel   2011-08-04
+## PirateBox installer script  
+##  created by Matthias Strubel   (c)2011-2014 GPL-3
 ##
 
-## ASH does not support arrays, so no nice foreach 
-# All Perl packages for kareha
-##OPENWRT_PACKAGES_IMAGEBOARD=(  perl perlbase-base perlbase-cgi perlbase-essential perlbase-file perlbase-bytes perlbase-config perlbase-data perlbase-db-file perlbase-digest perlbase-encode perlbase-encoding perlbase-fcntl perlbase-gdbm-file perlbase-integer perlbase-socket perlbase-unicode perlbase-utf8 perlbase-xsloader  )
+create_content_folder(){
 
+   echo "Creating 'content' folder on USB stick and move over stuff"
+   mkdir -p $WWW_CONTENT
+   cp -r     $PIRATEBOX_FOLDER/www_content/*   $WWW_CONTENT
 
+   [ ! -L $PIRATEBOX_FOLDER/www/content  ] && \
+		ln -s $WWW_CONTENT  $WWW_FOLDER/content
+   [ ! -e $WWW_FOLDER/favicon.ico ] && \
+		ln -s $WWW_CONTENT/favicon.ico $WWW_FOLDER
+
+   chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_CONTENT -R
+   chmod  u+rw $WWW_CONTENT
+   return 0
+}
 
 # Load configfile
 
@@ -55,7 +65,6 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/share/tmp
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
-#Copy Forban-Link spacer
    #Distribute the Directory Listing files
    $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
    #Set permissions
@@ -159,3 +168,6 @@ if [ $2 = "hostname" ] ; then
 	echo "..done"
 fi
 
+if [ $2 = "content" ] ; then
+	create_content_folder
+fi

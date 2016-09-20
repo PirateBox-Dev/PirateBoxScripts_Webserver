@@ -38,6 +38,7 @@ mimetype.assign             = (
   ".xpm"          =>      "image/x-xpixmap",
   ".xwd"          =>      "image/x-xwindowdump",
   ".css"          =>      "text/css",
+  ".xhtml"        =>      "application/xhtml+xml",
   ".html"         =>      "text/html",
   ".htm"          =>      "text/html",
   ".js"           =>      "text/javascript",

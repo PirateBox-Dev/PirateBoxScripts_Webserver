@@ -1,0 +1,10 @@
+[Unit]
+Description=rpi_hwclock initialization and sync
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/opt/piratebox/bin/rpi_hwclock.sh
+
+[Install]
+WantedBy=multi-user.target

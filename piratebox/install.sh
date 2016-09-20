@@ -15,6 +15,7 @@
 #       COMPANY:  ---
 #       CREATED: 02.02.2013 19:50:34 MST
 #      REVISION:  0.3.1
+#       LICENCE: (c) Cale Black, 2013 GPL-3
 #=======================================================================
 #Import PirateBox conf
 CURRENT_CONF=piratebox/conf/piratebox.conf

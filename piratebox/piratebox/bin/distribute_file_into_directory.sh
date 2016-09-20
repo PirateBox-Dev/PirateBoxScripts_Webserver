@@ -1,6 +1,8 @@
 #!/bin/sh
 
-#  The following script is used to distribute a specific file into directoried of the givien folder
+#   matthias.strubel@aod-rpg.de
+#
+#  The following script is used to distribute a specific file into directories of the givien folder
 
 directory=$1
 src_file=$2

@@ -8,7 +8,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      6 1 0
 # Short-Description: All services around piratebox
-# Description:       Based on /opt/piratebox/conf/piratebox.conf starts:  * DNSMASQ * HOSTAPD * DROOPY * WLAN-config * CHAT
+# Description:       Based on /opt/piratebox/conf/piratebox.conf starts several services
 ### END INIT INFO
 
 ###  
@@ -29,14 +29,19 @@ PIDFILE_HOSTAPN=/var/run/piratebox_hostapn.pid
 PIDFILE_DNSMASQ=/var/run/piratebox_dnsmasq.pid
 PIDFILE_LIGHTTPD=/opt/piratebox/tmp/lighttpd.pid
 PIDFILE_SHOUTBOX=/opt/piratebox/tmp/shoutbox_daemon.pid
+PIDFILE_RADVD=/opt/piratebox/tmp/radvd.pid
+PIDFILE_IRC=/opt/piratebox/tmp/irc.pid
 
 PIRATEBOX=/opt/piratebox
 CONF=$PIRATEBOX/conf/piratebox.conf
+CONF_IRC=$PIRATEBOX/conf/irc.conf
 #CONF_DROOPY=/opt/piratebox/conf/droopy.conf #not used
 CONF_APN=$PIRATEBOX/conf/hostapd.conf
 
 #Some extra config files for dnsmasq
 CONF_DNSMASQ=$PIRATEBOX/conf/dnsmasq_generated.conf
+
+CONF_RADVD=$PIRATEBOX/conf/radvd_generated.conf
 
 CONF_LIGHTTPD=$PIRATEBOX/conf/lighttpd/lighttpd.conf
 
@@ -64,7 +69,12 @@ else
 fi
 
 
-
+# Recreate the content folder, if it was deleted
+#  only if it is not already existing.
+#  This can be any time.
+if [ ! -d  $WWW_CONTENT ] ; then
+	$PIRATEBOX/bin/install_piratebox.sh "$CONF" content
+fi
 
 # Command Line for DNSMASQ,  use extra config file generated from command above
 CMD_DNSMASQ="-x $PIDFILE_DNSMASQ -C $CONF_DNSMASQ "
@@ -83,8 +93,14 @@ case "$1" in
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
-    echo "Copy over design files"
-    $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
+    if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
+       echo "Copy over design files"
+       $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
+    fi
+
+    if [ "$PBX_JSON_GENERATION" = "yes" ]; then
+        $PIRATEBOX_FOLDER/bin/json_generation.sh  $CONF 
+    fi
 
     if [ "$DO_IW" = "yes" ] ; then
        log_daemon_msg " Setting up Interface (iw) "
@@ -133,9 +149,22 @@ case "$1" in
          log_end_msg $?
        fi
 
+       #Setting up firewall rules
+       log_daemon_msg    "Setting up firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -s
+       log_end_msg $?
+
+
+	if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
+	  log_daemon_msg "Starting radvd..."
+	  start-stop-daemon --start --quiet --exec radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
+	  log_end_msg $?
+ 	fi
+
 
         if [ "$DROOPY_ENABLED" = "yes" ] ; then
           #Start here the PirateBox-Parts droopy i.e.
+          log_daemon_msg "Starting droopy..."
           #Delete 0 Byte Files
           delete_empty.sh  $UPLOADFOLDER
           find  $UPLOADFOLDER/ -iname tmp\* -exec rm {} \;
@@ -144,8 +173,9 @@ case "$1" in
           if [ "$DROOPY_USE_USER" = "yes" ] ; then
             DROOPY_USER=" -c $LIGHTTPD_USER:$LIGHTTPD_GROUP "
           fi
-          log_daemon_msg "Starting droopy..."
-          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -d "$UPLOADFOLDER" -m "$DROOPY_TXT" --chmod $DROOPY_CHMOD $DROOPY_USERDIR $DROOPY_PORT
+          DROOPY_DO_CHMOD=""
+          test -n "$DROOPY_CHMOD" && DROOPY_DO_CHMOD="--chmod $DROOPY_CHMOD"
+          start-stop-daemon $DROOPY_USER -m --start --background  --pidfile $PIDFILE_DROOPY --exec $PIRATEBOX/bin/droopy -- -d "$UPLOADFOLDER" -m "$DROOPY_TXT" $DROOPY_DO_CHMOD $DROOPY_USERDIR $DROOPY_PORT
           log_end_msg $?
        fi
 
@@ -164,6 +194,22 @@ case "$1" in
           start-stop-daemon -m --start  --background --pidfile $PIDFILE_SHOUTBOX --startas $PIRATEBOX/bin/shoutbox_daemon.sh -- $CONF
           log_end_msg $?
        fi
+
+       #Start IRC Server
+       if [ "$ENABLE_IRC_SERVER" = "yes" ] ; then
+          
+	  . $CONF_IRC
+
+	  IRC_PARMS="--daemon --motd $IRC_MOTD "
+
+	  if [ ! -z $STATEDIR ] ; then
+	     IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR "
+	  fi
+
+          log_daemon_msg "Starting Miniircd..."
+	  start-stop-daemon $DROOPY_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	  log_end_msg $?
+       fi
      fi
 
      $PIRATEBOX/bin/hooks/hook_piratebox_start_done.sh  "$CONF"
@@ -175,6 +221,16 @@ case "$1" in
 
      $PIRATEBOX/bin/hooks/hook_piratebox_stop.sh  "$CONF"
 
+    if [ "$ENABLE_IRC_SERVER" = "yes" ] ; then
+	log_daemon_msg "Stopping IRC..."
+	start-stop-daemon -K -q -p $PIDFILE_IRC 
+	log_end_msg $?
+    fi 
+
+       log_daemon_msg    "Removing firewall rules..."
+       $PIRATEBOX_FOLDER/bin/firewall.sh -k
+       log_end_msg $?
+
     if [  "$USE_APN"  = "yes" ] ;  then
        log_daemon_msg  "Stopping hostap... "
        start-stop-daemon --stop --quiet  --pidfile $PIDFILE_HOSTAPN  --oknodo  --startas "hostapd"
@@ -184,6 +240,12 @@ case "$1" in
        log_daemon_msg "Stopping dnsmasq..."
        start-stop-daemon --stop --quiet  --pidfile $PIDFILE_DNSMASQ  
        log_end_msg $?
+    fi
+
+    if [ -e $PIDFILE_RADVD ] ; then
+	log_daemon_msg "Stopping radvd..."
+	start-stop-daemon --stop --quite --pidfile $PIDFILE_RADVD
+  	log_end_msg $?
     fi
 
     #Stop Global Chat daemon

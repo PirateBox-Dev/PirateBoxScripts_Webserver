@@ -14,7 +14,7 @@
 use constant TITLE => 'PirateBox board';	# Name of this image board
 use constant SHOWTITLETXT => 1;				# Show TITLE at top (1: yes  0: no)
 use constant SHOWTITLEIMG => 1;				# Show image at top (0: no, 1: single, 2: rotating)
-use constant TITLEIMG => '/piratebox-logo-small.png';			# Title image (point to a script file if rotating)
+use constant TITLEIMG => '/content/img/piratebox-logo-small.png';			# Title image (point to a script file if rotating)
 #use constant THREADS_DISPLAYED => 10;			# Number of threads on the front page
 #use constant THREADS_LISTED => 40;				# Number of threads in the thread list
 #use constant REPLIES_PER_THREAD => 10;			# Replies shown
@@ -42,7 +42,7 @@ use constant ALLOW_TEXT_REPLIES => 1;			# Allow users to make text replies
 #use constant ALLOW_IMAGE_THREADS => 1;			# Allow users to create image threads
 #use constant ALLOW_IMAGE_REPLIES => 1;			# Allow users to make image replies
 #use constant IMAGE_REPLIES_PER_THREAD => 0;	# Number of image replies per thread to show, set to 0 for no limit.
-use constant MAX_KB => 10000;					# Maximum upload size in KB
+use constant MAX_KB => 5000;					# Maximum upload size in KB
 #use constant MAX_W => 200;						# Images exceeding this width will be thumbnailed
 #use constant MAX_H => 200;						# Images exceeding this height will be thumbnailed
 #use constant THUMBNAIL_SMALL => 1;				# Thumbnail small images (1: yes, 0: no)
