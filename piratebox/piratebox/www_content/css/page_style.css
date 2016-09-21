@@ -136,13 +136,19 @@ header img, footer img {
 }
 
 #logo {
+  background-image: url('/content/img/piratebox-logo-horizontal-white.png');
+  width: 215px;
+  height: 36px;
   float: left;
   overflow: hidden;
 }
 
 #menu-icon {
+  background-image: url('/content/img/menu.png');
   float: right;
   width: 36px;
+  height: 36px;
+  overflow: hdden;
   -webkit-transition: all 0.5s ease-in-out;
   -moz-transition: all 0.5s ease-in-out;
   -o-transition: all 0.5s ease-in-out;
