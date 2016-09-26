@@ -87,7 +87,7 @@ case "$1" in
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
-      echo "Copy over design files"
+      echo "Copy over directory design files"
       $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
     fi
 
