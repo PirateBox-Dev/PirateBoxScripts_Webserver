@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.1.1 ===
+* [Fix] Translation en,fr LibraryBox -> PirateBox
+
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
