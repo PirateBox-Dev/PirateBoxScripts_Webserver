@@ -2,6 +2,7 @@ CHANGELOG
 
 === 1.1.1 ===
 * [Fix] Translation en,fr LibraryBox -> PirateBox
+* [Fix] Spellings in translation
 * [Fix] IRC startup command failed.
 * [Removed] exchange_www.sh 
 
