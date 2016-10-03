@@ -94,7 +94,7 @@ case "$1" in
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
-       echo "Copy over design files"
+       echo "Copy over directory design files"
        $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
     fi
 
@@ -200,10 +200,10 @@ case "$1" in
           
 	  . $CONF_IRC
 
-	  IRC_PARMS="--daemon --motd $IRC_MOTD "
+	  IRC_PARMS="--setuid $IRC_USER --daemon --motd '$IRC_MOTD' "
 
-	  if [ ! -z $STATEDIR ] ; then
-	     IRC_PARMS=" $IRCPARMS --statedir  $STATEDIR "
+	  if [ ! -z "$IRC_STATEDIR" ] ; then
+	     IRC_PARMS=" $IRCPARMS --statedir  '$IRC_STATEDIR' "
 	  fi
 
           log_daemon_msg "Starting Miniircd..."

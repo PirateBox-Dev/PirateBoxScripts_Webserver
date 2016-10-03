@@ -1,5 +1,11 @@
 CHANGELOG
 
+=== 1.1.1 ===
+* [Fix] Translation en,fr LibraryBox -> PirateBox
+* [Fix] Spellings in translation
+* [Fix] IRC startup command failed.
+* [Removed] exchange_www.sh 
+
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
 * [New] ChatBox message is now in conf/chat_init.txt 
