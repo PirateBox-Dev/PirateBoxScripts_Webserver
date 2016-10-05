@@ -83,6 +83,9 @@ if [ $2 = 'part2' ] ; then
   
    [ ! -L $PIRATEBOX_FOLDER/www/board  ] && ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
    [ ! -L $PIRATEBOX_FOLDER/www/Shared ] && ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
+   [ ! -L $PIRATEBOX_FOLDER/www/content  ] && \
+       ln -s $WWW_CONTENT  $WWW_FOLDER/content
+
 fi 
 
 #Install the image-board

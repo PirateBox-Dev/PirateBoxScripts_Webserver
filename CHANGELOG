@@ -1,5 +1,8 @@
 CHANGELOG
 
+=== 1.1.2 ===
+* [Fix] Upgrade 1.1.x - 1.1.x does not create content symlink
+
 === 1.1.1 ===
 * [Fix] Translation en,fr LibraryBox -> PirateBox
 * [Fix] Spellings in translation
