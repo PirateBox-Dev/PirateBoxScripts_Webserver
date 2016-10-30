@@ -2,6 +2,7 @@ CHANGELOG
 
 === 1.1.3 ===
 * [Fix] Some shell incompatibilities
+* [Fix] forest.py : Cleanup used folders
 
 === 1.1.2 ===
 * [Fix] Upgrade 1.1.x - 1.1.x does not create content symlink
