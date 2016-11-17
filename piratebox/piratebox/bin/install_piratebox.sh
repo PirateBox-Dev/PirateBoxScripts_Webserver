@@ -50,7 +50,7 @@ if [ $2 = 'pyForum' ] ; then
     mkdir -p $PIRATEBOX_FOLDER/forumspace
     chmod a+rw -R  $PIRATEBOX_FOLDER/forumspace 2> /dev/null
     chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/cgi-bin/forest.py
-    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/content/forest.cssi  2> /dev/null
+    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/content/forest.css  2> /dev/null
     echo "Copied the files. Recheck your PirateBox now. "
 fi
 
