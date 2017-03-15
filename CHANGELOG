@@ -6,6 +6,7 @@ CHANGELOG
 * [Fix] forest.py : Cleanup used folders
 * [Fix] Fixed localization ID for placeholder message
 * [Fix] Correct/translate German localisation strings
+* [Fix] Adjust hostapd.conf with comments & addtional parameter for n-mode wifi
 
 === 1.1.2 ===
 * [Fix] Upgrade 1.1.x - 1.1.x does not create content symlink
