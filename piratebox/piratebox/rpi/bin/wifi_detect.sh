@@ -25,9 +25,16 @@ dnsmasq_interface=$( grep -e '^DNSMASQ_INTERFACE' "${PIRATEBOX_CONFIG_PATH}" | \
                 sed -e 's|DNSMASQ_INTERFACE=||' -e 's|"||g' )
 
 sed -i -e "s|interface=$hostap_interface|interface=$WIFI_DEVICE|" "${CONFIG_PATH}"
-sed -i -e "s|INTERFACE=\"$piratebox_interface\"|INTERFACE=\"$WIFI_DEVICE\"|" \
-       -e "s|DNSMASQ_INTERFACE=\"$dnsmasq_interface\"|DNSMASQ_INTERFACE=\"$WIFI_DEVICE\"|" \
-       "${PIRATEBOX_CONFIG_PATH}"
+
+#Only change piratebox interface if it is a wifi interface
+if echo "$piratebox_interface" | grep -q "wlan" ; then
+    sed -i -e "s|INTERFACE=\"$piratebox_interface\"|INTERFACE=\"$WIFI_DEVICE\"|" \
+         "${PIRATEBOX_CONFIG_PATH}" 
+fi
+if echo "$dnsmasq_interface" | grep -q "wlan" ; then
+    sed -i -e "s|DNSMASQ_INTERFACE=\"$dnsmasq_interface\"|DNSMASQ_INTERFACE=\"$WIFI_DEVICE\"|" \
+           "${PIRATEBOX_CONFIG_PATH}"
+fi
 
 
 
