@@ -10,6 +10,7 @@ WIFI_CONFIG_PATH="/boot/wifi_card.conf"
 
 PACKAGE_PATH="/prebuild/hostapd"
 CONFIG_PATH="/opt/piratebox/conf/hostapd.conf"
+PIRATEBOX_CONFIG_PATH="/opt/piratebox/conf/piratebox.conf"
 
 ## Only use if it is set
 if test -e "${WIFI_CONFIG_PATH}" ; then
@@ -18,19 +19,24 @@ if test -e "${WIFI_CONFIG_PATH}" ; then
 fi
 
 hostap_interface=$( grep -e '^interface' "${CONFIG_PATH}" | sed -e 's|interface=||' )
+piratebox_interface=$( grep -e '^INTERFACE' "${PIRATEBOX_CONFIG_PATH}" | \
+                sed -e 's|INTERFACE=||' -e 's|"||g' )
+dnsmasq_interface=$( grep -e '^DNSMASQ_INTERFACE' "${PIRATEBOX_CONFIG_PATH}" | \
+                sed -e 's|DNSMASQ_INTERFACE=||' -e 's|"||g' )
 
-if [ "${hostap_interface}" = "${WIFI_DEVICE}" ] ; then 
-    echo "No change in hostapd.conf for wifi device needed"
-else
-    sed -i -e "s|$hostap_interface|$WIFI_DEVICE|" "${CONFIG_PATH}"
-fi
+sed -i -e "s|interface=$hostap_interface|interface=$WIFI_DEVICE|" "${CONFIG_PATH}"
+sed -i -e "s|INTERFACE=\"$piratebox_interface\"|INTERFACE=\"$WIFI_DEVICE\"|" \
+       -e "s|DNSMASQ_INTERFACE=\"$dnsmasq_interface\"|DNSMASQ_INTERFACE=\"$WIFI_DEVICE\"|" \
+       "${PIRATEBOX_CONFIG_PATH}"
+
+
 
 ## Get pyhX device node
 CARD_ID=$( cat /sys/class/net/"${WIFI_DEVICE}"/phy80211/index )
 
 
 # Check if we have an nl80211 enabled device with AP mode, then we are done
-if iw phy phy"${CARD_ID}" | grep -q "* AP$"; then
+if iw phy phy"${CARD_ID}" info | grep -q "* AP$"; then
   echo "Found nl80211 device capable of AP mode..."
   pacman --noconfirm -U --needed "${PACKAGE_PATH}/hostapd-2"* > /dev/null
   sed -i 's/^#driver=nl80211/driver=nl80211/' "${CONFIG_PATH}"
