@@ -4,6 +4,7 @@ CHANGELOG
 * [New] Translation bt-pr
 * [New] [RPi] Helper scripts to jump to wifi client mode
 * [New] [RPi] Helper script to use SDCard without reboot
+* [New] [RPi] Image adjustments to save SDCard for to many writes
 * [Fix] Some shell incompatibilities
 * [Fix] forest.py : Cleanup used folders
 * [Fix] Fixed localization ID for placeholder message
