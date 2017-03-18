@@ -74,9 +74,9 @@ echo "Could not find an AP enabled WiFi card..."
 
 # Try to connect to Wifi if wpa_supplicant.conf is available.
 if [ -f /boot/wpa_supplicant.conf ]; then
-  echo "Found wpa_supplicant conf, trying to connect..."
-  wpa_supplicant -i"${WIFI_DEVICE}" -c /boot/wpa_supplicant.conf -B -D wext
-  dhcpcd "${WIFI_DEVICE}"
+  /opt/piratebox/rpi/bin/run_client.sh
+  exit 1
+  # Exit =! 0 will result in not starting piratebox service
 fi
 
 exit 1
