@@ -2,11 +2,13 @@ CHANGELOG
 
 === 1.1.3 ===
 * [New] Translation bt-pr
+* [New] [RPi] Helper scripts to jump to wifi client mode
 * [Fix] Some shell incompatibilities
 * [Fix] forest.py : Cleanup used folders
 * [Fix] Fixed localization ID for placeholder message
 * [Fix] Correct/translate German localisation strings
 * [Fix] Adjust hostapd.conf with comments & addtional parameter for n-mode wifi
+* [Fix] Some help about setting up WPA2 mode for AP in hostapd.conf
 
 === 1.1.2 ===
 * [Fix] Upgrade 1.1.x - 1.1.x does not create content symlink
