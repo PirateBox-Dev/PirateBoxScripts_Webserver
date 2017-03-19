@@ -12,6 +12,7 @@ CHANGELOG
 * [Fix] Adjust hostapd.conf with comments & addtional parameter for n-mode wifi
 * [Fix] Some help about setting up WPA2 mode for AP in hostapd.conf
 * [Fix] Reduce browser cache to a minimum, which solves issues with shoutbox and diskusage
+* [Fix] Trigger async disk usage refresh during page load
 
 === 1.1.2 ===
 * [Fix] Upgrade 1.1.x - 1.1.x does not create content symlink

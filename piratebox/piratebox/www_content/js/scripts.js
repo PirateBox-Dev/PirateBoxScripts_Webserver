@@ -56,6 +56,7 @@ $(document).ready(function() {
         }
     });
     
+    post_diskusage();
 
     // smooth scrolling for internal links
     function filterPath(string) {
