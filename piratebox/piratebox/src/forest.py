@@ -64,11 +64,11 @@ import time
 # ============================================================================
 
 # Where the threads are stored. This folder must exist.
-DATA_PATH = '/opt/piratebox/forumspace/'
+DATA_PATH = '/opt/piratebox/share/forumspace/'
 #Where the forest CGI is located (as a URL).
 CGI_URL='/cgi-bin/forest.py'
 # Where the main stylesheet is kept (as a URL).
-CSS_PATH = '/forest.css'
+CSS_PATH = '/content/css/forest.css'
 # What is the title of the board?
 BOARD_TITLE = 'PirateBox Board'
 # Simple Description of the board, appears at the top of each page
