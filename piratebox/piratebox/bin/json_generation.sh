@@ -31,7 +31,7 @@ echo "{ \"piratebox\" : { \"module\" : { " >> $JSON_FILE
 #------------ upload configuration
 echo -n "   \"upload\" : { \"status\" : $json_droopy_enabled , \"file\" : \"$UPLOAD_MODULE_FILE\" " >> $JSON_FILE
 #-----------  droopy specialities
-if [ "$DROOPY_ENABLED" == "yes" ] ; then
+if [ "$DROOPY_ENABLED" = "yes" ] ; then
 	echo -n ", " >> $JSON_FILE
 	echo -n "  \"upload_style\" : \"droopy\" , " >> $JSON_FILE
 	echo -n "  \"droopy_port\" : \"$DROOPY_PORT\", \"droopy_host\" : \"$HOST\" "  >> $JSON_FILE

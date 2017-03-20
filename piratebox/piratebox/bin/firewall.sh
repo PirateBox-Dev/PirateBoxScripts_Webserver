@@ -42,13 +42,13 @@ if test -z "$run" ; then
 	echo "ERROR: You need to select -s (start) or -k (stop) "
 	help_text
 fi
-if test -z $PIRATEBOX_CONFIG || test -z "$FIREWALL_CONFIG" ; then
+if test -z "$PIRATEBOX_CONFIG" || test -z "$FIREWALL_CONFIG" ; then
 	echo "ERROR: one of the config paths is empty, while it should not"
 	help_text
 fi
 
- . $PIRATEBOX_CONFIG  || exit 6
- . $FIREWALL_CONFIG   || exit 5
+ . "$PIRATEBOX_CONFIG"  || exit 6
+ . "$FIREWALL_CONFIG"   || exit 5
 
 if [ "$run" = "start" ] ; then
 	IPT_FLAG="-A"

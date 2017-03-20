@@ -5,8 +5,8 @@ ____________________.__               __        __________
  |____|_  /|____|   |__||__|  (____  /__|  \___  >______  /\____/__/\_ \
         \/                         \/          \/       \/            \/
 
-Website: http://piratebox.cc                  PirateBox Version:   1.1.0
-Forum:   http://forum.piratebox.cc            RPi Image Version: 1.1.0-1
+Website: http://piratebox.cc                  PirateBox Version:   1.1.3
+Forum:   http://forum.piratebox.cc            RPi Image Version: 1.1.3-1
 IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
 
 First Steps After Flashing
@@ -23,8 +23,9 @@ First Steps After Flashing
   > sudo systemctl enable timesave
 3. Enable the Kareha Image and Discussion Board
  > sudo /opt/piratebox/bin/board-autoconf.sh
-4. Enable USB thumb drive share
- > sudo /opt/piratebox/rpi/bin/usb_share.sh
+4. Enable USB thumb drive share OR extend SDCard
+ USB: > sudo /opt/piratebox/rpi/bin/usb_share.sh
+ SDCard: > sudo /opt/piratebox/rpi/bin/sdcard_share.sh
 5. Enable UPnP Media Server
  > sudo cp /etc/minidlna.conf /etc/minidlna.conf.bkp
  > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf

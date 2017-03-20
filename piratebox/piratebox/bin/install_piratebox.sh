@@ -46,11 +46,11 @@ PIRATEBOX_CONFIG=$1
 
 if [ $2 = 'pyForum' ] ; then
     cp -v $PIRATEBOX_FOLDER/src/forest.py  $WWW_FOLDER/cgi-bin
-    cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/
+    cp -v $PIRATEBOX_FOLDER/src/forest.css $WWW_FOLDER/content/css
     mkdir -p $PIRATEBOX_FOLDER/forumspace
-    chmod a+rw -R  $PIRATEBOX_FOLDER/forumspace
+    chmod a+rw -R  $PIRATEBOX_FOLDER/forumspace 2> /dev/null
     chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/cgi-bin/forest.py
-    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/forest.css
+    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $WWW_FOLDER/content/forest.css  2> /dev/null
     echo "Copied the files. Recheck your PirateBox now. "
 fi
 
@@ -83,6 +83,9 @@ if [ $2 = 'part2' ] ; then
   
    [ ! -L $PIRATEBOX_FOLDER/www/board  ] && ln -s $PIRATEBOX_FOLDER/share/board $PIRATEBOX_FOLDER/www/board
    [ ! -L $PIRATEBOX_FOLDER/www/Shared ] && ln -s $UPLOADFOLDER  $PIRATEBOX_FOLDER/www/Shared
+   [ ! -L $PIRATEBOX_FOLDER/www/content  ] && \
+       ln -s $WWW_CONTENT  $WWW_FOLDER/content
+
 fi 
 
 #Install the image-board

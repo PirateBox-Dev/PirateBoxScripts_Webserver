@@ -155,7 +155,7 @@ case "$1" in
        log_end_msg $?
 
 
-	if [ "$IPV6_ENABLE" == "yes" ] && [ "$IPV6_ADVERT" == "radvd" ] ; then
+	if [ "$IPV6_ENABLE" = "yes" ] && [ "$IPV6_ADVERT" = "radvd" ] ; then
 	  log_daemon_msg "Starting radvd..."
 	  start-stop-daemon --start --quiet --exec radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
 	  log_end_msg $?
