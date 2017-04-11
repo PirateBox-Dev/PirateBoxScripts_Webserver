@@ -200,14 +200,14 @@ case "$1" in
           
 	  . $CONF_IRC
 
-	  IRC_PARMS="--setuid $IRC_USER --daemon --motd $IRC_MOTD "
+	  IRC_PARMS="--daemon --motd $IRC_MOTD "
 
 	  if [ ! -z "$IRC_STATEDIR" ] ; then
 	     IRC_PARMS=" $IRCPARMS --statedir $IRC_STATEDIR "
 	  fi
 
           log_daemon_msg "Starting Miniircd..."
-	  start-stop-daemon $DROOPY_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	  start-stop-daemon $IRC_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
 	  log_end_msg $?
        fi
      fi
