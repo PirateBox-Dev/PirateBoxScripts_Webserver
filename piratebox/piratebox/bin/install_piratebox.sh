@@ -66,7 +66,9 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
    #Distribute the Directory Listing files
-   $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   if [ "$CUSTOM_DIRLIST_COPY" = "yes" ] ; then
+       $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   fi
    #Set permissions
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
