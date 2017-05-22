@@ -163,7 +163,7 @@ fi
 set_hostname() {
 	local name=$1 ; shift;
 
-	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/redirect.html
+	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/index.html
         sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
 }
 
