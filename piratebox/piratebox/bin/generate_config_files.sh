@@ -148,6 +148,7 @@ generate_lighttpd_env() {
 	local SHOUTBOX_CLIENT_TIMESTAMP=$7
 	local IN_UPLOAD_PATH=$8
   	local DISK_GEN_HTMLFILE=$9
+    local HOSTNAME=$10
 
         echo "Generating Environment-config for lighttpd ....."
 
@@ -162,10 +163,13 @@ generate_lighttpd_env() {
 	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , 
 	   \"SHOUTBOX_CLIENT_TIMESTAMP\" => \"$SHOUTBOX_CLIENT_TIMESTAMP\" , 
 	   \"UPLOAD_PATH\" => \"$IN_UPLOAD_PATH\" , 
+	   \"PIRATEBOX_HOSTNAME\" => \"$HOSTNAME\" , 
      	   \"DISK_GEN_HTMLFILE\"      => \"$DISK_GEN_HTMLFILE\" , 
 	   $LIGHTTPD_ENV_BR_LINE 
 
-        )"
+        )
+        var.PIRATEBOX_HOSTNAME = $HOSTNAME
+        "
 
        echo $LIGHTTPD_ENV > $LIGHTTPD_ENV_CONFIG
 }
@@ -203,7 +207,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
-generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER $GEN_DISKFILE 
+generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER $GEN_DISKFILE $HOST 
 
 COMPLETE_HOST=$HOST
 
