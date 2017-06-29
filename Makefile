@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 1.1.2
+VERSION = 1.2.0
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -8,8 +8,8 @@ PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
 
-IMAGE_FILE=piratebox_ws_1.1_img.gz
-TGZ_IMAGE_FILE=piratebox_ws_1.1_img.tar.gz
+IMAGE_FILE=piratebox_ws_1.2_img.gz
+TGZ_IMAGE_FILE=piratebox_ws_1.2_img.tar.gz
 SRC_IMAGE=image_stuff/OpenWRT_ext4_50MB.img.gz
 SRC_IMAGE_UNPACKED=image_stuff/piratebox_img
 MOUNT_POINT=image_stuff/image
@@ -60,6 +60,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:OPENWRT="no":OPENWRT="yes":'  -i $@/piratebox.conf 
 	sed 's:DO_IFCONFIG="yes":DO_IFCONFIG="no":'  -i $@/piratebox.conf 
 	sed 's:IPV6_ENABLE="no":IPV6_ENABLE="yes":'  -i $@/ipv6.conf 
+	sed 's:IPV6_ADVERT="radvd":IPV6_ADVERT="none":'  -i $@/ipv6.conf 
 	sed 's:USE_APN="yes":USE_APN="no":'  -i $@/piratebox.conf 
 	sed 's:DNSMASQ_INTERFACE="wlan0":DNSMASQ_INTERFACE="br-lan":' -i $@/piratebox.conf 
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf 
