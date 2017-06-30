@@ -67,7 +67,10 @@ if [ "$1" = 'part2' ] ; then
    mkdir -p "$PIRATEBOX_FOLDER/tmp"
 
    #Distribute the Directory Listing files
-   "$PIRATEBOX_FOLDER/bin/distribute_files.sh" "$SHARE_FOLDER/Shared" true
+   if [ "$CUSTOM_DIRLIST_COPY" = "yes" ] ; then
+      "$PIRATEBOX_FOLDER/bin/distribute_files.sh" "$SHARE_FOLDER/Shared" true
+   fi
+
    #Set permissions
    chown "$LIGHTTPD_USER":"$LIGHTTPD_GROUP"  "$PIRATEBOX_FOLDER/share" -R
    chmod  u+rw "$PIRATEBOX_FOLDER/share"
@@ -172,9 +175,8 @@ set_hostname() {
 	name=$1 ; shift;
 
 	sed -e "s|#####HOST#####|$name|g"  \
-       "$PIRATEBOX_FOLDER"/src/redirect.html.schema >  \
-       "$WWW_FOLDER"/redirect.html
-    sed -e "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  "$PIRATEBOX_CONFIG"
+       	       "$PIRATEBOX_FOLDER"/src/redirect.html.schema >  \
+               "$WWW_FOLDER"/index.html
 }
 
 if [ "$1" = "hostname" ] ; then

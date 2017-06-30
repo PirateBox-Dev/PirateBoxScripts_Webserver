@@ -1,5 +1,13 @@
 CHANGELOG
 
+=== 1.1.4 ===
+* [New] Removed legacy redirect.html, use /index.html only
+* [New] install_piratebox.sh, avoid distribution of index files, if turned off.
+* [New] mime.types: Adding gpx mime-type
+* [Fix] lang-de ; fix grammar
+* [Fix] [RPi] Fix wrong path in wifi client helper script
+* [Fix] initd: minircd startup fix setuid
+
 === 1.1.3 ===
 * [New] Translation bt-pr
 * [New] [RPi] Helper scripts to jump to wifi client mode

@@ -3,7 +3,7 @@
 # Wrapper script for the steps to enable wifi client
 
 systemctl stop piratebox
-if /opt/piratebox/rpi/run_client.sh ; then
+if /opt/piratebox/rpi/bin/run_client.sh ; then
     echo "Started Wifi client sucessfully!"
     exit 0
 else
