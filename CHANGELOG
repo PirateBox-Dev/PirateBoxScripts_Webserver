@@ -7,6 +7,8 @@ CHANGELOG
 * [Fix] lang-de ; fix grammar
 * [Fix] [RPi] Fix wrong path in wifi client helper script
 * [Fix] initd: minircd startup fix setuid
+* [Fix] initd: Fix radvd path to an absolute path
+* [Fix] WWW-Content, fix a syntax error which broke jQuery
 
 === 1.1.3 ===
 * [New] Translation bt-pr
