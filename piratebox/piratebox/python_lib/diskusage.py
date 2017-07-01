@@ -56,7 +56,7 @@ def get_usage(drive):
 	
 	#Add delay.
 	if age < max_delay:
-		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(drive, age.seconds/60, max_delay.seconds/60)
+		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(htmlfilename, age.seconds/60, max_delay.seconds/60)
 	else:
 		print "OK. File last modified {} minutes ago. Updating now...".format(age.seconds/60)
 		content = prepare_line(drive)
