@@ -90,7 +90,7 @@ case "$1" in
     echo "Preparing Captive Portal Housekeeping file"
     test -e /tmp/captive.sqlite && rm /tmp/captive.sqlite
     touch /tmp/captive.sqlite ; chmod g+w /tmp/captive.sqlite
-    chmod root:$LIGHTTPD_GROUP /tmp/captive.sqlite
+    chown root:$LIGHTTPD_GROUP /tmp/captive.sqlite
 
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
       echo "Copy over directory design files"
