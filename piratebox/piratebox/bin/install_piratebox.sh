@@ -3,7 +3,7 @@
 ##  created by Matthias Strubel   (c)2011-2017 GPL-3
 ##
 
-PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.con"
+PIRATEBOX_CONFIG="/opt/piratebox/conf/piratebox.conf"
 
 create_content_folder(){
 
