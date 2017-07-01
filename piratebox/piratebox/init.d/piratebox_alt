@@ -86,6 +86,12 @@ case "$1" in
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
+    # Captive Portal Housekeeping file in /tmp (ram)
+    echo "Preparing Captive Portal Housekeeping file"
+    test -e /tmp/captive.sqlite && rm /tmp/captive.sqlite
+    touch /tmp/captive.sqlite ; chmod g+w /tmp/captive.sqlite
+    chmod root:$LIGHTTPD_GROUP /tmp/captive.sqlite
+
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
       echo "Copy over directory design files"
       $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
