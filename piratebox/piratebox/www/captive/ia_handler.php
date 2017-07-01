@@ -48,11 +48,13 @@ erdebug( "Detected client type: $client_type");
 
 if ( $send == 0 ) {
     // Send redirect
+    erdebug( " -> Send redirect");
     header("Location: ". $config['captive_info_page'] , true, 302);
     count_ip($_SERVER['REMOTE_ADDR']);
     exit;
 }
 // Access confirmed, send fake reply
 require_once ("captive.templates.php");
+    erdebug( " -> Send answer");
 
 call_user_func( "template_$client_type");
