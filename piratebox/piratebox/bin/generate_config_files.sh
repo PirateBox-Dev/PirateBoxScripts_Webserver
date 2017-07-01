@@ -157,7 +157,7 @@ generate_lighttpd_env() {
 	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , "
 	fi
 
-	LIGHTTPD_ENV="setenv.add-environment = (
+	echo "setenv.add-environment = (
 	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\",
 	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" ,
 	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" ,
@@ -168,10 +168,8 @@ generate_lighttpd_env() {
 	   $LIGHTTPD_ENV_BR_LINE
 
         )
-        var.PIRATEBOX_HOSTNAME = $HOSTNAME
-        "
-
-       echo $LIGHTTPD_ENV > $LIGHTTPD_ENV_CONFIG
+        var.PIRATEBOX_HOSTNAME = \"$HOSTNAME\"
+        "  > $LIGHTTPD_ENV_CONFIG
 }
 
 #------------ lighttpd env config - End   ---------------------
