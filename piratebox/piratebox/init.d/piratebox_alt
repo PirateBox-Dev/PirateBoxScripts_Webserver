@@ -185,6 +185,10 @@ case "$1" in
 
        #Start here the lighttpd i.e.
        echo "Starting lighttpd..."
+       touch "$PIRATEBOX_FOLDER/tmp/break.log" \
+             "$PIRATEBOX_FOLDER/tmp/error.log"
+       chown $LIGHTTPD_USER:$LIGHTTPD_GROUP "$PIRATEBOX_FOLDER/tmp/break.log" \
+                                            "$PIRATEBOX_FOLDER/tmp/error.log"
        start-stop-daemon -S -q  -p $PIDFILE_LIGHTTPD -x /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
        echo $?
 

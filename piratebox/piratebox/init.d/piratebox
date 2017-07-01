@@ -191,6 +191,10 @@ case "$1" in
 
        #Start here the lighttpd i.e.
        log_daemon_msg "Starting lighttpd..."
+       touch "$PIRATEBOX_FOLDER/tmp/break.log" \
+             "$PIRATEBOX_FOLDER/tmp/error.log"
+       chown $LIGHTTPD_USER:$LIGHTTPD_GROUP "$PIRATEBOX_FOLDER/tmp/break.log" \
+                                            "$PIRATEBOX_FOLDER/tmp/error.log"
        start-stop-daemon --start --quiet  --pidfile $PIDFILE_LIGHTTPD --exec /usr/sbin/lighttpd -- -f $CONF_LIGHTTPD
        log_end_msg $?
 
