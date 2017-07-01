@@ -94,7 +94,6 @@ case "$1" in
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
     # Captive Portal Housekeeping file in /tmp (ram)
-    echo "Preparing Captive Portal Housekeeping file"
     "$PIRATEBOX/bin/captive_notify_lease.sh" refresh
 
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
