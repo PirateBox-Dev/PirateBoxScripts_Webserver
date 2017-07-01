@@ -110,7 +110,7 @@ function count_ip($ip, $do_only_insert="no" , $amount=1 ){
             $cnt = $row['counter'] + $amount;
             $stmt= "UPDATE access SET counter = :cnt WHERE ip = :ip ";
         } else {
-            $cnt = 0;
+            $cnt = 1;
             $stmt=$insert;
             // This should not happen, because we get an entry through dnsmasq
         }
