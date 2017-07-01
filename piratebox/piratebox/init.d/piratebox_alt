@@ -88,9 +88,7 @@ case "$1" in
 
     # Captive Portal Housekeeping file in /tmp (ram)
     echo "Preparing Captive Portal Housekeeping file"
-    test -e /tmp/captive.sqlite && rm /tmp/captive.sqlite
-    touch /tmp/captive.sqlite ; chmod g+w /tmp/captive.sqlite
-    chown root:$LIGHTTPD_GROUP /tmp/captive.sqlite
+    "$PIRATEBOX/bin/captive_notify_lease.sh" refresh
 
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
       echo "Copy over directory design files"

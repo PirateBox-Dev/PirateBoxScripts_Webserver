@@ -20,6 +20,13 @@ if [ "$FEATURE_CAPTIVE" = "no" ] ; then
     exit 0
 fi
 
+if [ "$op" = "refresh" ] ; then
+    echo "Preparing Captive Portal Housekeeping file"
+    test -e /tmp/captive.sqlite && rm /tmp/captive.sqlite
+    touch /tmp/captive.sqlite ; chmod g+w /tmp/captive.sqlite
+    chown root:$LIGHTTPD_GROUP /tmp/captive.sqlite
+    exit 0
+fi
 
 echo "$op ; $ip"
 
