@@ -28,7 +28,7 @@
 #    GEN_CHATFILE      = generated html chatfile
 #    PIRATEBOX         = PirateBox Folder
 #    CHATFILE          = data store for Shoutbox-content
-#    
+#
 #    NODE_CONFIG       = Config file for Mesh-Node parameters
 #  -
 #  ipv6.conf (loaded within piratebox.conf)
@@ -119,17 +119,17 @@ generate_radvd(){
   mask=$2
   interface=$3
 
-  echo "Generating config for radvd.." 
-  echo "#---- generated file ---"               > $RADVD_CONFIG  
+  echo "Generating config for radvd.."
+  echo "#---- generated file ---"               > $RADVD_CONFIG
   echo "
     interface $interface {
        AdvSendAdvert on;
        MinRtrAdvInterval 3;
        MaxRtrAdvInterval 10;
        prefix $prefix::/$mask {
-           AdvOnLink on; 
-	   AdvAutonomous on; 
-	   AdvRouterAddr on; 
+           AdvOnLink on;
+	   AdvAutonomous on;
+	   AdvRouterAddr on;
        };
     };
        "                                        >>  $RADVD_CONFIG
@@ -157,21 +157,19 @@ generate_lighttpd_env() {
 	     LIGHTTPD_ENV_BR_LINE="   \"SHOUTBOX_BROADCAST_DESTINATIONS\" => \"$GLOBAL_DEST\" , "
 	fi
 
-	LIGHTTPD_ENV="setenv.add-environment = ( 
-	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\", 
-	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" , 
-	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" , 
-	   \"SHOUTBOX_CLIENT_TIMESTAMP\" => \"$SHOUTBOX_CLIENT_TIMESTAMP\" , 
-	   \"UPLOAD_PATH\" => \"$IN_UPLOAD_PATH\" , 
-	   \"PIRATEBOX_HOSTNAME\" => \"$HOSTNAME\" , 
-     	   \"DISK_GEN_HTMLFILE\"      => \"$DISK_GEN_HTMLFILE\" , 
-	   $LIGHTTPD_ENV_BR_LINE 
+	echo "setenv.add-environment = (
+	   \"PYTHONPATH\"             => \"$PYTHONPATH:$PIRATEBOX/python_lib\",
+	   \"SHOUTBOX_GEN_HTMLFILE\"  => \"$SHOUTBOX_GEN_HTMLFILE\" ,
+	   \"SHOUTBOX_CHATFILE\"      => \"$SHOUTBOX_CHATFILE\" ,
+	   \"SHOUTBOX_CLIENT_TIMESTAMP\" => \"$SHOUTBOX_CLIENT_TIMESTAMP\" ,
+	   \"UPLOAD_PATH\" => \"$IN_UPLOAD_PATH\" ,
+	   \"PIRATEBOX_HOSTNAME\" => \"$HOSTNAME\" ,
+     	   \"DISK_GEN_HTMLFILE\"      => \"$DISK_GEN_HTMLFILE\" ,
+	   $LIGHTTPD_ENV_BR_LINE
 
         )
-        var.PIRATEBOX_HOSTNAME = $HOSTNAME
-        "
-
-       echo $LIGHTTPD_ENV > $LIGHTTPD_ENV_CONFIG
+        var.PIRATEBOX_HOSTNAME = \"$HOSTNAME\"
+        "  > $LIGHTTPD_ENV_CONFIG
 }
 
 #------------ lighttpd env config - End   ---------------------
@@ -179,7 +177,7 @@ generate_lighttpd_env() {
 
 
 if [ -z  $1 ] ; then
-  echo "Usage is 
+  echo "Usage is
       generate_config_files.sh /opt/piratebox/conf/piratebox.conf
    "
    exit 255
@@ -207,7 +205,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
 fi
 generate_hosts $HOST  $IP  $IPV6
 generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
-generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER $GEN_DISKFILE $HOST 
+generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER $GEN_DISKFILE $HOST
 
 COMPLETE_HOST=$HOST
 
@@ -217,7 +215,7 @@ if [ "$NODE_CONFIG_ACTIVE" = "yes" ] ; then
 	echo $NODE_GEN_OUTPUT
 	echo "$NODE_IPV6_IP   $NODE_GEN_OUTPUT  " >> $HOSTS_CONFIG
 	COMPLETE_HOST=$NODE_GEN_OUTPUT
-     else 
+     else
 	 echo "Error: No valid node-name-config found, skipping"
      fi
 fi
@@ -227,6 +225,6 @@ fi
 ###   but, the daemon works per default only on /etc/avahi
 ### If you want to enable avahi, then you have to link /etc/avahi to /opt/piratebox/conf/avahi
 ### On OpenWRT this should happen, if avahi is available before installing the piratebox
-###  automtically. 
+###  automtically.
 AVAHI_HOST=$( echo $COMPLETE_HOST | sed 's|\.|_|g' )
 sed "s|#####MASKED_HOSTNAME#####|$AVAHI_HOST|" $AVAHI_SRC > $AVAHI_CONFIG

@@ -86,6 +86,9 @@ case "$1" in
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/  -exec rm {} \;
 
+    # Captive Portal Housekeeping file in /tmp (ram)
+    "$PIRATEBOX/bin/captive_notify_lease.sh" refresh
+
     if [ "$CUSTOM_DIRLIST_COPY" = "yes" ]; then
       echo "Copy over directory design files"
       $PIRATEBOX/bin/distribute_files.sh $SHARE_FOLDER/Shared
@@ -220,6 +223,7 @@ case "$1" in
        echo "Stopping dnsmasq..."
        start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ
        echo  $?
+       rm "$LEASE_FILE_LOCATION"
    fi
 
 
