@@ -30,4 +30,4 @@ fi
 
 echo "$op ; $ip"
 
-php "$PIRATEBOX_FOLDER"/bin/captive_cli.php "$op" "$ip" "$PIRATEBOX_FOLDER/"
+wget -q -O - "http://127.0.0.1/captive/dnsmasq_cli.php?type=$op&ip=$ip" > /dev/null

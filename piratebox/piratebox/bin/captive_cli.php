@@ -8,6 +8,8 @@ if ( ! ( isset ( $argv['1'] ) &&
          die("
 Add and removes IPs to captive.sqlite database
 
+Note: DNSMASQ is using webrequests to speed up on embedded devices! 
+
 Usage:
    captive_cli.php <action> <ip>  (path)
 
