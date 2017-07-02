@@ -1,6 +1,7 @@
 CHANGELOG
 
 === 1.2.0 ===
+* [New] Trigger captive portal features on clients to display a welcome message
 * [New] Konami code feature
 * [New] lighttpd.conf , Redirect only for non piratebox.lan domain
 * [New] [OpenWrt] Update to LEDE 17.01.2 for embedded devices
