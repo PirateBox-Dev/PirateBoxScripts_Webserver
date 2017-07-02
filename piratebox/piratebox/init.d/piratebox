@@ -243,6 +243,7 @@ case "$1" in
        log_daemon_msg "Stopping dnsmasq..."
        start-stop-daemon --stop --quiet  --pidfile $PIDFILE_DNSMASQ  
        log_end_msg $?
+       rm "$LEASE_FILE_LOCATION"
     fi
 
     if [ -e $PIDFILE_RADVD ] ; then

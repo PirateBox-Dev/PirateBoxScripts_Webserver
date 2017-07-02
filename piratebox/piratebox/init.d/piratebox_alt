@@ -223,6 +223,7 @@ case "$1" in
        echo "Stopping dnsmasq..."
        start-stop-daemon -K  -q  -p $PIDFILE_DNSMASQ
        echo  $?
+       rm "$LEASE_FILE_LOCATION"
    fi
 
 
