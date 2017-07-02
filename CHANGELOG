@@ -17,6 +17,7 @@ CHANGELOG
 * [Changed] [OpenWrt] box-installer: Add a better trigger for extendRoot (delayed)
 * [Changed] [OpenWrt] box-installer: Switch to variable based image name finding
 * [Changed] [OpenWrt] box-installer: Change logging to new logd otions
+* [Changed] [OpenWrt] box-installer: Open  reflash for all architectures
 * [Changed] [OpenWrt] piratebox: remove radvd dependency
 * [Changed] [OpenWrt] Better way to disable ::1 IPv6
 * [Changed] [OpenWrt] Split up of avahi and avahi-tools
