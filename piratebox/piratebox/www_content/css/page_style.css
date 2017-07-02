@@ -386,3 +386,8 @@ Licensed under the MIT license.
     box-shadow: 0px -1px 0px rgba(0, 0, 0, 0.15) inset;
     transition: width 0.6s ease 0s;
 }
+
+#browse {
+    background-color: #ad000b;
+    color: white;
+}
