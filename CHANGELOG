@@ -10,6 +10,7 @@ CHANGELOG
 * [Fix] initd: minircd startup fix setuid
 * [Fix] initd: Fix radvd path to an absolute path
 * [Fix] WWW-Content, fix a syntax error which broke jQuery
+* [Fix] Refresh kareha download URL, which changed in year 2015
 
 === 1.1.3 ===
 * [New] Translation bt-pr
