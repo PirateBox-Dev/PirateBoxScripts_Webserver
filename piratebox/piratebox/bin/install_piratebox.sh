@@ -107,7 +107,8 @@ if [ "$1" = 'imageboard' ] ; then
     KAREHA_RELEASE=kareha_3.1.4.zip
     if [ ! -e "$PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE" ] ; then
 	  echo "  Wgetting kareha-zip file "
-      if ! wget "http://wakaba.c3.cx/releases/$KAREHA_RELEASE" ; then
+      wget "http://wakaba.c3.cx/releases/Kareha/$KAREHA_RELEASE"
+	  if [ "$?" != "0" ] ; then
        		echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
 	  fi
     fi
