@@ -16,7 +16,7 @@ delay = 60*5 #In seconds
 #               content    -   String  containing preformatted data
 #--------------
 def generate_html(content):
-	htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='disk usage'><title>DiskUsage Data</title><body>"
+	htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='disk usage'><title>DiskUsage Data</title></head><body>"
 	htmlstring +=  content
 	htmlstring +=  "</body></html>"
 	return htmlstring
