@@ -177,7 +177,7 @@ case "$1" in
        fi
 
        #Do shoutbox stuff
-       $PIRATEBOX/bin/shoutbox_stuff.sh $WWW_FOLDER $CONF
+       $PIRATEBOX/bin/shoutbox_stuff.sh 
 
 
        #Start here the lighttpd i.e.
