@@ -7,6 +7,7 @@ PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
 PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
+MOTD=$(PB_FOLDER)/$(PB_FOLDER)/rpi/motd.txt
 
 IMAGE_FILE=piratebox_ws_1.2_img.gz
 TGZ_IMAGE_FILE=piratebox_ws_1.2_img.tar.gz
@@ -32,16 +33,19 @@ $(IRC_TARGET_SERVER):
 	git clone $(IRC_GITHUB_ULR) $(IRC_WORK_FOLDER)
 	cp $(IRC_SRC_SERVER) $(IRC_TARGET_SERVER)
 
+$(MOTD):
+	sed -e 's|##version##|$(VERSION)|' rpi.motd-template.txt > $@
+
 $(VERSION):
 	echo "$(PACKAGE_NAME)" >  $(VERSION_FILE)
 	echo `git status -sb --porcelain` >> $(VERSION_FILE)
 	echo ` git log -1 --oneline` >>  $(VERSION_FILE)
 
-$(PACKAGE): $(IRC_TARGET_SERVER) $(VERSION)
+$(PACKAGE): $(IRC_TARGET_SERVER) $(VERSION) $(MOTD)
 	tar czf $@ $(PB_FOLDER)
 
 
-$(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER)
+$(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER) $(MOTD)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
 	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
@@ -94,7 +98,7 @@ clean: cleanimage
 	rm -fr $(IRC_WORK_FOLDER)
 	rm -f $(IRC_TARGET_SERVER)
 	rm -f $(PACKAGE)
-	rm -f $(VERSION_FILE)
+	rm -f $(VERSION_FILE) $(MOTD)
 
 cleanimage:
 	- rm -f  $(TGZ_IMAGE_FILE)
