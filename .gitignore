@@ -9,3 +9,4 @@ tmp/*
 piratebox/piratebox/bin/miniircd.py
 piratebox/piratebox/www/Shared
 piratebox/piratebox/www/cgi-bin/data.pso
+piratebox/piratebox/rpi/motd.txt

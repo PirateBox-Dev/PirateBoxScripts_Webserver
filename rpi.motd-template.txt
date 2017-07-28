@@ -5,8 +5,8 @@ ____________________.__               __        __________
  |____|_  /|____|   |__||__|  (____  /__|  \___  >______  /\____/__/\_ \
         \/                         \/          \/       \/            \/
 
-Website: http://piratebox.cc                  PirateBox Version:   1.1.3
-Forum:   http://forum.piratebox.cc            RPi Image Version: 1.1.3-1
+Website: http://piratebox.cc                  PirateBox Version: ##version##
+Forum:   http://forum.piratebox.cc            Build date: 00-00-0000
 IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
 
 First Steps After Flashing
