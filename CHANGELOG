@@ -22,13 +22,18 @@ CHANGELOG
 * [Changed] [OpenWrt] Better way to disable ::1 IPv6
 * [Changed] [OpenWrt] Split up of avahi and avahi-tools
 * [Changed] [OpenWrt] Align IPv6 setup with LEDE
+* [Changed] [RPi] MotD generation reworked and more dynamically
 * [Changed] lighttpd.conf cleanup and separation to help customizations
 * [Changed] install_piratebox.sh does not need piratebox.conf path anymore
 * [Changed] Reworked timesave feature.
 * [Changed] Whitespace issues
 * [Changed] Disabled radvd for OpenWrt build
 * [Changed] Cleaned up scripts based on shellcheker results
+* [Changed] Removed piratebox description at the landing page. -> now welcome.html
+* [Changed] More verbose browse button
 * [Removed] Obsolete install.sh and readme.txt
+* [Removed] Obsolete style.css for shoutbox
+* [Removed] Obsolete timesave format in piratebox.conf
 * [Removed] [OpenWrt] piratebox: remove unsupported www_alt feature
 
 === 1.1.4 ===
