@@ -40,7 +40,7 @@ else
 fi
 
 # Force update diskwirte 
-touch -t 197001010101 /opt/piratebox/www/diskusage.html  
+touch -t 201701010101 /opt/piratebox/www/diskusage.html  
 wget http://127.0.0.1/cgi-bin/diskwrite.py -q -O -
 
 exit 0
