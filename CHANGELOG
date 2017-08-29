@@ -4,6 +4,7 @@ CHANGELOG
 * [New] Trigger captive portal features on clients to display a welcome message
 * [New] Konami code feature
 * [New] lighttpd.conf , Redirect only for non piratebox.lan domain
+* [New] [i8n] Russian translation
 * [New] [OpenWrt] Update to LEDE 17.01.2 for embedded devices
 * [New] [OpenWrt] Mult arch build to support devices other then ar71xx
 * [New] [OpenWrt] box-installer: Honor new way for repository cache
