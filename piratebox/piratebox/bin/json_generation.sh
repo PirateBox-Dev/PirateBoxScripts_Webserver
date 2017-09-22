@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #  Matthias Strubel (c) 2013  - GPL3
 # Generate a JSON file, which relfects some part of the current configuration
