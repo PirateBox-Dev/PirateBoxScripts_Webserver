@@ -10,6 +10,7 @@ CHANGELOG
 * [New] [OpenWrt] box-installer: Honor new way for repository cache
 * [New] [OpenWrt] pbxopkg : Deploy our public repository key
 * [New] [OpenWrt] php support, switch everything to PHP7
+* [New] [OpenWrt] sftp-server is now available via extendRoot (also on small devices)
 * [Fix] [OpenWrt] extendRoot: Bugfix , ALWAYS create swap space
 * [Fix] [OpenWrt] extendRoot: Patch broken handling of PKG_ROOT in /lib/functions.sh
 * [Fix] [OpenWrt] package dependencies: Fix dependency recursive issues
@@ -24,6 +25,7 @@ CHANGELOG
 * [Changed] [OpenWrt] Split up of avahi and avahi-tools
 * [Changed] [OpenWrt] Align IPv6 setup with LEDE
 * [Changed] [RPi] MotD generation reworked and more dynamically
+* [Changed] [RPi] Run timesave-save function during shutdown
 * [Changed] lighttpd.conf cleanup and separation to help customizations
 * [Changed] install_piratebox.sh does not need piratebox.conf path anymore
 * [Changed] Reworked timesave feature.
