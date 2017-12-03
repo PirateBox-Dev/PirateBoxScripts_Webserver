@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # PyShoutOut by Joey C. (http://www.joeyjwc.x3fusion.com)
 # Writes the recieved information to the data file.

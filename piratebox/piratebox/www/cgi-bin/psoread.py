@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # PyShoutOut by Joey C. (http://www.joeyjwc.x3fusion.com)
 # Read the data from a shout-out file.

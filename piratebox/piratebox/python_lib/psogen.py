@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # Modificated ShoutBox Library    (C)2013-2014
 #   enables further modifications for the ShoutBox

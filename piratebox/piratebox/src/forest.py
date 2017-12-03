@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 """
 Script: Forest, a simple Python forum script.
 Author: Andrew Nelis (andrew.nelis@gmail.com)

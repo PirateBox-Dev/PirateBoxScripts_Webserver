@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # Disk Write
 # Writes the total freespace to an HTML file.
