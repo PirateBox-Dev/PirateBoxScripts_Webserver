@@ -91,7 +91,7 @@ case "$1" in
     $PIRATEBOX/bin/hooks/hook_piratebox_start.sh  "$CONF"
 
     echo "Empty tmp folder"
-    find   $PIRATEBOX/tmp/  -exec rm {} \;
+    find   $PIRATEBOX/tmp/ -mindepth 1  -exec rm {} \;
 
     # Captive Portal Housekeeping file in /tmp (ram)
     "$PIRATEBOX/bin/captive_notify_lease.sh" refresh

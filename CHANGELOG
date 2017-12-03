@@ -15,6 +15,7 @@ CHANGELOG
 * [Fix] [OpenWrt] extendRoot: Patch broken handling of PKG_ROOT in /lib/functions.sh
 * [Fix] [OpenWrt] package dependencies: Fix dependency recursive issues
 * [Fix] [RPi] Enable cronie for startup, which was missing
+* [Fix] Removed unecessary error messages from cleaning up tmp folder
 * [Changed] [OpenWrt] box-installer: grab new tmp logfile , var/log/messages was removed
 * [Changed] [OpenWrt] box-installer: run opkg without signature file, like imagebuilder does
 * [Changed] [OpenWrt] box-installer: Add a better trigger for extendRoot (delayed)
