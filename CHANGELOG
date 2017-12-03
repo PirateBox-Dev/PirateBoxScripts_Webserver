@@ -11,6 +11,7 @@ CHANGELOG
 * [New] [OpenWrt] pbxopkg : Deploy our public repository key
 * [New] [OpenWrt] php support, switch everything to PHP7
 * [New] [OpenWrt] sftp-server is now available via extendRoot (also on small devices)
+* [New] [RPi] Add all needed things to create a simple on/off button
 * [Fix] [OpenWrt] extendRoot: Bugfix , ALWAYS create swap space
 * [Fix] [OpenWrt] extendRoot: Patch broken handling of PKG_ROOT in /lib/functions.sh
 * [Fix] [OpenWrt] package dependencies: Fix dependency recursive issues

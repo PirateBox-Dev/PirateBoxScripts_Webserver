@@ -1,0 +1,12 @@
+[Unit]
+Description=Button Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/opt/piratebox/rpi/bin/button_onoff.sh
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
+Alias=button.service
