@@ -38,7 +38,8 @@ CHANGELOG
 * [Changed] Cleaned up scripts based on shellcheker results
 * [Changed] Removed piratebox description at the landing page. -> now welcome.html
 * [Changed] More verbose browse button
-* [Changed] Python2 linking not required anymore, using direct path
+* [Changed] Python2 linking not required anymore, using direct path.
+* [Changed] AP isolation is disabled per default now.
 * [Removed] Obsolete install.sh and readme.txt
 * [Removed] Obsolete style.css for shoutbox
 * [Removed] Obsolete timesave format in piratebox.conf
