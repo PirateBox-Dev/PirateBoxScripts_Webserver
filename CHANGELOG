@@ -49,6 +49,7 @@ CHANGELOG
 * [New] Removed legacy redirect.html, use /index.html only
 * [New] install_piratebox.sh, avoid distribution of index files, if turned off.
 * [New] mime.types: Adding gpx mime-type
+* [New] Language files for Spanish and Basque
 * [Fix] diskusage: Fix wrong error message
 * [Fix] lang-de ; fix grammar
 * [Fix] [RPi] Fix wrong path in wifi client helper script
