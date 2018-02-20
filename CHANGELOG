@@ -9,6 +9,7 @@ CHANGELOG
 * [New] [RPi] Add all needed things to create a simple on/off button
 * [Changed] [RPi] MotD generation reworked and more dynamically
 * [Changed] [RPi] Run timesave-save function during shutdown
+* [Changed] [RPi] Work with en_US.UTF-8 per default
 * [Fix] diskusage: Fix wrong error message
 * [Fix] lang-de ; fix grammar
 * [Fix] [RPi] Fix wrong path in wifi client helper script
