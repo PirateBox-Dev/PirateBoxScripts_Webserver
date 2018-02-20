@@ -192,13 +192,13 @@ case "$1" in
        #Start IRC Server
        if [ "$ENABLE_IRC_SERVER" = "yes" ] ; then
            . $CONF_IRC
-           IRC_PARMS="--daemon --motd $IRC_MOTD "
+           IRC_PARMS="--setuid $IRC_USER --daemon --motd $IRC_MOTD "
 
            if [ ! -z "$IRC_STATEDIR" ] ; then
                 IRC_PARMS=" $IRCPARMS --statedir $IRC_STATEDIR "
            fi
            echo  "Starting Miniircd..."
-           start-stop-daemon $IRC_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+           start-stop-daemon -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
            echo $?
         fi
      fi
