@@ -24,14 +24,15 @@ First Steps After Flashing
  3.2 Enable on startup
   > sudo systemctl enable timesave
 4. Enable the Kareha Image and Discussion Board
- > sudo /opt/piratebox/bin/board-autoconf.sh
+ > board-autoconf.sh
 5. Enable USB thumb drive share OR extend SDCard
  USB: > sudo /opt/piratebox/rpi/bin/usb_share.sh
  SDCard: > sudo /opt/piratebox/rpi/bin/sdcard_share.sh
 6. Enable UPnP Media Server
- > sudo cp /etc/minidlna.conf /etc/minidlna.conf.bkp
- > sudo cp /opt/piratebox/src/linux.example.minidlna.conf /etc/minidlna.conf
- > sudo systemctl start minidlna
- > sudo systemctl enable minidlna
+ 6.1 (Optional) Adjust minidlna configuration, if needed (Name of the box)
+   > sudo nano /etc/minidlna.conf
+ 6.2 Enable minidlna for startup
+   > sudo systemctl start minidlna
+   > sudo systemctl enable minidlna
 7. Enable RealTimeClock timekeeping (needs DS3231 or 1307 RTC module!)
  > sudo systemctl enable rpi_hwclock
