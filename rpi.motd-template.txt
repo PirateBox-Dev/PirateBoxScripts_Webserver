@@ -10,7 +10,7 @@ Forum:   http://forum.piratebox.cc            Build date: 00-00-0000
 IRC:     #piratebox irc.freenode.net          Be open  --  Share freely!
 
 First Steps After Flashing
-1. Change password of alarm user
+1. **done during login**: Change password of pbxuser user
  > passwd
 2. Change password of root user
  > sudo passwd root
