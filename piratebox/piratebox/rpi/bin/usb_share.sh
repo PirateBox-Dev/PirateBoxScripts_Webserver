@@ -27,7 +27,7 @@ fi
 
 echo "## Adding USB share..."
 mkdir -p "${MOUNTPOINT}" > /dev/null
-echo "${UUID} ${MOUNTPOINT} vfat umask=0,noatime,rw,user,uid=nobody,gid=nogroup 0 0" >> /etc/fstab
+echo "${UUID} ${MOUNTPOINT} vfat umask=0,noatime,rw,user,uid=pbxuser,gid=pbxuser 0 0" >> /etc/fstab
 mount "${MOUNTPOINT}" > /dev/null
 
 if [ $? == 0 ]; then
