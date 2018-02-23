@@ -149,6 +149,11 @@ case "$1" in
        echo $?
 
         if [ "$IPV6_ENABLE" = "yes" ] && [ "$IPV6_ADVERT" = "radvd" ] ; then
+          # Ugly hack on PirateBox 1.1.x only
+          if test -e "/usr/local/usr/sbin/radvd" && test ! -e "/usr/bin/radvd" ; then
+              echo "Deploy ugly hack for radvd on PirateBox 1.1"
+              ln -sf /usr/local/usr/sbin/radvd /usr/bin/radvd
+          fi
           echo  "Starting radvd..."
           start-stop-daemon  -S -q -x /usr/bin/radvd  --  -p $PIDFILE_RADVD -C $CONF_RADVD
           echo $?
