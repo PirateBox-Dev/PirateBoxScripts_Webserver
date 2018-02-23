@@ -17,7 +17,9 @@ CHANGELOG
 * [Fix] [RPi] Enable cronie for startup, which was missing
 * [Fix] [RPi] Fixed resolv.conf. A default entry is now available
 * [Fix] initd: minircd startup fix setuid
+* [Fix] initd: minircd fixing start-stop issues
 * [Fix] initd: Fix radvd path to an absolute path
+* [Fix] initd: Ugly hack for absolute path of radvd on OpenWrt
 * [Fix] WWW-Content, fix a syntax error which broke jQuery
 * [Fix] Refresh kareha download URL, which changed in year 2015
 * [Fix] diskusage: Adding missing </head> tag
