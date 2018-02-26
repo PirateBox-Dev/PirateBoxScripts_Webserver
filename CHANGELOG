@@ -16,6 +16,8 @@ CHANGELOG
 * [Fix] [RPi] Fix issue with diskusage generation & usb share
 * [Fix] [RPi] Enable cronie for startup, which was missing
 * [Fix] [RPi] Fixed resolv.conf. A default entry is now available
+* [Fix] [RPi] Fixed detection of 8188eu
+* [Fix] [RPi] Store the installed hostap package in /prebuild/hostapd 
 * [Fix] initd: minircd startup fix setuid
 * [Fix] initd: minircd fixing start-stop issues
 * [Fix] initd: Fix radvd path to an absolute path
