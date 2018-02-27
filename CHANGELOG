@@ -4,19 +4,15 @@ CHANGELOG
 * [New] Trigger captive portal features on clients to display a welcome message
 * [New] Konami code feature
 * [New] lighttpd.conf , Redirect only for non piratebox.lan domain
-* [New] [i8n] Russian translation
 * [New] [OpenWrt] Update to LEDE 17.01.2 for embedded devices
 * [New] [OpenWrt] Mult arch build to support devices other then ar71xx
 * [New] [OpenWrt] box-installer: Honor new way for repository cache
 * [New] [OpenWrt] pbxopkg : Deploy our public repository key
 * [New] [OpenWrt] php support, switch everything to PHP7
 * [New] [OpenWrt] sftp-server is now available via extendRoot (also on small devices)
-* [New] [RPi] Add all needed things to create a simple on/off button
 * [Fix] [OpenWrt] extendRoot: Bugfix , ALWAYS create swap space
 * [Fix] [OpenWrt] extendRoot: Patch broken handling of PKG_ROOT in /lib/functions.sh
 * [Fix] [OpenWrt] package dependencies: Fix dependency recursive issues
-* [Fix] [RPi] Enable cronie for startup, which was missing
-* [Fix] [RPi] Fixed resolv.conf. A default entry is now available
 * [Fix] Removed unecessary error messages from cleaning up tmp folder
 * [Changed] [OpenWrt] box-installer: grab new tmp logfile , var/log/messages was removed
 * [Changed] [OpenWrt] box-installer: run opkg without signature file, like imagebuilder does
@@ -28,8 +24,6 @@ CHANGELOG
 * [Changed] [OpenWrt] Better way to disable ::1 IPv6
 * [Changed] [OpenWrt] Split up of avahi and avahi-tools
 * [Changed] [OpenWrt] Align IPv6 setup with LEDE
-* [Changed] [RPi] MotD generation reworked and more dynamically
-* [Changed] [RPi] Run timesave-save function during shutdown
 * [Changed] [RPi] Remove python link creating
 * [Changed] [RPi] Separate User for all tasks and interactive access
 * [Changed] [RPi] Easer access to Shared files and RW access to www-content
@@ -55,16 +49,29 @@ CHANGELOG
 * [New] Removed legacy redirect.html, use /index.html only
 * [New] install_piratebox.sh, avoid distribution of index files, if turned off.
 * [New] mime.types: Adding gpx mime-type
-* [New] Language files for Spanish and Basque
+* [New] [i8n] Spanish and Basque
+* [New] [i8n] Russian translation
+* [New] [RPi] Add all needed things to create a simple on/off button
+* [Changed] [RPi] MotD generation reworked and more dynamically
+* [Changed] [RPi] Run timesave-save function during shutdown
+* [Changed] [RPi] Work with en_US.UTF-8 per default
 * [Fix] diskusage: Fix wrong error message
 * [Fix] lang-de ; fix grammar
 * [Fix] [RPi] Fix wrong path in wifi client helper script
 * [Fix] [RPi] Fix issue with diskusage generation & usb share
+* [Fix] [RPi] Enable cronie for startup, which was missing
+* [Fix] [RPi] Fixed resolv.conf. A default entry is now available
+* [Fix] [RPi] Fixed detection of 8188eu
+* [Fix] [RPi] Store the installed hostap package in /prebuild/hostapd
 * [Fix] initd: minircd startup fix setuid
+* [Fix] initd: minircd fixing start-stop issues
 * [Fix] initd: Fix radvd path to an absolute path
+* [Fix] initd: Ugly hack for absolute path of radvd on OpenWrt
 * [Fix] WWW-Content, fix a syntax error which broke jQuery
 * [Fix] Refresh kareha download URL, which changed in year 2015
 * [Fix] diskusage: Adding missing </head> tag
+* [Fix] timesave: Shellcheck issues fixed
+* [Fix] timesave: Problems with date & time format at RPi fixed
 
 === 1.1.3 ===
 * [New] Translation bt-pr
