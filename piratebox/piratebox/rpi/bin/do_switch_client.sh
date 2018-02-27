@@ -11,4 +11,4 @@ else
     systemctl start piratebox
     exit 1
 fi
-exit 1 
+exit 1

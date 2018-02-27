@@ -39,8 +39,8 @@ else
   cat "/etc/fstab"
 fi
 
-# Force update diskwirte 
-touch -t 201701010101 /opt/piratebox/www/diskusage.html  
+# Force update diskwirte
+touch -t 201701010101 /opt/piratebox/www/diskusage.html
 wget http://127.0.0.1/cgi-bin/diskwrite.py -q -O -
 
 exit 0

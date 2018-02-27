@@ -51,7 +51,7 @@ else
     exit 1
 fi
 
-mkswap /dev/mmcblk0p3 
+mkswap /dev/mmcblk0p3
 if [ $? -ne 0 ] ; then
     echo "Error formating swap"
     exit 1
@@ -65,10 +65,10 @@ if grep -q "${SWAP_UUID}" /etc/fstab ; then
 fi
 
 echo "Adding swap to fstab"
-echo "${SWAP_UUID} none swap defaults 0 0" >> /etc/fstab 
+echo "${SWAP_UUID} none swap defaults 0 0" >> /etc/fstab
 
 echo "Creating data partition"
-mkfs.ext4 -F "$SDCARD"p4 
+mkfs.ext4 -F "$SDCARD"p4
 if [ $? -ne 0 ] ; then
     echo "Error formating data"
     exit 1
