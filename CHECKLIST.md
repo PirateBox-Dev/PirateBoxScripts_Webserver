@@ -16,9 +16,9 @@ Make sure you PirateBox stopped flashing (indicating the installation is running
 ### Initial configuration setup
 * [ ] PirateBox' WiFi is available
 * [ ] Connection to PirateBox' WiFi could be established
-* [ ] **RPi only**  SSH connection to PirateBox with the username *alarm* and the password *alarm* could be established
+* [ ] **RPi only**  SSH connection to PirateBox with the username *pbxuser* and the password *pbxuser* could be established
+* [ ] **RPi only** Change the password for the *pbxuser* user, log out and log back in
 * [ ] **RPi only**  Message of the day containing information about *First Steps* is displayed correctly
-* [ ] **RPi only** Change the password for the *alarm* user, log out and log back in
 * [ ] **RPi only** Enable USB share
 * [ ] Set some date and enable Fake-timeservice
 * [ ] Enable Kareha Image and Discussion Board
