@@ -35,6 +35,7 @@ CHANGELOG
 * [Changed] [RPi] Easer access to Shared files and RW access to www-content
 * [Changed] [RPi] Removed a few manual configuration steps
 * [Changed] [RPi] Image now has the hostname "piratebox"
+* [Changed] [RPi] usb_share.sh uses piratebox.conf for configuration
 * [Changed] lighttpd.conf cleanup and separation to help customizations
 * [Changed] install_piratebox.sh does not need piratebox.conf path anymore
 * [Changed] Reworked timesave feature.
@@ -86,11 +87,11 @@ CHANGELOG
 * [Fix] Translation en,fr LibraryBox -> PirateBox
 * [Fix] Spellings in translation
 * [Fix] IRC startup command failed.
-* [Removed] exchange_www.sh 
+* [Removed] exchange_www.sh
 
 === 1.1.0 ===
 * [New] Enable / Disable file provisioning for custom lighttpd directory listing
-* [New] ChatBox message is now in conf/chat_init.txt 
+* [New] ChatBox message is now in conf/chat_init.txt
 * [New] Disable the Shoutbox to prevent writing into it
 * [New] PHP configuration shipped, to enable easily for modifications
 * [New] Mesh implementation, technical preview
@@ -106,7 +107,7 @@ CHANGELOG
 * [New] [OpenWrt] Enable all wifi devices with the PirateBox SSID
 * [New] [OpenWrt] AP Client isolation activated per default
 * [Changed] Send HTTP-Code 204 via PHP, much cleaner
-* [Changed] Update jQuery to 2.2.3, removes IE <=8 support 
+* [Changed] Update jQuery to 2.2.3, removes IE <=8 support
 * [Changed] Redirect happens now always to wished domain name
 * [Changed] Droopy, make chmod operation optional (prevent errors on OpenWRT)
 * [Fix] License Adjustments
@@ -140,15 +141,15 @@ CHANGELOG
 * [New] Improved styling for droopy iframe.
 * [New] Timesave script service file to run set the time during startup.
 * [Fix] Droopy call in init.d/piratebox failed to use the correct port.
-* [Fix] Timesave script behaviour fixed on full Linux systems. 
+* [Fix] Timesave script behaviour fixed on full Linux systems.
 *       OpenWrt's date format is now customized during build & piratebox.conf .
 
-=== 1.0.4 === 
+=== 1.0.4 ===
 * [New] New feature: /opt/piratebox/bin/board-autoconf.sh for setting up the imageboard
 * [New] Droopy update: Multiple upload
 * [New] Droopy update: In general user/password setting (non configurable via
                        PirateBox)
-* [New] imageboard: inital dummy page for a not installed board. 
+* [New] imageboard: inital dummy page for a not installed board.
 * [New] Send HTTP-Code 204 for Android devices, avoids captive Portal and leaving devices.
 
 * [Fix] Some script cleanups
@@ -185,11 +186,11 @@ CHANGELOG
 * [New] Service File for RPi image
 * [Fix] Several typos in scripts
 * [Fix] Typo in front page and directory listing
-* [Fix] in timsave.sh while restoring date&time 
-* [Fix] [OpenWRT] Timesave create bootup restore 
-* [Fix] [OpenWRT] Fix for not working "already installed" recognition to skip parts 
+* [Fix] in timsave.sh while restoring date&time
+* [Fix] [OpenWRT] Timesave create bootup restore
+* [Fix] [OpenWRT] Fix for not working "already installed" recognition to skip parts
 * [Fix] [OpenWRT] Fix for errors during installing piratebox-mod-imageboard because of duplicate links
-* [Fix] [OpenWRT] Fix for LED flashing during auto install (box-installer on image) 
+* [Fix] [OpenWRT] Fix for LED flashing during auto install (box-installer on image)
 * [Fix] [OpenWRT] Fix error messages on package reinstall. (extendRoot)
 * [Fix] No dublicates symlink after double "part2" via install_piratebox.sh
 * [New] Remove # in front of secret & password to force user to change it before using the board
@@ -219,9 +220,9 @@ NOTE: This may only be a partial changelog, check github / your package manager 
 	* [Removed] [Testing] Executable, we will stick to service based
 * [Fixed] Overwritten saved timestamp with 1970 one
 * [New] possibility in install_piratebox.sh to exchange the hostname easily
-* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)  
+* [New] Moved DHCP leasefile into memory on OpenWRT system (/tmp is memory)
 * [Fix] Timesave script does not contain parts for OpenWRT anymore
-* [Fix] Timesave-file location is now configured in piratebox.conf 
+* [Fix] Timesave-file location is now configured in piratebox.conf
 * [Fix] Fix in Changing hostname functionality
 * [New] Hostname changing generates the redirect.html now based on a Schema file
 * [New] Added JSON Mime-Type
