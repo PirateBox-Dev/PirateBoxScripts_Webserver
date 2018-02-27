@@ -54,7 +54,7 @@ fi
 DRIVER_NAME=$( ls -1 /sys/class/net/"${WIFI_DEVICE}"/device/driver/module/drivers/ )
 
 # Check for r8188eu enabled device
-if echo "$DRIVER_NAME"  | grep -q  "r8188eu:"; then
+if echo "$DRIVER_NAME"  | grep -q  "r8188eu"; then
   echo "Found r8188eu enabled device..."
   pacman --noconfirm  -U --needed "${PACKAGE_PATH}/hostapd-8188eu-"* > /dev/null
   sed -i 's/^driver=nl80211/#driver=nl80211/' "${CONFIG_PATH}"

@@ -11,7 +11,6 @@
 #  Licenced under GPL-3  @ 2012,2017
 #    Matthias Strubel    matthias.strubel@aod-rgp.de
 
-
 # Print usage if parameters are not provided
 if [ -z "$1" ] || [ -z "$2" ] ; then
   echo "Set up a crontab entry for regulary saving the time"
