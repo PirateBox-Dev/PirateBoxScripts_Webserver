@@ -16,7 +16,7 @@ delay = 60*5 #In seconds
 #               content    -   String  containing preformatted data
 #--------------
 def generate_html(content):
-	htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='disk usage'><title>DiskUsage Data</title><body>"
+	htmlstring =   "<html><head><meta http-equiv='cache-control' content='no-cache'><meta name='GENERATOR' content='disk usage'><title>DiskUsage Data</title></head><body>"
 	htmlstring +=  content
 	htmlstring +=  "</body></html>"
 	return htmlstring
@@ -56,7 +56,7 @@ def get_usage(drive):
 	
 	#Add delay.
 	if age < max_delay:
-		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(drive, age.seconds/60, max_delay.seconds/60)
+		print "CRITICAL: {} modified {} minutes ago. Threshold set to {} minutes. Cannot update.".format(htmlfilename, age.seconds/60, max_delay.seconds/60)
 	else:
 		print "OK. File last modified {} minutes ago. Updating now...".format(age.seconds/60)
 		content = prepare_line(drive)

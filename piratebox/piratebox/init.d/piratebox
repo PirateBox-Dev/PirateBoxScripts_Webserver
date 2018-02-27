@@ -157,7 +157,7 @@ case "$1" in
 
 	if [ "$IPV6_ENABLE" = "yes" ] && [ "$IPV6_ADVERT" = "radvd" ] ; then
 	  log_daemon_msg "Starting radvd..."
-	  start-stop-daemon --start --quiet --exec radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
+	  start-stop-daemon --start --quiet --exec /usr/bin/radvd  -- -p $PIDFILE_RADVD -C $CONF_RADVD
 	  log_end_msg $?
  	fi
 
@@ -200,14 +200,14 @@ case "$1" in
           
 	  . $CONF_IRC
 
-	  IRC_PARMS="--setuid $IRC_USER --daemon --motd '$IRC_MOTD' "
+	  IRC_PARMS="--setuid $IRC_USER  --daemon --motd $IRC_MOTD --pid-file $PIDFILE_IRC "
 
 	  if [ ! -z "$IRC_STATEDIR" ] ; then
-	     IRC_PARMS=" $IRCPARMS --statedir  '$IRC_STATEDIR' "
+	     IRC_PARMS=" $IRCPARMS --statedir $IRC_STATEDIR "
 	  fi
 
           log_daemon_msg "Starting Miniircd..."
-	  start-stop-daemon $DROOPY_USER -m -S -p $PIDFILE_IRC -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
+	  start-stop-daemon -S -x $PIRATEBOX/bin/miniircd.py -- $IRC_PARMS
 	  log_end_msg $?
        fi
      fi
@@ -223,7 +223,7 @@ case "$1" in
 
     if [ "$ENABLE_IRC_SERVER" = "yes" ] ; then
 	log_daemon_msg "Stopping IRC..."
-	start-stop-daemon -K -q -p $PIDFILE_IRC 
+	start-stop-daemon -s 9 -K -q -p $PIDFILE_IRC 
 	log_end_msg $?
     fi 
 

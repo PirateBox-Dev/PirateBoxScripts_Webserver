@@ -66,7 +66,9 @@ if [ $2 = 'part2' ] ; then
    mkdir -p $PIRATEBOX_FOLDER/tmp
 
    #Distribute the Directory Listing files
-   $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   if [ "$CUSTOM_DIRLIST_COPY" = "yes" ] ; then
+       $PIRATEBOX_FOLDER/bin/distribute_files.sh $SHARE_FOLDER/Shared true
+   fi
    #Set permissions
    chown $LIGHTTPD_USER:$LIGHTTPD_GROUP  $PIRATEBOX_FOLDER/share -R
    chmod  u+rw $PIRATEBOX_FOLDER/share
@@ -101,7 +103,7 @@ if [ $2 = 'imageboard' ] ; then
     KAREHA_RELEASE=kareha_3.1.4.zip
     if [ ! -e $PIRATEBOX_FOLDER/tmp/$KAREHA_RELEASE ] ; then
 	echo "  Wgetting kareha-zip file "
-    	wget http://wakaba.c3.cx/releases/$KAREHA_RELEASE
+    	wget http://wakaba.c3.cx/releases/Kareha/$KAREHA_RELEASE
 	if [ "$?" != "0" ] ; then
        		echo "wget kareha failed.. you can place the current file your to  $PIRATEBOX_FOLDER/tmp "
 	 fi
@@ -161,7 +163,7 @@ fi
 set_hostname() {
 	local name=$1 ; shift;
 
-	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/redirect.html
+	sed  "s|#####HOST#####|$name|g"  $PIRATEBOX_FOLDER/src/redirect.html.schema >  $WWW_FOLDER/index.html
         sed "s|HOST=\"$HOST\"|HOST=\"$name\"|" -i  $PIRATEBOX_CONFIG
 }
 

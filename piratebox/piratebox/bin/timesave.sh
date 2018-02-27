@@ -19,11 +19,11 @@ get_datetime() {
 
 # Strip spaces from datetime
 sanitize_datetime() {
-  echo $1 | sed s/" "/""/g
+  echo "$1" | sed s/" "/""/g
 }
 
 # Print usage if parameters are not provided
-if [ -z $1 ] || [ -z $2 ] ; then
+if [ -z "$1" ] || [ -z "$2" ] ; then
   echo "Set up a crontab entry for regulary saving the time"
   echo "Usage $0 <path to piratebox.conf> <step>"
   echo "    Valid steps are:"
@@ -35,7 +35,7 @@ if [ -z $1 ] || [ -z $2 ] ; then
 fi
 
 # Load configfile
-. $1
+. "$1"
 
 if [ "$2" = "install" ] ; then
   crontab -l > $PIRATEBOX_FOLDER/tmp/crontab 2> /dev/null
@@ -44,9 +44,9 @@ if [ "$2" = "install" ] ; then
   crontab $PIRATEBOX_FOLDER/tmp/crontab
 
   echo "initialize timesave file"
-  touch $TIMESAVE
-  chmod a+rw $TIMESAVE
-  get_datetime > $TIMESAVE
+  touch "$TIMESAVE"
+  chmod a+rw "$TIMESAVE"
+  get_datetime > "$TIMESAVE"
 
   echo "Remember MAY have to cron active..."
   echo "  on OpenWrt run: /etc/init.d/piratebox enable"
@@ -56,14 +56,14 @@ fi
 
 # Save current date-time in a recoverable format
 if [ "$2" = "save" ] ; then
-  if [ -e $TIMESAVE ] ; then
+  if [ -e "$TIMESAVE" ] ; then
     if [ $(sanitize_datetime "$(get_datetime)") -lt $(sanitize_datetime "$(cat $TIMESAVE)") ] ; then
       logger -s "$0: Current date-time is lower then saved one. Not saving!"
       exit 1
     fi
   fi
 
-  get_datetime > $TIMESAVE
+  get_datetime > "$TIMESAVE"
   exit 0
 fi
 

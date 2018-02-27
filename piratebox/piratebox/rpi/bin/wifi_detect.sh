@@ -3,8 +3,8 @@
 # Install the proper hostapd package and adjust the hostapd configuration
 # accordingly.
 
-## Default 
-WIFI_DEVICE="wlan0"  
+## Default
+WIFI_DEVICE="wlan0"
 
 WIFI_CONFIG_PATH="/boot/wifi_card.conf"
 
@@ -29,7 +29,7 @@ sed -i -e "s|interface=$hostap_interface|interface=$WIFI_DEVICE|" "${CONFIG_PATH
 #Only change piratebox interface if it is a wifi interface
 if echo "$piratebox_interface" | grep -q "wlan" ; then
     sed -i -e "s|INTERFACE=\"$piratebox_interface\"|INTERFACE=\"$WIFI_DEVICE\"|" \
-         "${PIRATEBOX_CONFIG_PATH}" 
+         "${PIRATEBOX_CONFIG_PATH}"
 fi
 if echo "$dnsmasq_interface" | grep -q "wlan" ; then
     sed -i -e "s|DNSMASQ_INTERFACE=\"$dnsmasq_interface\"|DNSMASQ_INTERFACE=\"$WIFI_DEVICE\"|" \
@@ -54,7 +54,7 @@ fi
 DRIVER_NAME=$( ls -1 /sys/class/net/"${WIFI_DEVICE}"/device/driver/module/drivers/ )
 
 # Check for r8188eu enabled device
-if echo "$DRIVER_NAME"  | grep -q  "r8188eu:"; then
+if echo "$DRIVER_NAME"  | grep -q  "r8188eu"; then
   echo "Found r8188eu enabled device..."
   pacman --noconfirm  -U --needed "${PACKAGE_PATH}/hostapd-8188eu-"* > /dev/null
   sed -i 's/^driver=nl80211/#driver=nl80211/' "${CONFIG_PATH}"

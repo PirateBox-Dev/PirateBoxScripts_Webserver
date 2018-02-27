@@ -1,5 +1,5 @@
 NAME = piratebox-ws
-VERSION = 1.1.3
+VERSION = 1.1.4
 ARCH = all
 PB_FOLDER=piratebox
 PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
@@ -7,6 +7,7 @@ PB_SRC_FOLDER=$(PB_FOLDER)/$(PB_FOLDER)
 PACKAGE_NAME=$(NAME)_$(VERSION)
 PACKAGE=$(PACKAGE_NAME).tar.gz
 VERSION_FILE=$(PB_FOLDER)/$(PB_FOLDER)/version
+MOTD=$(PB_FOLDER)/$(PB_FOLDER)/rpi/motd.txt
 
 IMAGE_FILE=piratebox_ws_1.1_img.gz
 TGZ_IMAGE_FILE=piratebox_ws_1.1_img.tar.gz
@@ -32,16 +33,18 @@ $(IRC_TARGET_SERVER):
 	git clone $(IRC_GITHUB_ULR) $(IRC_WORK_FOLDER)
 	cp $(IRC_SRC_SERVER) $(IRC_TARGET_SERVER)
 
-$(VERSION):	
+$(MOTD):
+	sed -e 's|##version##|$(VERSION)|' rpi.motd-template.txt > $@
+
+$(VERSION):
 	echo "$(PACKAGE_NAME)" >  $(VERSION_FILE)
 	echo `git status -sb --porcelain` >> $(VERSION_FILE)
 	echo ` git log -1 --oneline` >>  $(VERSION_FILE)
 
-$(PACKAGE): $(IRC_TARGET_SERVER) $(VERSION)
-	tar czf $@ $(PB_FOLDER) 
+$(PACKAGE): $(IRC_TARGET_SERVER) $(VERSION) $(MOTD)
+	tar czf $@ $(PB_FOLDER)
 
-
-$(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER)
+$(IMAGE_FILE): $(IRC_TARGET_SERVER) $(VERSION) $(SRC_IMAGE_UNPACKED) $(OPENWRT_CONFIG_FOLDER) $(OPENWRT_BIN_FOLDER) $(MOTD)
 	mkdir -p  $(MOUNT_POINT)
 	echo "#### Mounting image-file"
 	sudo  mount -o loop,rw,sync $(SRC_IMAGE_UNPACKED) $(MOUNT_POINT)
@@ -66,7 +69,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
 	sed 's:DROOPY_CHMOD:#DROOPY_CHMOD:' -i $@/piratebox.conf
 	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
-	sed 's:TIMESAVE_FORMAT="":TIMESAVE_FORMAT="+%C%g%m%d%H%M":' -i $@/piratebox.conf
+	sed 's:TIMESAVE_FORMAT="+%C%g%m%d %H%M":TIMESAVE_FORMAT="+%C%g%m%d%H%M":' -i $@/piratebox.conf
 	sed 's:FIREWALL_FETCH_DNS="yes":FIREWALL_FETCH_DNS="no":' -i $@/firewall.conf
 	sed 's:FIREWALL_FETCH_HTTP="yes":FIREWALL_FETCH_HTTP="no":' -i $@/firewall.conf
 
@@ -93,7 +96,7 @@ clean: cleanimage
 	rm -fr $(IRC_WORK_FOLDER)
 	rm -f $(IRC_TARGET_SERVER)
 	rm -f $(PACKAGE)
-	rm -f $(VERSION_FILE)
+	rm -f $(VERSION_FILE) $(MOTD)
 
 cleanimage:
 	- rm -f  $(TGZ_IMAGE_FILE)
