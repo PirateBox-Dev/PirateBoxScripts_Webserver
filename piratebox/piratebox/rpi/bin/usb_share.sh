@@ -5,6 +5,9 @@ MOUNTPOINT="/mnt/usbshare"
 FS="vfat"
 UUIDS=$(blkid | grep "/dev/sd*.*TYPE=\"${FS}\"" | egrep -o " UUID=\"([a-zA-Z0-9-])*\"" | sed 's/ //g')
 
+# Load PirateBox-Config for User-Configurations
+source "/opt/piratebox/conf/piratebox.conf"
+
 if [ $(echo "${UUIDS}" | wc -l) -gt 1 ]; then
   echo "You seem to have more than one valid ${FS} partition for a USB share:"
   echo "${UUIDS}\n"
@@ -27,13 +30,13 @@ fi
 
 echo "## Adding USB share..."
 mkdir -p "${MOUNTPOINT}" > /dev/null
-echo "${UUID} ${MOUNTPOINT} vfat umask=0,noatime,rw,user,uid=nobody,gid=nogroup 0 0" >> /etc/fstab
+echo "${UUID} ${MOUNTPOINT} vfat umask=0,noatime,rw,user,uid=${LIGHTTPD_USER},gid=${LIGHTTPD_GROUP} 0 0" >> /etc/fstab
 mount "${MOUNTPOINT}" > /dev/null
 
 if [ $? == 0 ]; then
   echo "## Moving files..."
-  mv /opt/piratebox/share "${MOUNTPOINT}/share" > /dev/null 2>&1
-  ln -s "${MOUNTPOINT}/share" /opt/piratebox/share > /dev/null
+  mv "${SHARE_FOLDER}/" "${MOUNTPOINT}/share" > /dev/null 2>&1
+  ln -s "${MOUNTPOINT}/share" "${SHARE_FOLDER}"  > /dev/null
 else
   echo "Error: Mounting file system failed, will not move files..."
   cat "/etc/fstab"
