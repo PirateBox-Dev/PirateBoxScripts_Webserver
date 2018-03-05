@@ -69,6 +69,7 @@ $(OPENWRT_CONFIG_FOLDER):
 	sed 's:192.168.77:192.168.1:g' -i $@/piratebox.conf
 	sed 's:DROOPY_USE_USER="yes":DROOPY_USE_USER="no":' -i  $@/piratebox.conf
 	sed 's:DROOPY_CHMOD:#DROOPY_CHMOD:' -i $@/piratebox.conf
+	sed 's:UPLOAD_DO_CHMOD="yes":UPLOAD_DO_CHMOD="no":' -i $@/piratebox.conf
 	sed 's:LEASE_FILE_LOCATION=$$PIRATEBOX_FOLDER/tmp/lease.file:LEASE_FILE_LOCATION=/tmp/lease.file:' -i  $@/piratebox.conf
 	sed 's:TIMESAVE_FORMAT="+%C%g%m%d %H%M":TIMESAVE_FORMAT="+%C%g%m%d%H%M":' -i $@/piratebox.conf
 	sed 's:FIREWALL_FETCH_DNS="yes":FIREWALL_FETCH_DNS="no":' -i $@/firewall.conf

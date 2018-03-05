@@ -169,12 +169,54 @@ generate_lighttpd_env() {
 
         )
         var.PIRATEBOX_HOSTNAME = \"$HOSTNAME\"
+        var.CONFDIR = \"$CONFDIR\"
         "  > $LIGHTTPD_ENV_CONFIG
 }
 
 #------------ lighttpd env config - End   ---------------------
 
+#------------  change php ini ---------------------------------
+work_php_ini=""
+php_ini_entry(){
+    in_parm=$1
+    in_val=$2
 
+    if grep -q "$in_parm" "$work_php_ini" ;
+        old_val=$( grep  "$in_parm" "$work_php_ini" | head -n 1 )
+        sed -e "s|${old_val}|${in_parm} = ${in_val}|g" "$work_php_ini"
+    else
+        echo "ERROR php.ini : Old val. $in_parm not found"
+    fi
+
+}
+generate_php_ini(){
+    echo "Generating custom php.ini ... "
+    test -e /etc/php.ini && cp /etc/php.ini "${PIRATEBOX_FOLDER}/tmp/php.ini.original"
+    test -e /etc/php/php.ini && cp /etc/php/php.ini "${PIRATEBOX_FOLDER}/tmp/php.ini.original"
+    # Comment original statements
+    sed -e 's|^upload_tmp_dir|;upload_tmp_dir|g' \
+        -e 's|^upload_max_filesize|;upload_max_filesize|g' \
+        -e 's|^post_max_size|;post_max_size|g' \
+        -e 's|^max_file_uploads|;max_file_uploads|g' \
+        "${PIRATEBOX_FOLDER}/tmp/php.ini.original" > "$CONFDIR/php.ini"
+    work_php_ini="$CONFDIR/php.ini"
+
+    php_ini_entry 'upload_tmp_dir' "$UPLOAD_TMP_FOLDER"
+    php_ini_entry 'upload_max_filesize' "$UPLOAD_MAX_SIZE"
+    php_ini_entry 'post_max_size'   "0"
+    php_ini_entry 'max_file_uploads' "10"
+
+}
+##------------- piratebox_config.php -----------------
+generate_piratebox_php(){
+    echo "Generate piratebox_config.php"
+    sed -e "s|####UPLOAD_ENABLED####|${UPLOAD_ENABLED}|g"    \
+        -e "s|####UPLOAD_FOLDER####|${UPLOADFOLDER}|g"       \
+        -e "s|####OVERWRITE####|${UPLOAD_ALLOW_OVERWRITE}|g" \
+        -e "s|####DO_CHMOD####|${UPLOAD_DO_CHMOD}|g"         \
+        -e "s|####CHMOD####|${UPLOAD_CHMOD}|g"               \
+        "$CONFDIR/piratebox_config.php.template" >  "${PIRATEBOX_FOLDER}/www"
+}
 
 if [ -z  $1 ] ; then
   echo "Usage is
@@ -228,3 +270,6 @@ fi
 ###  automtically.
 AVAHI_HOST=$( echo $COMPLETE_HOST | sed 's|\.|_|g' )
 sed "s|#####MASKED_HOSTNAME#####|$AVAHI_HOST|" $AVAHI_SRC > $AVAHI_CONFIG
+
+generate_php_ini
+generate_piratebox_php
