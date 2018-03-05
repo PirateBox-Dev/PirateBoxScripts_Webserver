@@ -8,7 +8,7 @@
 # Upload enabled
 $config['upload_enabled'] = '####UPLOAD_ENABLED####' ;
 # Where to store
-$config['upload_folder'] = ""####UPLOAD_FOLDER####;
+$config['upload_folder'] = "####UPLOAD_FOLDER####";
 # Rename dublicate files with suffix or overwrite it
 $config['allow_overwrite']   = '####OVERWRITE####' ;
 # Set permissions afterwards

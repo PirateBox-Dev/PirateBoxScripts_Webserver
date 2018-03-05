@@ -92,6 +92,7 @@ case "$1" in
 
     echo "Empty tmp folder"
     find   $PIRATEBOX/tmp/ -mindepth 1  -exec rm {} \;
+    find   $PIRATEBOX/share/tmp/ -mindepth 1  -exec rm {} \;
 
     # Captive Portal Housekeeping file in /tmp (ram)
     "$PIRATEBOX/bin/captive_notify_lease.sh" refresh

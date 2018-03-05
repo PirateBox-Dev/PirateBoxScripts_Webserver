@@ -91,6 +91,11 @@ try {
         }
         $path = $config['upload_folder']. "/" . $filename ;
 
+        if ( $config['do_chmod'] == 'no' ) {
+            /* Ok, we want whatever a filepermission and we want to ignore Warnings from
+             * move_uploaded_file */
+            error_reporting(E_ERROR | E_PARSE);
+        }
         if(move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $path)) {
             if ( $config['do_chmod']  == 'yes' ) {
                 // set proper permissions on the new file

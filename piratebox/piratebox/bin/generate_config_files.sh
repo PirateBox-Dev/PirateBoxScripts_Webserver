@@ -169,7 +169,7 @@ generate_lighttpd_env() {
 
         )
         var.PIRATEBOX_HOSTNAME = \"$HOSTNAME\"
-        var.CONFDIR = \"$CONFDIR\"
+        var.CONFDIR = \"$CONFIG_PATH\"
         "  > $LIGHTTPD_ENV_CONFIG
 }
 
@@ -181,9 +181,9 @@ php_ini_entry(){
     in_parm=$1
     in_val=$2
 
-    if grep -q "$in_parm" "$work_php_ini" ;
+    if grep -q "$in_parm" "$work_php_ini" ; then
         old_val=$( grep  "$in_parm" "$work_php_ini" | head -n 1 )
-        sed -e "s|${old_val}|${in_parm} = ${in_val}|g" "$work_php_ini"
+        sed -i -e "s|${old_val}|${in_parm} = ${in_val}|g" "$work_php_ini"
     else
         echo "ERROR php.ini : Old val. $in_parm not found"
     fi
@@ -198,8 +198,8 @@ generate_php_ini(){
         -e 's|^upload_max_filesize|;upload_max_filesize|g' \
         -e 's|^post_max_size|;post_max_size|g' \
         -e 's|^max_file_uploads|;max_file_uploads|g' \
-        "${PIRATEBOX_FOLDER}/tmp/php.ini.original" > "$CONFDIR/php.ini"
-    work_php_ini="$CONFDIR/php.ini"
+        "${PIRATEBOX_FOLDER}/tmp/php.ini.original" > "$CONFIG_PATH/php.ini"
+    work_php_ini="$CONFIG_PATH/php.ini"
 
     php_ini_entry 'upload_tmp_dir' "$UPLOAD_TMP_FOLDER"
     php_ini_entry 'upload_max_filesize' "$UPLOAD_MAX_SIZE"
@@ -215,7 +215,7 @@ generate_piratebox_php(){
         -e "s|####OVERWRITE####|${UPLOAD_ALLOW_OVERWRITE}|g" \
         -e "s|####DO_CHMOD####|${UPLOAD_DO_CHMOD}|g"         \
         -e "s|####CHMOD####|${UPLOAD_CHMOD}|g"               \
-        "$CONFDIR/piratebox_config.php.template" >  "${PIRATEBOX_FOLDER}/www"
+        "$CONFIG_PATH/piratebox_config.php.template" >  "${PIRATEBOX_FOLDER}/www/piratebox_config.php"
 }
 
 if [ -z  $1 ] ; then
