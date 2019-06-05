@@ -13,7 +13,7 @@ Note: DNSMASQ is using webrequests to speed up on embedded devices!
 Usage:
    captive_cli.php <action> <ip>  (path)
 
-   action = add / del
+   action = add / del / show
    ip     = valid ip address
    path   = optional, path to /opt/piratebox base folder
 ");
@@ -35,6 +35,9 @@ if ( $action == "add" ) {
     exit ;
 } elseif ( $action == "del" ) {
     del_ip("$ip" );
+    exit ;
+} elseif ( $action == "show" ) {
+    print_stats(); 
     exit ;
 } elseif ( $action == "old" ) {
     // Refresh or relogin

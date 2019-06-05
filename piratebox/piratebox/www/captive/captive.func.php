@@ -131,6 +131,22 @@ function count_ip($ip, $do_only_insert="no" , $amount=1 ){
 }
 
 
+// Display current registered IPs.
+function print_stats(){
+    $db=__do_db_connect();
+    $stmt="SELECT ip, counter  from access ORDER BY ip" ;
+    $sel_sth=$db->prepare("$stmt");
+    if ( ! $sel_sth->execute() ) {
+        die ("Error getting stats". $up_stmt->errorInfo ());
+    }
+
+    echo " Captive Statistics \n";
+    while ( $row = $sel_sth->fetch(PDO::FETCH_ASSOC) ) {
+        print ( " ". $row[ip] ."  -  ".$row[counter]."\n");
+    }
+    return 0;
+}
+
 function erdebug($string="") {
     $config=get_config();
     if (  $config['debug'] ) {

@@ -24,6 +24,9 @@ $ip = $_GET['ip'];
 if ( $action == "add" ) {
     count_ip("$ip" , "yes" );
     exit ;
+} elseif ( $action == "show" ) {
+	print_stats();
+	exit;
 } elseif ( $action == "del" ) {
     del_ip("$ip" );
     exit ;
