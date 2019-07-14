@@ -15,7 +15,7 @@
 //                          captive portal
 //
 function get_config(){
-    $hostname="piratebox.lan";
+    $hostname=$_ENV['PIRATEBOX_HOSTNAME'];
     return  array (
      'SQLITE_FILE'         =>  "sqlite:/tmp/captive.sqlite" ,
      'minimum_answers'     => 5 ,

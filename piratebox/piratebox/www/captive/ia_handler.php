@@ -7,6 +7,9 @@
 //   $_SERVER['REQUEST_URI']  - URL , needed for Client OS
 //   $_SERVER['HTTP_USER_AGENT'] -  needed for Client OS verification
 //   ( $_SERVER['SERVER_NAME'] - possibly )
+//
+// For Redirect:
+//  $_ENV['PIRATEBOX_HOSTNAME']
 
 require_once ("captive.func.php");
 
@@ -15,7 +18,7 @@ require_once ("captive.func.php");
 $config = get_config();
 
 if ( isset ($_GET['enter'] ) ) {
-    header('Location: http://piratebox.lan/', true, 302);
+    header('Location: http://'.$config['hostname'], true, 302);
     count_ip($_SERVER['REMOTE_ADDR'],"no",99);
 
     exit;
