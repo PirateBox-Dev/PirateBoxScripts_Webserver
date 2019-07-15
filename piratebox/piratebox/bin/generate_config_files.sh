@@ -88,11 +88,17 @@ generate_dnsmasq() {
    lease_time=$5
    ip_pb=$2
    dnsmasq_interface=$6
+   pbx_hostname=$7
+
    echo "Generating dnsmasq.conf ....."
    cat $DEFAULT_DNSMASQ                > $DNSMASQ_CONFIG
 
    #Add interface line if filled
    [ -n $dnsmasq_interface ] &&   echo "interface=$dnsmasq_interface" >> $DNSMASQ_CONFIG
+
+   echo "
+domain=$pbx_hostname
+"         >> $DNSMASQ_CONFIG
 
    lease_line="$net.$lease_start,$net.$lease_end,$lease_time"
    echo  "dhcp-range=$lease_line"      >> $DNSMASQ_CONFIG
@@ -204,7 +210,7 @@ if [ "$IPV6_ENABLE" = "yes" ] ; then
    [[ "$IPV6_ADVERT" = "radvd" ]] && generate_radvd $IPV6_PREFIX  $IPV6_MASK $DNSMASQ_INTERFACE
 fi
 generate_hosts $HOST  $IP  $IPV6
-generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE
+generate_dnsmasq  $NET $IP_SHORT  $START_LEASE  $END_LEASE $LEASE_DURATION $DNSMASQ_INTERFACE $HOST
 generate_lighttpd_env $GLOBAL_CHAT "$GLOBAL_DEST" $PIRATEBOX_PYTHONPATH $GEN_CHATFILE $PIRATEBOX_FOLDER  $CHATFILE $SHOUTBOX_CLIENT_TIMESTAMP $UPLOADFOLDER $GEN_DISKFILE $HOST
 
 COMPLETE_HOST=$HOST
