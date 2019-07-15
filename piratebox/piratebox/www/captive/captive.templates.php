@@ -19,7 +19,7 @@ Success
 }
 
 function template_iOS_captiveBrowser(){
-    header('Location: http://'.$config['hostname'].'/', true, 302);
+    header('Location: '.$config['captive_info_url'], true, 302);
 }
 
 function template_Android(){

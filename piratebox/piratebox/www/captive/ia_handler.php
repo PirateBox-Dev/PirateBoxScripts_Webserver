@@ -18,8 +18,9 @@ require_once ("captive.func.php");
 $config = get_config();
 
 if ( isset ($_GET['enter'] ) ) {
-    header('Location: http://'.$config['hostname'], true, 302);
+    header('Location: '.$config['enter_url'], true, 302);
     count_ip($_SERVER['REMOTE_ADDR'],"no",99);
+    erdebug (" ~~~ ENTER - ". $_SERVER['REMOTE_ADDR'] );
 
     exit;
 }
@@ -28,6 +29,7 @@ if ( isset ($_GET['enter'] ) ) {
 $send = check_ip_send_fake($_SERVER['REMOTE_ADDR']);
 
     erdebug('DEBUG LOG FOR IA_HANDLER');
+    erdebug(" - SEND        - " . $send );
     erdebug(" - REMOTE_ADDR - ". $_SERVER['REMOTE_ADDR'] );
     erdebug(" - REQUEST_URI - ". $_SERVER['REQUEST_URI'] );
     erdebug(" - HTTP_USER_AGENT - ". $_SERVER['HTTP_USER_AGENT'] );
@@ -52,7 +54,7 @@ erdebug( "Detected client type: $client_type");
 if ( $send == 0 ) {
     // Send redirect
     erdebug( " -> Send redirect");
-    header("Location: ". $config['captive_info_page'] , true, 302);
+    header("Location: ". $config['captive_info_url'] , true, 302);
     count_ip($_SERVER['REMOTE_ADDR']);
     exit;
 }

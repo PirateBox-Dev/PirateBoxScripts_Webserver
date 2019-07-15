@@ -18,11 +18,14 @@ function get_config(){
     $hostname=$_ENV['PIRATEBOX_HOSTNAME'];
     return  array (
      'SQLITE_FILE'         =>  "sqlite:/tmp/captive.sqlite" ,
-     'minimum_answers'     => 5 ,
+     'minimum_answers'     => 10 ,
      'old_triggers_login'  => 0,
      'debug'               => 1,
      'hostname'            => "$hostname",
-     'captive_info_page'   => "http://$hostname/content/welcome.html" ,
+#  captive_info_url => Captive Portal still on, redirect client to this page
+     'captive_info_url'   => "http://$hostname/content/auto_login.html" ,
+#  enter_url => The page redirected to after ?enter=1
+     'enter_url'             => "http://$hostname/content/open_browser.html",
  );
 }
 
