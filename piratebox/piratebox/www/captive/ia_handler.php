@@ -18,9 +18,20 @@ require_once ("captive.func.php");
 $config = get_config();
 
 if ( isset ($_GET['enter'] ) ) {
-    header('Location: '.$config['enter_url'], true, 302);
+
+    $enter_url=$config['enter_url'];
+
+    header('Location: '.$enter_url, true, 302);
     count_ip($_SERVER['REMOTE_ADDR'],"no",99);
-    erdebug (" ~~~ ENTER - ". $_SERVER['REMOTE_ADDR'] );
+    erdebug (" ~~~ ENTER - $enter_url". $_SERVER['REMOTE_ADDR'] );
+
+    exit;
+} elseif ( isset ($_GET['enter_iOS'] )) {
+    $enter_url=$config['enter_url_iOS'];
+
+    header('Location: '.$enter_url, true, 302);
+    count_ip($_SERVER['REMOTE_ADDR'],"no",99);
+    erdebug (" ~~~ ENTER - $enter_url". $_SERVER['REMOTE_ADDR'] );
 
     exit;
 }
