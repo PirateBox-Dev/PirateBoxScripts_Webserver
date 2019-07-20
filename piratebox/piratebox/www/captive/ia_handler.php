@@ -18,7 +18,6 @@ require_once ("captive.func.php");
 $config = get_config();
 
 if ( isset ($_GET['enter'] ) ) {
-
     $enter_url=$config['enter_url'];
 
     header('Location: '.$enter_url, true, 302);
@@ -65,7 +64,12 @@ erdebug( "Detected client type: $client_type");
 if ( $send == 0 ) {
     // Send redirect
     erdebug( " -> Send redirect");
-    header("Location: ". $config['captive_info_url'] , true, 302);
+
+    if ( preg_match ( '/iOS/' , $client_type ){
+        header("Location: ". $config['captive_info_url_iOS'] , true, 302);
+    } else {
+        header("Location: ". $config['captive_info_url'] , true, 302);
+    }
     count_ip($_SERVER['REMOTE_ADDR']);
     exit;
 }
