@@ -23,7 +23,7 @@ function get_config(){
      'debug'               => 1,
      'hostname'            => "$hostname",
 #  captive_info_url => Captive Portal still on, redirect client to this page
-     'captive_info_url'   => "http://$hostname/content/auto_login.html" ,
+     'captive_info_url'   => "http://$hostname/captive/auto_login.html" ,
 #  enter_url => The page redirected to after ?enter=1
      'enter_url'             => "http://$hostname/content/open_browser.html",
  );
