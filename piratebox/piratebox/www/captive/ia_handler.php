@@ -65,7 +65,7 @@ if ( $send == 0 ) {
     // Send redirect
     erdebug( " -> Send redirect");
 
-    if ( preg_match ( '/iOS/' , $client_type ){
+    if ( preg_match ( '/iOS/' , $client_type )){
         header("Location: ". $config['captive_info_url_iOS'] , true, 302);
     } else {
         header("Location: ". $config['captive_info_url'] , true, 302);
