@@ -5,7 +5,7 @@
 #   (to save cpu cycles).
 #
 # Arguments:
-#    add | del | old   ; old is ignored
+#    add | del | old | show  ; old is ignored
 #    <mac>  ; ignored
 #    <ip>   ; used
 #
@@ -30,4 +30,8 @@ fi
 
 echo "$op ; $ip"
 
-wget -q -O - "http://127.0.0.1/captive/dnsmasq_cli.php?type=$op&ip=$ip" > /dev/null
+if [ "$op" = "show" ] ; then
+    wget -q -O - "http://127.0.0.1/captive/dnsmasq_cli.php?type=$op&ip=$ip"
+else
+    wget -q -O - "http://127.0.0.1/captive/dnsmasq_cli.php?type=$op&ip=$ip" > /dev/null
+fi
