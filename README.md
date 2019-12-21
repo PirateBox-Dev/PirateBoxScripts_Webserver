@@ -44,7 +44,7 @@ Is supported by [mkPirateBox](https://github.com/MaStr/mkPirateBox) > v0.5 for O
 and by [PirateBox Manager](https://github.com/TerrorByte/PirateBox-Manager)
 
 ## Installation
-PirateBox should be in most common repositories soon, but in the mean time you can use this method:
+PirateBox should be in most common repositories soon, but in the meantime you can go to [piratebox.cc/getting_started](https://piratebox.cc/getting_started)
 
 
 <!--### Installing unstable (development version)
