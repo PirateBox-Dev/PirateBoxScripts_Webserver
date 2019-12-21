@@ -1,7 +1,10 @@
 # PirateBoxScripts with Modifications for running in a Webserver     
 
-[![Join the chat at https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-&copy; 2012-2014 [Matthias Strubel](mailto:matthias.strubel@aod-rpg.de) licenced under GPL-3
+[![Join the chat at https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+
+&copy; 2012-2014 [Matthias Strubel](mailto:matthias.strubel@aod-rpg.de) 
+
+Licensed under the GNU GPLv3
 
 ## Maintainers
 * [Matthias Strubel](matthias.strubel@aod-rpg.de)     
@@ -11,7 +14,7 @@ PirateBox is a collection of scripts / programs that allows you to use your wire
 as a local network to share files and chat anonymously. For more information please visit
 http://daviddarts.com/
 
------ Info -----
+## Info
 Packages contains only scripts based PirateBox scripts with running lighttpd webserver.
 
 PirateBox scripts can:
@@ -34,27 +37,23 @@ PirateBox scripts can:
    * Optional Poll for WLAN device until it available (for USB wifi cards)
    * Optional IRC-Server
 
-More information can be found ont http://piratebox.aod-rpg.de
-Installation-HowTo und current Download-Link: http://piratebox.aod-rpg.de/dokuwiki/doku.php/piratebox_lighttpd
+More information can be found on [piratebox.cc](https://piratebox.cc)
+Installation tutorial and current download link: [piratebox.cc/getting_started](https://piratebox.cc/getting_started)<!--I'm pretty sure I did the right link but if not you can uncomment this link http://piratebox.aod-rpg.de/dokuwiki/doku.php/piratebox_lighttpd-->
 
-Is supported by mkPirateBox > v0.5 for OpenWRT Systems https://github.com/MaStr/mkPirateBox
-and by PirateBox Manager https://github.com/TerrorByte/PirateBox-Manager
+Is supported by [mkPirateBox](https://github.com/MaStr/mkPirateBox) > v0.5 for OpenWRT Systems 
+and by [PirateBox Manager](https://github.com/TerrorByte/PirateBox-Manager)
 
------ Installation -----
+## Installation
 PirateBox should be in most common repositories soon, but in the mean time you can use this method:
 
 
-##### For alpha testing
+<!--### Installing unstable (development version)
 
-Download the package:
-https://github.com/MaStr/PirateBoxScripts_Webserver/archive/development.zip
+Download the package [here](https://github.com/MaStr/PirateBoxScripts_Webserver/archive/development.zip)
 
 Unzip the package:
-$unzip development.zip
+`$ unzip development.zip`
 
 Run the installer in the unzipped folder:
-$ cd PirateBoxScripts_Webserver/piratebox
-$ sudo ./install.sh default #Default can be substituted with 'board' if you want an image board on your PB
-
-
-
+`$ cd PirateBoxScripts_Webserver/piratebox && sudo ./install.sh default #Default can be substituted with 'board' if you want an image board on your PB`
+-->
