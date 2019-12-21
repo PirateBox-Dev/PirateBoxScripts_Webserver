@@ -7,12 +7,12 @@
 Licensed under the GNU GPLv3
 
 ## Maintainers
-* [Matthias Strubel](matthias.strubel@aod-rpg.de)     
+* [Matthias Strubel](matthias.strubel@aod-rpg.de)
 
 
 PirateBox is a collection of scripts / programs that allows you to use your wireless card
 as a local network to share files and chat anonymously. For more information please visit
-http://daviddarts.com/
+[piratebox.cc](https://piratebox.cc)
 
 ## Info
 Packages contains only scripts based PirateBox scripts with running lighttpd webserver.
@@ -29,7 +29,7 @@ PirateBox scripts can:
    * Announce "Internet yes" for iOS
    * Announce "Internet yes" for MS devices
    * ShoutBox
-   * Optional small python Forum
+   * Optional small Python forum
    * Optional imageboard
    * Optional Station counter
    * Optional Inihibit starting upload-script
