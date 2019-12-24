@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/PirateBox-Dev/PirateBoxScripts_Webserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 
-&copy; 2012-2014 [Matthias Strubel](mailto:matthias.strubel@aod-rpg.de) 
+© 2012-2019 [Matthias Strubel](mailto:matthias.strubel@aod-rpg.de) 
 
 Licensed under the GNU GPLv3
 
@@ -45,6 +45,9 @@ and by [PirateBox Manager](https://github.com/TerrorByte/PirateBox-Manager)
 
 ## Installation
 PirateBox should be in most common repositories soon, but in the meantime you can go to [piratebox.cc/getting_started](https://piratebox.cc/getting_started)
+
+## Note
+PirateBox is going to be discontinued. Read [this forum post](https://forum.piratebox.cc/read.php?9,23070) for more information.
 
 
 <!--### Installing unstable (development version)
