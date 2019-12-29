@@ -175,9 +175,23 @@ fi
 set_hostname() {
 	name=$1 ; shift;
 
+    if test -z "$name" ; then
+        echo "ERROR: Empty hostname not allowed ! '$name'"
+        exit 128
+    fi
+
+    # Set Bash EXIT on error
+    set -e
+
 	sed -e "s|#####HOST#####|$name|g"  \
        	       "$PIRATEBOX_FOLDER"/src/redirect.html.schema >  \
                "$WWW_FOLDER"/index.html
+
+    # Also change configuration, because other parts of PirateBox are making use of it
+    OLD_HOST=$HOST
+    HOST=$name
+    sed -i -e "s|^HOST=\"${OLD_HOST}\"|HOST=\"${HOST}\"|" "$PIRATEBOX_CONFIG"
+    set +e
 }
 
 if [ "$1" = "hostname" ] ; then
